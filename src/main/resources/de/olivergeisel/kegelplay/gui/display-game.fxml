@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox minHeight="500" minWidth="1200" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.olivergeisel.kegelplay.gui.DisplayGameController">
+    <children>
+        <HBox minWidth="800.0" snapToPixel="false">
+            <children>
+                <VBox styleClass="margin-left-1 margin-right-1">
+                    <children>
+                        <fx:include source="header.fxml" />
+                        <fx:include source="tabelle.fxml" />
+                        <fx:include source="fallbild.fxml" />
+                    </children>
+                </VBox>
+                <VBox>
+                    <children>
+                        <fx:include source="header.fxml" />
+                        <fx:include source="tabelle.fxml" />
+                        <fx:include source="fallbild.fxml" />
+                    </children>
+                    <HBox.margin>
+                        <Insets left="10.0" />
+                    </HBox.margin>
+                </VBox>
+                <VBox>
+                    <children>
+                        <fx:include source="header.fxml" />
+                        <fx:include source="tabelle.fxml" />
+                        <fx:include source="fallbild.fxml" />
+                    </children>
+                    <HBox.margin>
+                        <Insets left="10.0" />
+                    </HBox.margin>
+                </VBox>
+                <VBox>
+                    <children>
+                        <fx:include source="header.fxml" />
+                        <fx:include source="tabelle.fxml" />
+                        <fx:include source="fallbild.fxml" />
+                    </children>
+                    <HBox.margin>
+                        <Insets left="10.0" />
+                    </HBox.margin>
+                </VBox>
+
+            </children>
+        </HBox>
+    </children>
+</VBox>

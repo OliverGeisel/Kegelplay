@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane minHeight="210.0" styleClass="primary-container" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="de.olivergeisel.kegelplay.gui.HeaderController" fx:factory="getClassCssMetaData">
+   <columnConstraints>
+      <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="40.0" />
+      <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="60.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
+   </rowConstraints>
+   <children>
+        <AnchorPane styleClass="border-image">
+            <children>
+                <ImageView fx:id="image" fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" styleClass="border-image">
+                    <image>
+                        <Image url="@../../../../icons/kegeln.png" />
+                    </image>
+                </ImageView>
+            </children>
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
+        </AnchorPane>
+        <VBox alignment="CENTER" focusTraversable="true" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" GridPane.columnIndex="1">
+            <children>
+                <HBox alignment="CENTER_LEFT" minHeight="60.0" minWidth="150.0" styleClass="centering">
+                    <children>
+                        <Label fx:id="name" contentDisplay="CENTER" depthTest="ENABLE" minHeight="15.0" minWidth="60.0" text="Name" textAlignment="CENTER" wrapText="true" HBox.hgrow="ALWAYS">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                     <styleClass>
+                        <String fx:value="centering" />
+                        <String fx:value="primary-complementary-color" />
+                     </styleClass>
+                        </Label>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" minHeight="60.0" styleClass="centering">
+                    <children>
+
+                        <Label fx:id="vorname" alignment="CENTER" contentDisplay="CENTER" lineSpacing="1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="150.0" style="-fx-pref-width: 95%;" text="Vorname" textAlignment="CENTER" textOverrun="CLIP">
+                            <font>
+                                <Font name="Arial" size="18.0" />
+                            </font>
+                     <styleClass>
+                        <String fx:value="centering" />
+                        <String fx:value="primary-complementary-color" />
+                     </styleClass>
+                        </Label>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" minHeight="60.0" styleClass="centering">
+                    <children>
+                        <Label fx:id="verein" minWidth="150.0" text="Verein" textAlignment="CENTER">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                     <styleClass>
+                        <String fx:value="centering" />
+                        <String fx:value="primary-complementary-color" />
+                     </styleClass>
+                        </Label>
+                    </children>
+                </HBox>
+            </children>
+            <opaqueInsets>
+                <Insets left="12.0" />
+            </opaqueInsets>
+        </VBox>
+   </children>
+</GridPane>
