@@ -5,8 +5,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
-
-<GridPane alignment="CENTER" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="grid" alignment="CENTER" xmlns="http://javafx.com/javafx/21.0.1"
+          fx:controller="de.olivergeisel.kegelplay.gui.TableController">
     <columnConstraints>
         <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="30.0"/>
         <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="30.0"/>

@@ -2,8 +2,8 @@
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
-
-<AnchorPane fx:id="anchorPane" minHeight="200.0" minWidth="200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.olivergeisel.kegelplay.gui.FallbildController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="anchorPane" minHeight="200.0" minWidth="200.0"
+            xmlns="http://javafx.com/javafx/21.0.1" fx:controller="de.olivergeisel.kegelplay.gui.FallbildController">
         <children>
             <Rectangle fx:id="square" arcHeight="5.0" arcWidth="5.0" fill="#5ba7f3" height="150.0" opacity="0.27" rotate="45" stroke="BLACK" strokeType="INSIDE" styleClass="fallbild-background" width="150.0" x="31.0" y="31.0" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="31.0" AnchorPane.topAnchor="31.0" />
             <Circle id="one-hit" fx:id="pin1" centerX="104.0" centerY="186.0" fill="DODGERBLUE" radius="12.0" stroke="BLACK" strokeType="INSIDE" styleClass="pin-hit" AnchorPane.leftAnchor="95.0" AnchorPane.topAnchor="165.0" />
