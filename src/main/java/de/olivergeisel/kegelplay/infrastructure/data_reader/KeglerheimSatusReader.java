@@ -1,5 +1,8 @@
 package de.olivergeisel.kegelplay.infrastructure.data_reader;
 
+import de.olivergeisel.kegelplay.infrastructure.ini.IniFile;
+import de.olivergeisel.kegelplay.infrastructure.ini.KeglerheimIniReader;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -11,7 +14,7 @@ public class KeglerheimSatusReader {
 	private final List<String> teamNames;
 	private       IniFile      iniFile;
 	private       int          teamCount;
-	private       boolean      abortet;
+	private boolean aborted;
 	private       boolean      finished;
 
 	public KeglerheimSatusReader(Path iniFilePath) throws IOException {
@@ -21,18 +24,19 @@ public class KeglerheimSatusReader {
 		if (!iniFilePath.toFile().exists()) {
 			throw new IllegalArgumentException("IniFilePath must exist");
 		}
-		if (iniFilePath.toFile().getName().equals("status.ini")) {
+		if (!iniFilePath.toFile().getName().equals("status.ini")) {
 			throw new IllegalArgumentException("IniFilePath must be named 'status.ini'");
 		}
 		this.iniFile = KeglerheimIniReader.read(iniFilePath);
 		var allgemeinRegion = iniFile.getRegion("Allgemein");
-		this.abortet = allgemeinRegion.getValue("Abgebrochen").equals("1");
+		this.aborted = allgemeinRegion.getValue("Abgebrochen").equals("1");
 		this.finished = allgemeinRegion.getValue("Abgeschlossen").equals("1");
 
-		teamCount = Integer.parseInt(allgemeinRegion.getValue("AnzahlMannschaften"));
+		var teamRegion = iniFile.getRegion("Mannschaften");
+		teamCount = Integer.parseInt(teamRegion.getValue("Anzahl"));
 		teamNames = new ArrayList<>(teamCount);
 		for (int i = 0; i < teamCount; i++) {
-			teamNames.add(allgemeinRegion.getValue("Mannschaft" + i));
+			teamNames.add(teamRegion.getValue(STR."Mannschaft \{i}"));
 		}
 	}
 
@@ -41,8 +45,8 @@ public class KeglerheimSatusReader {
 		return teamCount;
 	}
 
-	public boolean isAbortet() {
-		return abortet;
+	public boolean isAborted() {
+		return aborted;
 	}
 
 	public boolean isFinished() {

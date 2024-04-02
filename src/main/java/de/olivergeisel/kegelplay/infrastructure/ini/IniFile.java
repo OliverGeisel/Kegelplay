@@ -1,16 +1,22 @@
-package de.olivergeisel.kegelplay.infrastructure.data_reader;
+package de.olivergeisel.kegelplay.infrastructure.ini;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class IniFile {
 
+	private static final System.Logger LOGGER = System.getLogger(IniFile.class.getName());
+
 	private String          name;
 	private List<IniRegion> regions = new java.util.ArrayList<>();
 
-	public IniFile(Path path) throws IOException, IniFileException, IllegalArgumentException {
+	public IniFile(Path path, String encoding) throws IOException, IniFileException, IllegalArgumentException {
 		if (path == null) {
 			throw new IllegalArgumentException("path must not be null");
 		}
@@ -24,7 +30,7 @@ public class IniFile {
 		this.name = path.getFileName().toString();
 
 		String[] lines;
-		try (var reader = new java.io.BufferedReader(new java.io.FileReader(file))) {
+		try (var reader = new BufferedReader(new FileReader(file, Charset.forName(encoding)))) {
 			lines = reader.lines().toArray(String[]::new);
 		} catch (Exception e) {
 			throw new IOException("could not read file", e);
@@ -41,29 +47,47 @@ public class IniFile {
 		}
 	}
 
-	private void createWithMultipleRegions(String firstLine, String[] lines) {
-		// iterate threw lines
-		var regionName = firstLine.substring(1, firstLine.length() - 1);
-		var map = new java.util.HashMap<String, String>();
-		var regionLines = new java.util.ArrayList<String>();
+	public IniFile(Path path) throws IOException, IniFileException, IllegalArgumentException {
+		this(path, "ISO-8859-1");
+	}
 
+	/**
+	 * Create IniFile with multiple regions
+	 *
+	 * @param firstLine first line of the ini file
+	 * @param lines all lines of the ini file
+	 *  @throws IniFileException if the first line is not a region
+	 */
+	private void createWithMultipleRegions(String firstLine, String[] lines)
+			throws IniFileException {
+		// iterate threw lines
+		String regionName;
+		List<String> regionLines = new LinkedList<>();
+		if (!firstLine.startsWith("[") || !firstLine.endsWith("]")) {
+			throw new IniFileException("First line is not a region in ini file");
+		}
+		IniRegion currentRegion = new IniRegion("", new String[0]);
 		for (var line : lines) {
 			var trimmedLine = line.trim();
-			if (trimmedLine.startsWith("[") && trimmedLine.endsWith("]")) {
-				this.regions.add(new IniRegion(regionName, regionLines.toArray(String[]::new), map));
+			if (trimmedLine.startsWith("[") && trimmedLine.endsWith("]")) { // new region
+				currentRegion.setLines(regionLines.toArray(String[]::new)); // finish old region
+				// add new region to regions
 				regionName = trimmedLine.substring(1, trimmedLine.length() - 1);
-				map = new java.util.HashMap<>();
 				regionLines = new java.util.ArrayList<>();
+				currentRegion = new IniRegion(regionName, regionLines.toArray(String[]::new));
+				this.regions.add(currentRegion);
 			} else {
-				var keyValue = trimmedLine.split("=");
-				if (keyValue.length != 2) {
-					throw new IniFileException("invalid ini file");
+				if (!trimmedLine.contains("=")) {
+					LOGGER.log(System.Logger.Level.INFO, "invalid pair {line} in ini file");
+					continue;
 				}
-				map.put(keyValue[0].trim(), keyValue[1].trim());
+				var keyValue = trimmedLine.split("=");
+				var key = keyValue[0].trim();
+				var value = keyValue.length != 2 ? "" : keyValue[1].trim();
+				currentRegion.put(key, value);
 				regionLines.add(line);
 			}
 		}
-		this.regions.add(new IniRegion(regionName, regionLines.toArray(String[]::new), map));
 	}
 
 	private void creatWithOneRegion(String[] lines) {

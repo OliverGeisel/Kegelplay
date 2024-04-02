@@ -1,5 +1,10 @@
 package de.olivergeisel.kegelplay.infrastructure.data_reader;
 
+import de.olivergeisel.kegelplay.infrastructure.csv.CSVFileReader;
+import de.olivergeisel.kegelplay.infrastructure.ini.IniFile;
+import de.olivergeisel.kegelplay.infrastructure.ini.IniFileException;
+import de.olivergeisel.kegelplay.infrastructure.ini.KeglerheimIniReader;
+
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
 
@@ -10,9 +15,9 @@ public class KeglerheimPlayerReader extends PlayerReader {
 
 	private final String  name;
 	private final String  vorname;
-	private final Path    teamDir;
-	private       IniFile infoFile;
-	private       CSVFile dataFile;
+	private final Path          teamDir;
+	private       IniFile       infoFile;
+	private       CSVFileReader dataFile;
 
 	public KeglerheimPlayerReader(String name, String vorname, Path teamDir) {
 		this.name = name;
@@ -38,7 +43,7 @@ public class KeglerheimPlayerReader extends PlayerReader {
 		}
 		var dataPath = playerDir.resolve(PLAYER_GAME_FILE_NAME);
 		try {
-			this.dataFile = new CSVFile(dataPath);
+			this.dataFile = new CSVFileReader(dataPath);
 		} catch (Exception e) {
 			throw new RuntimeException("invalid data file");
 		}

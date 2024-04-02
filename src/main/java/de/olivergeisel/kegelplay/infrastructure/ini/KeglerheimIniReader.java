@@ -1,4 +1,4 @@
-package de.olivergeisel.kegelplay.infrastructure.data_reader;
+package de.olivergeisel.kegelplay.infrastructure.ini;
 
 import java.io.IOException;
 import java.nio.file.Path;

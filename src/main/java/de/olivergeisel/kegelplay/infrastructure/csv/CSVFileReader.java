@@ -1,4 +1,4 @@
-package de.olivergeisel.kegelplay.infrastructure.data_reader;
+package de.olivergeisel.kegelplay.infrastructure.csv;
 
 import com.opencsv.CSVReader;
 
@@ -7,13 +7,16 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
-public class CSVFile {
+/**
+ *
+ */
+public class CSVFileReader {
 
 	private final Path           path;
 	private       String[]       header;
 	private       List<String[]> data;
 
-	public CSVFile(Path file) {
+	public CSVFileReader(Path file) {
 		this.path = file;
 		List<String[]> rawData;
 		try {
@@ -21,11 +24,16 @@ public class CSVFile {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		header = rawData.get(0);
-		data.remove(0);
+		header = rawData.getFirst();
+		rawData.removeFirst();
 		this.data = rawData;
 	}
 
+	/**
+	 * Read the data from the file.
+	 * @return List of String arrays, each array represents a row in the CSV file.
+	 * @throws IOException if the file is not readable
+	 */
 	public List<String[]> read() throws IOException {
 		try (var csvReader = new CSVReader(new FileReader(path.toFile()))) {
 			return csvReader.readAll();
@@ -34,15 +42,15 @@ public class CSVFile {
 		}
 	}
 
-	public void reread() throws IOException {
+	public void reread() {
 		List<String[]> rawData;
 		try {
 			rawData = read();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		header = rawData.get(0);
-		data.remove(0);
+		header = rawData.getFirst();
+		rawData.removeFirst();
 		this.data = rawData;
 	}
 
