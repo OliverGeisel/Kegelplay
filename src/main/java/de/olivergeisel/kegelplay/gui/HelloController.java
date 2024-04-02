@@ -1,6 +1,6 @@
 package de.olivergeisel.kegelplay.gui;
 
-import de.olivergeisel.kegelplay.core.GameOverview;
+import de.olivergeisel.kegelplay.core.game.GameOverview;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,16 +37,10 @@ public class HelloController {
 	}
 
 	@FXML
-	protected void onHelloButtonClick() {
-		welcomeText.setText("Welcome to JavaFX Application!");
-	}
-
-	@FXML
-	public void onNeuFensterClick(ActionEvent actionEvent) throws IOException {
-		welcomeText.setText("Neues Fenster");
+	public void onDebugButtonClick(ActionEvent actionEvent) throws IOException {
 		var oldScene = welcomeText.getScene();
 		var stage = (Stage) oldScene.getWindow();
-		var fxmlLoader = new FXMLLoader(getClass().getResource("display-game.fxml"));
+		var fxmlLoader = new FXMLLoader(getClass().getResource("debug.fxml"));
 		Pane stackPane = fxmlLoader.load();
 		var scene = new Scene(stackPane);
 		scene.getStylesheets().add("file:css/bkv.css");
@@ -58,7 +52,7 @@ public class HelloController {
 			stage.setHeight(newHeight);
 		});
 
-		stage.setTitle("4 gegeneinander Satzpunkte");
+		stage.setTitle("Debug");
 		stage.setHeight(stackPane.getPrefHeight());
 		stage.setWidth(stackPane.getPrefWidth());
 		stage.setScene(scene);
@@ -66,7 +60,34 @@ public class HelloController {
 		stage.setMinWidth(stackPane.getMinWidth());
 		stage.centerOnScreen();
 		DisplayGameController controller = fxmlLoader.getController();
-		controller.setStage(stage);
+		stage.show();
+	}
+
+	@FXML
+	protected void onHelloButtonClick() {
+		welcomeText.setText("Welcome to JavaFX Application!");
+	}
+
+	@FXML
+	public void onNeuFensterClick(ActionEvent actionEvent) throws IOException {
+		var oldScene = welcomeText.getScene();
+		var stage = (Stage) oldScene.getWindow();
+		var fxmlLoader = new FXMLLoader(getClass().getResource("selectgame.fxml"));
+		Pane stackPane = fxmlLoader.load();
+		var scene = new Scene(stackPane);
+		scene.getStylesheets().add("file:css/bkv.css");
+		// ChangeListener für die Breite und Höhe der Szene
+		scene.widthProperty().addListener((observableValue, oldWidth, newWidth) -> {
+			double newHeight = round(newWidth.doubleValue() / ASPECT_RATIO);
+			stage.setHeight(newHeight);
+		});
+		stage.setTitle("Wahl Spiel");
+		stage.setHeight(stackPane.getPrefHeight());
+		stage.setWidth(stackPane.getPrefWidth());
+		stage.setScene(scene);
+		stage.setMinHeight(stackPane.getMinHeight());
+		stage.setMinWidth(stackPane.getMinWidth());
+		stage.centerOnScreen();
 		stage.show();
 	}
 
