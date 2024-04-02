@@ -1,47 +1,51 @@
 package de.olivergeisel.kegelplay.core.match;
 
+import de.olivergeisel.kegelplay.core.game.Game;
 import de.olivergeisel.kegelplay.core.team_and_player.Player;
 import de.olivergeisel.kegelplay.core.team_and_player.Team;
 
-public class Match2Teams extends Match {
+import java.nio.file.Path;
 
-	private final Team home;
-	private final Team guest;
+public class Match2Teams<G extends Game> extends Match<G> {
+
+	private final Team<G> home;
+	private final Team<G> guest;
 
 
-	public Match2Teams(MatchConfig config, Team home, Team guest) {
-		super(config);
+	public Match2Teams(MatchConfig config, GeneralMatchInfo generalMatchInfo, MatchStatusInfo statusInfo, Team<G> home,
+			Team<G> guest, Path path) {
+		super(config, generalMatchInfo, statusInfo, path);
 		this.home = home;
 		this.guest = guest;
 	}
 
-	public Player getHomePlayerByName(String name) {
+	public Player<G> getHomePlayerByName(String name) {
 		return home.getPlayer(name);
 	}
 
-	public Player getGuestPlayerByName(String name) {
+	public Player<G> getGuestPlayerByName(String name) {
 		return guest.getPlayer(name);
 	}
 
-	public Player getHomePlayerByPosition(int position) {
+	public Player<G> getHomePlayerByPosition(int position) {
 		return home.getPlayer(position);
 	}
 
-	public Player getGuestPlayerByPosition(int position) {
+	public Player<G> getGuestPlayerByPosition(int position) {
 		return guest.getPlayer(position);
 	}
 
 	//region setter/getter
-	public Team getGuest() {
+	public Team<G> getGuest() {
 		return guest;
 	}
 
-	public Team getHome() {
+	public Team<G> getHome() {
 		return home;
 	}
 
 	@Override
-	public Team[] getTeams() {
+	public Team<G>[] getTeams() {
 		return new Team[]{home, guest};
 	}
 //endregion

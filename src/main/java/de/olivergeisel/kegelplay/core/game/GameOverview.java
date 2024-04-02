@@ -1,4 +1,4 @@
-package de.olivergeisel.kegelplay.core;
+package de.olivergeisel.kegelplay.core.game;
 
 import java.time.LocalDateTime;
 

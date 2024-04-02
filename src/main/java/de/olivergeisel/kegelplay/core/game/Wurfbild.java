@@ -1,5 +1,10 @@
 package de.olivergeisel.kegelplay.core.game;
 
+/**
+ * Represents a single pitch.
+ * It can display the concrete fallen pins.
+ * if a pin is fallen the value is true.
+ */
 public class Wurfbild {
 	private final boolean one;
 	private final boolean two;
@@ -12,16 +17,21 @@ public class Wurfbild {
 	private final boolean nine;
 
 
-	public Wurfbild(int wert) {
-		this.one = (wert & 1) != 0;
-		this.two = ((wert >> 1) & 1) != 0;
-		this.three = ((wert >> 2) & 1) != 0;
-		this.four = ((wert >> 3) & 1) != 0;
-		this.five = ((wert >> 4) & 1) != 0;
-		this.six = ((wert >> 5) & 1) != 0;
-		this.seven = ((wert >> 6) & 1) != 0;
-		this.eight = ((wert >> 7) & 1) != 0;
-		this.nine = ((wert >> 8) & 1) != 0;
+	/**
+	 * create a new instance by an integer. The value is the encoded version of the pitch.
+	 * Each pin is the exponent of the base to in there position -> Pin 5 = 2^5.
+	 * @param value integer value of the pitch.
+	 */
+	public Wurfbild(int value) {
+		this.one = (value & 1) != 0;
+		this.two = ((value >> 1) & 1) != 0;
+		this.three = ((value >> 2) & 1) != 0;
+		this.four = ((value >> 3) & 1) != 0;
+		this.five = ((value >> 4) & 1) != 0;
+		this.six = ((value >> 5) & 1) != 0;
+		this.seven = ((value >> 6) & 1) != 0;
+		this.eight = ((value >> 7) & 1) != 0;
+		this.nine = ((value >> 8) & 1) != 0;
 	}
 
 	public Wurfbild(boolean one, boolean two, boolean three, boolean four, boolean five, boolean six, boolean seven,
@@ -38,7 +48,7 @@ public class Wurfbild {
 		this.nine = nine;
 	}
 
-	public Wurfbild(boolean[] fields) throws IllegalArgumentException{
+	public Wurfbild(boolean[] fields) throws IllegalArgumentException {
 		if (fields.length != 9) {
 			throw new IllegalArgumentException("Wurfbild hat genau 9 Werte");
 		}
@@ -79,4 +89,9 @@ public class Wurfbild {
 		return sum;
 	}
 //endregion
+
+	public String toString() {
+		return STR."\{getWert()}: \{one ? "1" : "-"}\{two ? "2" : "-"}\{three ? "3" : "-"}\{four ? "4" : "-"}\{five ?
+				"5" : "-"}\{six ? "6" : "-"}\{seven ? "7" : "-"}\{eight ? "8" : "-"}\{nine ? "9" : "-"}";
+	}
 }

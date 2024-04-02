@@ -1,29 +1,43 @@
 package de.olivergeisel.kegelplay.core.game;
 
+import de.olivergeisel.kegelplay.core.match.GameKind;
 import de.olivergeisel.kegelplay.core.team_and_player.Player;
-import de.olivergeisel.kegelplay.infrastructure.data_reader.CSVFile;
+import de.olivergeisel.kegelplay.infrastructure.csv.CSVFileReader;
 import javafx.beans.InvalidationListener;
+import javafx.beans.WeakInvalidationListener;
 import javafx.util.Subscription;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
-public class Game120 extends Game{
+/**
+ * A Game120 is a game with 120 throws.
+ * The game is played in 4 Durchgänge with 30 throws each.
+
+ */
+public class Game120 extends Game {
 
 	private static final int ANZAHL_DURCHGAENGE = 4;
 
-	private final Durchgang[] durchgaenge = new Durchgang[ANZAHL_DURCHGAENGE];
+	private final GameSet[] sets = new GameSet[ANZAHL_DURCHGAENGE];
+
+	public Game120(Player player) {
+		this(player, LocalDateTime.now());
+	}
+
+	public Game120(Player player, List<Player> substitutions, LocalDateTime date) {
+		super(player, substitutions, date);
+	}
 
 	protected Game120(Player player, LocalDateTime date) {
 		super(player, date);
 		for (int i = 0; i < ANZAHL_DURCHGAENGE; i++) {
-			durchgaenge[i] = new Durchgang(30, 15, 15);
+			sets[i] = new GameSet(30, 15, 15);
 		}
 	}
 
-	public static Game120 createGameFromCSV(Player player, LocalDateTime date, CSVFile csvFile) {
-		var back =  new Game120(player, date);
-		return back;
+	public static Game120 createGameFromCSV(Player player, LocalDateTime date, CSVFileReader csvFileReader) {
+		return new Game120(player, date);
 	}
 
 	@Override
@@ -104,22 +118,84 @@ public class Game120 extends Game{
 	}
 
 	@Override
+	public GameSet getDurchgang(int durchgang) {
+		return sets[durchgang];
+	}
+
+	//region setter/getter
+	@Override
+	public GameKind getGameKind() {
+		return GameKind.GAME_120;
+	}
+
+	@Override
 	public int getNumberOfDurchgaenge() {
 		return ANZAHL_DURCHGAENGE;
 	}
 
 	@Override
 	public int getNumberOfWurf() {
-		return 0;
+		var back = 0;
+		for (GameSet set : sets) {
+			if (set.getState() == SetState.FINISHED) {
+				back += set.getAnzahlWuerfe();
+			} else {
+				back += set.getAnzahlGespielteWuerfe();
+			}
+		}
+		return back;
 	}
 
 	@Override
-	public Durchgang[] getDurchgaenge() {
-		return new Durchgang[0];
+	public int getTotalFehlwurf() {
+		var back = 0;
+		for (GameSet set : sets) {
+			back += set.getAnzahlFehler();
+		}
+		return back;
 	}
 
 	@Override
-	public Durchgang getDurchgang(int durchgang) {
-		return durchgaenge[durchgang];
+	public int getTotalScore() {
+		var back = 0;
+		for (GameSet set : sets) {
+			back += set.getScore();
+		}
+		return back;
 	}
+
+	@Override
+	public int getTotalVolle() {
+		var back = 0;
+		for (GameSet set : sets) {
+			back += set.getAnzahlVolle();
+		}
+		return back;
+	}
+
+	@Override
+	public int getTotalAbraeumen() {
+		var back = 0;
+		for (GameSet set : sets) {
+			back += set.getAnzahlAbraeumen();
+		}
+		return back;
+	}
+
+	@Override
+	public GameSet[] getSets() {
+		return sets;
+	}
+
+	@Override
+	public void setDurchgaenge(List<GameSet> durgaenge) throws IllegalArgumentException {
+		if (durgaenge.size() != ANZAHL_DURCHGAENGE) {
+			throw new IllegalArgumentException("Anzahl der Durchgänge stimmt nicht");
+		}
+		for (int i = 0; i < ANZAHL_DURCHGAENGE; i++) {
+			sets[i] = durgaenge.get(i);
+		}
+		checkState();
+	}
+//endregion
 }
