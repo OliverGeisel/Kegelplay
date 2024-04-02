@@ -88,6 +88,41 @@ public abstract class Team<G extends Game> {
 	}
 
 	//region setter/getter
+	public int getTeamScore() {
+		int score = 0;
+		for (Player<G> player : players) {
+			score += player.getGame().getTotalScore();
+		}
+		return score;
+	}
+
+	public int getTeamTotalMissThrow() {
+		int score = 0;
+		for (Player<G> player : players) {
+			score += player.getGame().getTotalFehlwurf();
+		}
+		return score;
+	}
+
+	public int getTeamTotalVolle() {
+		int score = 0;
+		for (Player<G> player : players) {
+			score += player.getGame().getTotalVolle();
+		}
+		return score;
+	}
+
+	public int getTeamTotalAbraeumen() {
+		int score = 0;
+		for (Player<G> player : players) {
+			score += player.getGame().getTotalAbraeumen();
+		}
+		return score;
+	}
+
+
+
+
 	public String getName() {
 		return name;
 	}
