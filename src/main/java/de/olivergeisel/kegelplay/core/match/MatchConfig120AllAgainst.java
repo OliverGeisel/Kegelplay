@@ -1,5 +1,8 @@
 package de.olivergeisel.kegelplay.core.match;
 
+import de.olivergeisel.kegelplay.core.point_system.AllAgainstAll120_4PlayerPointSystem;
+import de.olivergeisel.kegelplay.core.point_system.PointSystem;
+
 import java.util.List;
 
 public class MatchConfig120AllAgainst extends MatchConfig {
@@ -13,7 +16,7 @@ public class MatchConfig120AllAgainst extends MatchConfig {
 	private static final int NUM_VOLLE   = 15;
 	private static final int NUM_RAEUMER = 15;
 
-	private static final PointSystem POINTSYSTEM = new PointSystem();
+	private static final PointSystem POINTSYSTEM = new AllAgainstAll120_4PlayerPointSystem();
 
 	public MatchConfig120AllAgainst() {
 		super();

@@ -23,7 +23,7 @@ public class Match1Team<T extends Game> extends Match<T> {
 		return team.getPlayer(position);
 	}
 
-//region setter/getter
+	//region setter/getter
 	@Override
 	public Team[] getTeams() {
 		return new Team[]{team};

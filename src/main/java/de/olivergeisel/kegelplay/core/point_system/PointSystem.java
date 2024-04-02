@@ -1,13 +1,46 @@
-package de.olivergeisel.kegelplay.core.match;
+package de.olivergeisel.kegelplay.core.point_system;
 
+import de.olivergeisel.kegelplay.core.game.Game;
+import de.olivergeisel.kegelplay.core.game.GameSet;
+import de.olivergeisel.kegelplay.core.match.Match;
 import de.olivergeisel.kegelplay.core.team_and_player.Player;
 
 import java.util.*;
 
-public class PointSystem {
+/**
+ * A PointSystem is a claculation system for a match.
+ * This system decides who will win or lose a match.
+ * A Draw is possible too.
+ * A match can be decided by different factors. So the Total Teamscore, the points per Player or the points per Set
+ * can be selected. The concrete implementation of the PointSystem decides the winner.
+ * The important method is the .getMatchPoints() method. This method calculates the points for a match.
+ * For subparts of a match, like a {@link Game} or a {@link GameSet}, there are other methods to calculate the points.
+ *
+ * @param <G> The type of the {@link Game} that is played in the match.
+ * @author Oliver Geisel
+ * @version 1.0.0
+ * @see Match
+ * @see Game
+ * @see GameSet
+ * @since 1.0.0
+ */
+public abstract class PointSystem<G extends Game> {
 
 	private static final PointType pointType          = PointType.PER_DURCHGANG;
 	private static final int[]     pointsPerDurchgang = {4, 3, 2, 1};
+
+	protected String description;
+
+	protected PointSystem() {
+	}
+
+	public abstract MatchPoints getMatchPoints(Match<G> match);
+
+	//region setter/getter
+	public String getDescription() {
+		return description;
+	}
+//endregion
 
 	public static Map<Player, Integer> getPlayerPoints(int durchgang, Player... players) {
 		if (players.length != 4) {

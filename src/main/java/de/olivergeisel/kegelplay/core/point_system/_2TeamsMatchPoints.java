@@ -1,0 +1,99 @@
+package de.olivergeisel.kegelplay.core.point_system;
+
+import de.olivergeisel.kegelplay.core.game.Game;
+import de.olivergeisel.kegelplay.core.team_and_player.Player;
+import de.olivergeisel.kegelplay.core.team_and_player.Team;
+import javafx.util.Pair;
+
+import java.util.List;
+import java.util.Map;
+
+public class _2TeamsMatchPoints<G extends Game> extends MatchPoints<Team<G>> {
+
+	private final List<Pair<Player<G>, Player<G>>> pairs;
+	private final Team<G>                          team1;
+	private final Team<G>                          team2;
+	private final double                           scorePointsTeam1;
+	private final double                           scorePointsTeam2;
+	private final List<GamePoints>                 gamePointsTeam1;
+	private final List<GamePoints>                 gamePointsTeam2;
+	private final double                           winnerPoints;
+
+	public _2TeamsMatchPoints(List<Pair<Player<G>, Player<G>>> pairs,
+			Team<G> team1, Team<G> team2,
+			List<GamePoints> gamePointsTeam1, List<GamePoints> gamePointsTeam2,
+			double scorePointsTeam1, double scorePointsTeam2, double winnerPoints) {
+		super();
+		this.pairs = pairs;
+		this.team1 = team1;
+		this.team2 = team2;
+		this.scorePointsTeam1 = scorePointsTeam1;
+		this.scorePointsTeam2 = scorePointsTeam2;
+		this.gamePointsTeam1 = gamePointsTeam1;
+		this.gamePointsTeam2 = gamePointsTeam2;
+		this.winnerPoints = winnerPoints;
+	}
+
+	/**
+	 * Return the points of the winner.
+	 *
+	 * @return the points of the winner
+	 */
+	@Override
+	public double winnerPoints() {
+		return winnerPoints;
+	}
+
+	public double totalPointsTeam1() {
+		return gamePointsTeam1.stream().mapToDouble(GamePoints::getScore).sum();
+	}
+
+	public double totalPointsTeam2() {
+		return gamePointsTeam2.stream().mapToDouble(GamePoints::getScore).sum();
+	}
+
+//region setter/getter
+
+	/**
+	 * Return the winner of the match.
+	 *
+	 * @return the winner of the match
+	 * @throws IllegalStateException if the match is a draw
+	 */
+	@Override
+	public Team<G> getWinner() throws IllegalStateException {
+		if (isDraw()) {
+			throw new IllegalStateException("Match is a draw");
+		}
+		if (scorePointsTeam1 > scorePointsTeam2) {
+			return team1;
+		}
+		return team2;
+
+	}
+
+	/**
+	 * Return the concrete points of the match per partie.
+	 *
+	 * @return a map with the points of the match
+	 */
+	@Override
+	public Map<Team<G>, Double> getMatchPoints() {
+		if (isDraw()) {
+			return Map.of(team1, 1.0, team2, 1.0);
+		}
+		return totalPointsTeam1() > totalPointsTeam2() ?
+				Map.of(team1, winnerPoints, team2, 0.) : Map.of(team1, 0., team2, winnerPoints);
+	}
+
+	/**
+	 * When all parties have equal points, the match is a draw.
+	 *
+	 * @return true if the match is a draw
+	 */
+	@Override
+	public boolean isDraw() {
+		return totalPointsTeam1() == totalPointsTeam2();
+	}
+//endregion
+}
