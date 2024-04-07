@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class AllAgainstMatchScore<G extends Game> extends MatchPoints<Player<G>> {
 
-	private GamePointsCollection gamePointsCollection;
+	private final GamePointsCollection gamePointsCollection;
 
 	public AllAgainstMatchScore(GamePointsCollection gamePointsCollection) {
 		super();
@@ -34,26 +34,12 @@ public class AllAgainstMatchScore<G extends Game> extends MatchPoints<Player<G>>
 		return 0;
 	}
 
-//region setter/getter
-
-	/**
-	 * Return the winner of the match.
-	 *
-	 * @return the winner of the match
-	 */
 	@Override
-	public Player<G> getWinner() {
-		Player<G> winner = null;
-		for (Player player : gamePointsCollection.getPlayers()) {
-			if (winner == null) {
-				winner = player;
-			}
-			if (gamePointsCollection.getScore(player) > gamePointsCollection.getScore(winner)) {
-				winner = player;
-			}
-		}
-		return winner;
+	public double getGameSetPointsFor(String player, int gameSetNumber) {
+		return gamePointsCollection.getGameSetPointsFor(player, gameSetNumber);
 	}
+
+//region setter/getter
 
 	/**
 	 * Return the concrete points of the match per partie.
@@ -73,6 +59,24 @@ public class AllAgainstMatchScore<G extends Game> extends MatchPoints<Player<G>>
 	@Override
 	public boolean isDraw() {
 		return false;
+	}
+	/**
+	 * Return the winner of the match.
+	 *
+	 * @return the winner of the match
+	 */
+	@Override
+	public Player<G> getWinner() {
+		Player<G> winner = null;
+		for (Player<G> player : gamePointsCollection.getPlayers()) {
+			if (winner == null) {
+				winner = player;
+			}
+			if (gamePointsCollection.getScore(player) > gamePointsCollection.getScore(winner)) {
+				winner = player;
+			}
+		}
+		return winner;
 	}
 //endregion
 }

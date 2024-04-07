@@ -4,7 +4,7 @@ import de.olivergeisel.kegelplay.core.game.GameSet;
 import de.olivergeisel.kegelplay.core.team_and_player.Player;
 
 public class GameSetPoints {
-	private double  points;
+	private double points;
 	private Player  player;
 	private GameSet gameSet;
 
@@ -15,7 +15,15 @@ public class GameSetPoints {
 	}
 
 	//region setter/getter
-	public double getScore() {
+	public Player getPlayer() {
+		return player;
+	}
+
+	public GameSet getGameSet() {
+		return gameSet;
+	}
+
+	public double getPoints() {
 		return points;
 	}
 //endregion

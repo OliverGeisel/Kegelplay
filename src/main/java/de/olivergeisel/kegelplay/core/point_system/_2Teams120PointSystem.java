@@ -42,6 +42,25 @@ public class _2Teams120PointSystem extends PointSystem<Game120> {
 		return back;
 	}
 
+	private static void setFinalPoints(GamePointsTeam<Game120> player1Points, GamePointsTeam<Game120> player2Points,
+			Player<Game120> player1, Player<Game120> player2) {
+		if (player1Points.getSumGameSetPoints() > player2Points.getSumGameSetPoints()) {
+			player1Points.setPoints(1.0);
+		} else if (player1Points.getSumGameSetPoints() < player2Points.getSumGameSetPoints()) {
+			player2Points.setPoints(1.0);
+		} else {
+			if (player1.getGame().getTotalScore() > player2.getGame().getTotalScore()) {
+				player1Points.setPoints(1.0);
+			} else if (player1.getGame().getTotalScore() < player2.getGame().getTotalScore()) {
+				player2Points.setPoints(1.0);
+			} else {
+				// draw (both get 0.5 points
+				player1Points.setPoints(0.5);
+				player2Points.setPoints(0.5);
+			}
+		}
+	}
+
 	@Override
 	public MatchPoints<Team<Game120>> getMatchPoints(Match<Game120> match) throws IllegalArgumentException {
 		if (match == null) {
@@ -53,13 +72,13 @@ public class _2Teams120PointSystem extends PointSystem<Game120> {
 		var team1 = match.getTeams()[0];
 		var team2 = match.getTeams()[1];
 		var pairs = getPairings(team1, team2);
-		var team1Result = new ArrayList<GamePoints>();
-		var team2Result = new ArrayList<GamePoints>();
+		var team1Result = new ArrayList<GamePointsTeam<Game120>>();
+		var team2Result = new ArrayList<GamePointsTeam<Game120>>();
 		for (var pair : pairs) {
 			var player1 = pair.getKey();
 			var player2 = pair.getValue();
-			var player1Points = new GamePoints(player1);
-			var player2Points = new GamePoints(player2);
+			var player1Points = new GamePointsTeam<>(player1, 0.0);
+			var player2Points = new GamePointsTeam<>(player2, 0.0);
 			for (int i = 0; i < 4; i++) {
 				var setPoints = getSetPoints(i, player1, player2);
 				player1Points.addGameSetPoints(player1, setPoints.getGamePoints(player1));

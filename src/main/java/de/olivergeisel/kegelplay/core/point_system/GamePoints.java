@@ -1,34 +1,59 @@
 package de.olivergeisel.kegelplay.core.point_system;
 
+import de.olivergeisel.kegelplay.core.game.Game;
 import de.olivergeisel.kegelplay.core.team_and_player.Player;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class GamePoints {
+public abstract class GamePoints<G extends Game> {
 
-	private Player              player;
+	private Player<G> player;
 	private List<GameSetPoints> gameSetPoints;
 
-	public GamePoints(Player player) {
+	protected GamePoints(Player<G> player) {
 		this.player = player;
 		this.gameSetPoints = new ArrayList<>();
 	}
 
-	public GamePoints(Player player1, List<GameSetPoints> gameSetPoints) {
+	protected GamePoints(Player<G> player1, List<GameSetPoints> gameSetPoints) {
 		this.player = player1;
 		this.gameSetPoints = gameSetPoints;
 	}
 
-	public void addGameSetPoints(Player player, GameSetPoints setPoints) {
+	public void addGameSetPoints(Player<G> player, GameSetPoints setPoints) {
 		if (this.player.equals(player)) {
 			gameSetPoints.add(setPoints);
 		}
 	}
 
-	//region setter/getter
-	public double getScore() {
-		return gameSetPoints.stream().mapToDouble(GameSetPoints::getScore).sum();
+	public double getGameSetPointsFor(int gameSetNumber) {
+		return gameSetPoints.stream()
+							.filter(it -> it.getGameSet().getGameSetNumber() == gameSetNumber)
+							.mapToDouble(GameSetPoints::getPoints).sum();
 	}
+
+	//region setter/getter
+	public abstract double getPoints();
+
+	public abstract boolean isWinner();
+
+	public abstract boolean isLoser();
+
+	public abstract boolean isDraw();
+
+	public Player<G> getPlayer() {
+		return player;
+	}
+
+	public List<GameSetPoints> getGameSetPoints() {
+		return Collections.unmodifiableList(gameSetPoints);
+	}
+
+	public double getSumGameSetPoints() {
+		return gameSetPoints.stream().mapToDouble(GameSetPoints::getPoints).sum();
+	}
+
 //endregion
 }

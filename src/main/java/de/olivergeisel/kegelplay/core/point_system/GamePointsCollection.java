@@ -24,6 +24,15 @@ public class GamePointsCollection {
 		}
 	}
 
+	public double getGameSetPointsFor(String playerName, int gameSetNumber) {
+		Player player =
+				scores.keySet().stream().filter(p -> p.getCompleteName().equals(playerName)).findFirst().orElse(null);
+		return scores.get(player).stream()
+					 .filter(it -> it.getGameSetNumber() == gameSetNumber)
+					 .mapToDouble(it -> it.getGamePoints(player).getPoints()).sum();
+
+	}
+
 	public void setScore(Player player, List<GameSetPointsCollection> score) {
 		scores.put(player, score);
 	}

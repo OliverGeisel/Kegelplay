@@ -19,7 +19,7 @@ public abstract class MatchPoints<W> {
 	 */
 	public abstract double winnerPoints();
 
-//region setter/getter
+	public abstract double getGameSetPointsFor(String player, int gameSetNumber);
 
 	/**
 	 * Return the winner of the match.
@@ -42,6 +42,8 @@ public abstract class MatchPoints<W> {
 	 * @return true if the match is a draw
 	 */
 	public abstract boolean isDraw();
+
+//region setter/getter
 //endregion
 
 }

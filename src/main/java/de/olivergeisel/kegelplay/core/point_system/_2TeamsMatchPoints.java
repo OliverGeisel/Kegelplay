@@ -14,14 +14,14 @@ public class _2TeamsMatchPoints<G extends Game> extends MatchPoints<Team<G>> {
 	private final Team<G>                          team1;
 	private final Team<G>                          team2;
 	private final double                           scorePointsTeam1;
-	private final double                           scorePointsTeam2;
-	private final List<GamePoints>                 gamePointsTeam1;
-	private final List<GamePoints>                 gamePointsTeam2;
-	private final double                           winnerPoints;
+	private final double                  scorePointsTeam2;
+	private final List<GamePointsTeam<G>> gamePointsTeam1;
+	private final List<GamePointsTeam<G>> gamePointsTeam2;
+	private final double                  winnerPoints;
 
 	public _2TeamsMatchPoints(List<Pair<Player<G>, Player<G>>> pairs,
 			Team<G> team1, Team<G> team2,
-			List<GamePoints> gamePointsTeam1, List<GamePoints> gamePointsTeam2,
+			List<GamePointsTeam<G>> gamePointsTeam1, List<GamePointsTeam<G>> gamePointsTeam2,
 			double scorePointsTeam1, double scorePointsTeam2, double winnerPoints) {
 		super();
 		this.pairs = pairs;
@@ -45,15 +45,41 @@ public class _2TeamsMatchPoints<G extends Game> extends MatchPoints<Team<G>> {
 	}
 
 	public double totalPointsTeam1() {
-		return gamePointsTeam1.stream().mapToDouble(GamePoints::getScore).sum();
+		return gamePointsTeam1.stream().mapToDouble(GamePoints::getPoints).sum();
 	}
 
 	public double totalPointsTeam2() {
-		return gamePointsTeam2.stream().mapToDouble(GamePoints::getScore).sum();
+		return gamePointsTeam2.stream().mapToDouble(GamePoints::getPoints).sum();
 	}
 
-//region setter/getter
+	@Override
+	public double getGameSetPointsFor(String player, int gameSetNumber) throws IllegalArgumentException {
+		for (var gamePoints : gamePointsTeam1) {
+			if (gamePoints.getPlayer().getCompleteName().equals(player)) {
+				return gamePoints.getGameSetPointsFor(gameSetNumber);
+			}
+		}
+		for (var gamePoints : gamePointsTeam2) {
+			if (gamePoints.getPlayer().getCompleteName().equals(player)) {
+				return gamePoints.getGameSetPointsFor(gameSetNumber);
+			}
+		}
+		throw new IllegalArgumentException("Player not found");
+	}
 
+	public GamePoints getGamePointsForPlayer(String player) {
+		for (var gamePoints : gamePointsTeam1) {
+			if (gamePoints.getPlayer().getCompleteName().equals(player)) {
+				return gamePoints;
+			}
+		}
+		for (var gamePoints : gamePointsTeam2) {
+			if (gamePoints.getPlayer().getCompleteName().equals(player)) {
+				return gamePoints;
+			}
+		}
+		throw new IllegalArgumentException("Player not found");
+	}
 	/**
 	 * Return the winner of the match.
 	 *
@@ -85,6 +111,8 @@ public class _2TeamsMatchPoints<G extends Game> extends MatchPoints<Team<G>> {
 		return totalPointsTeam1() > totalPointsTeam2() ?
 				Map.of(team1, winnerPoints, team2, 0.) : Map.of(team1, 0., team2, winnerPoints);
 	}
+
+//region setter/getter
 
 	/**
 	 * When all parties have equal points, the match is a draw.
