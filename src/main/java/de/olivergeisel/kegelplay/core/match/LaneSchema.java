@@ -63,6 +63,12 @@ public class LaneSchema {
 	}
 
 	public LaneSatz getSatze(int index) {
+		if (index >= saetze.size()) {
+			index = saetze.size() - 1;
+		}
+		if (index < 0) {
+			index = 0;
+		}
 		return saetze.get(index);
 	}
 

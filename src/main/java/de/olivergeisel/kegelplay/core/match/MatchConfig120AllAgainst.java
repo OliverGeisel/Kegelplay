@@ -1,5 +1,6 @@
 package de.olivergeisel.kegelplay.core.match;
 
+import de.olivergeisel.kegelplay.core.game.GameKind;
 import de.olivergeisel.kegelplay.core.point_system.AllAgainstAll120_4PlayerPointSystem;
 import de.olivergeisel.kegelplay.core.point_system.PointSystem;
 

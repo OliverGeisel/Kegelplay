@@ -20,10 +20,11 @@ public abstract class Team<G extends Game> {
 	private       int                       numberOfSubstitutes;
 	private       GeneralTeamInfo           generalTeamInfo;
 
-	protected Team(String name, Player<G>[] players, Player<G>[] substitutes) {
+	protected Team(String name, GeneralTeamInfo teamInfo, Player<G>[] players, Player<G>[] substitutes) {
 		this.name = name;
 		this.players = players;
 		this.substitutes = substitutes;
+		this.generalTeamInfo = teamInfo;
 
 	}
 

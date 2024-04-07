@@ -1,6 +1,7 @@
 package de.olivergeisel.kegelplay.core.match;
 
 import de.olivergeisel.kegelplay.core.game.Game;
+import de.olivergeisel.kegelplay.core.point_system.PointSystem;
 import de.olivergeisel.kegelplay.core.team_and_player.Player;
 import de.olivergeisel.kegelplay.core.team_and_player.Team;
 
@@ -12,9 +13,10 @@ public class Match2Teams<G extends Game> extends Match<G> {
 	private final Team<G> guest;
 
 
-	public Match2Teams(MatchConfig config, GeneralMatchInfo generalMatchInfo, MatchStatusInfo statusInfo, Team<G> home,
+	public Match2Teams(MatchConfig config, GeneralMatchInfo generalMatchInfo, MatchStatusInfo statusInfo,
+			PointSystem<G> pointSystem, Team<G> home,
 			Team<G> guest, Path path) {
-		super(config, generalMatchInfo, statusInfo, path);
+		super(config, generalMatchInfo, statusInfo, pointSystem, path);
 		this.home = home;
 		this.guest = guest;
 	}

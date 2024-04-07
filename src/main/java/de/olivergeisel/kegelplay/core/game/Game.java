@@ -1,6 +1,5 @@
 package de.olivergeisel.kegelplay.core.game;
 
-import de.olivergeisel.kegelplay.core.match.GameKind;
 import de.olivergeisel.kegelplay.core.match.Match;
 import de.olivergeisel.kegelplay.core.team_and_player.Player;
 import javafx.beans.Observable;
@@ -78,6 +77,7 @@ public abstract class Game implements Observable {
 	public abstract GameSet getDurchgang(int durchgang);
 
 	//region setter/getter
+	public abstract GameInfo getGameInfo();
 
 	/**
 	 * Game is currently played.

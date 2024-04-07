@@ -1,6 +1,5 @@
 package de.olivergeisel.kegelplay.core.game;
 
-import de.olivergeisel.kegelplay.core.match.GameKind;
 import de.olivergeisel.kegelplay.core.team_and_player.Player;
 import de.olivergeisel.kegelplay.infrastructure.csv.CSVFileReader;
 import javafx.beans.InvalidationListener;
@@ -32,7 +31,7 @@ public class Game120 extends Game {
 	protected Game120(Player player, LocalDateTime date) {
 		super(player, date);
 		for (int i = 0; i < ANZAHL_DURCHGAENGE; i++) {
-			sets[i] = new GameSet(30, 15, 15);
+			sets[i] = new GameSet(30, 15, 15, i);
 		}
 	}
 
@@ -123,6 +122,10 @@ public class Game120 extends Game {
 	}
 
 	//region setter/getter
+	@Override
+	public GameInfo getGameInfo() {
+		return new GameInfo(4, 15, 15, 12, true);
+	}
 	@Override
 	public GameKind getGameKind() {
 		return GameKind.GAME_120;

@@ -2,7 +2,7 @@ package de.olivergeisel.kegelplay.infrastructure.update;
 
 import de.olivergeisel.kegelplay.core.game.Game;
 import de.olivergeisel.kegelplay.core.game.Game120;
-import de.olivergeisel.kegelplay.core.match.GameKind;
+import de.olivergeisel.kegelplay.core.game.GameKind;
 import de.olivergeisel.kegelplay.core.match.Match;
 import de.olivergeisel.kegelplay.core.match.MatchStatusInfo;
 import de.olivergeisel.kegelplay.core.team_and_player.Team;

@@ -13,7 +13,17 @@ public class GeneralTeamInfo {
 	private int    numberOfPlayers;
 	private int    numberOfSubstitutes;
 
-
+	protected GeneralTeamInfo() {
+		name = "";
+		gameClass = "";
+		league = "";
+		district = "";
+		leader = "";
+		observer = "";
+		clubNumber = "";
+		numberOfPlayers = 0;
+		numberOfSubstitutes = 0;
+	}
 	public GeneralTeamInfo(IniFile iniFile) {
 		var region = iniFile.getRegion("Allgemein");
 		name = region.getValue("Name");
@@ -26,6 +36,44 @@ public class GeneralTeamInfo {
 		numberOfPlayers = Integer.parseInt(region.getValue("Anzahl Spieler"));
 		numberOfSubstitutes = Integer.parseInt(region.getValue("Anzahl Ersatzspieler"));
 	}
+
+	//region setter/getter
+	public String getName() {
+		return name;
+	}
+
+	public String getGameClass() {
+		return gameClass;
+	}
+
+	public String getLeague() {
+		return league;
+	}
+
+	public String getDistrict() {
+		return district;
+	}
+
+	public String getLeader() {
+		return leader;
+	}
+
+	public String getObserver() {
+		return observer;
+	}
+
+	public String getClubNumber() {
+		return clubNumber;
+	}
+
+	public int getNumberOfPlayers() {
+		return numberOfPlayers;
+	}
+
+	public int getNumberOfSubstitutes() {
+		return numberOfSubstitutes;
+	}
+//endregion
 
 
 }

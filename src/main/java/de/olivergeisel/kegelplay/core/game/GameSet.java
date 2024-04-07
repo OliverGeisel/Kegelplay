@@ -16,8 +16,9 @@ public class GameSet {
 	private final Wurf[]   wuerfe;
 	private       double   time;
 	private       SetState state;
+	private int gameSetNumber;
 
-	public GameSet(int anzahlWuerfe, int anzahlVolle, int anzahlAbraeumen) {
+	public GameSet(int anzahlWuerfe, int anzahlVolle, int anzahlAbraeumen, int gameSetNumber) {
 		if (anzahlWuerfe < 1) throw new IllegalArgumentException("Number of throws must be greater than 0");
 		if (anzahlVolle + anzahlAbraeumen != anzahlWuerfe) {
 			throw new IllegalArgumentException(
@@ -28,14 +29,15 @@ public class GameSet {
 		this.anzahlVolle = anzahlVolle;
 		this.anzahlAbraeumen = anzahlAbraeumen;
 		this.state = SetState.NOT_STARTED;
+		this.gameSetNumber = gameSetNumber;
 	}
 
 	/**
 	 * Set the throw at the given number.
 	 *
 	 * @param number Number of the throw
-	 * @param w Wurf to set
-	 *          @throws IndexOutOfBoundsException if the number is out of bounds
+	 * @param w      Wurf to set
+	 * @throws IndexOutOfBoundsException if the number is out of bounds
 	 */
 	public void set(int number, Wurf w) throws IndexOutOfBoundsException {
 		wuerfe[number] = w;
@@ -44,9 +46,10 @@ public class GameSet {
 
 	/**
 	 * Set the throw at the given number and set the remaining time for the set.
+	 *
 	 * @param number Number of the throw
-	 * @param w Wurf to set
-	 * @param time Remaining time in minutes
+	 * @param w      Wurf to set
+	 * @param time   Remaining time in minutes
 	 * @throws IndexOutOfBoundsException if the number is out of bounds
 	 */
 	public void set(int number, Wurf w, double time) throws IndexOutOfBoundsException {
@@ -62,6 +65,7 @@ public class GameSet {
 
 	/**
 	 * Check if all throws are set.
+	 *
 	 * @return true if all throws are set, false otherwise (at least one throw is missing)
 	 */
 	private boolean allThrowsAreSet() {
@@ -69,19 +73,21 @@ public class GameSet {
 	}
 
 	//region setter/getter
+	public int getGameSetNumber() {
+		return gameSetNumber;
+	}
+
 	public double getTime() {
 		return time;
 	}
 
 	/**
-	 * Set the remaining time for the set. If the time is 0, the set is {@link SetState#FINISHED}.
-	 * @param time Remaining time in minutes
+	 * Get the sum of all throws values.
+	 *
+	 * @return Sum of all throws values
 	 */
-	public void setTime(double time) {
-		this.time = time;
-		if (time <= 0) {
-			state = SetState.FINISHED;
-		}
+	public int getScore() {
+		return Arrays.stream(wuerfe).filter(Objects::nonNull).mapToInt(Wurf::getScore).sum();
 	}
 
 	public SetState getState() {
@@ -108,25 +114,8 @@ public class GameSet {
 	}
 
 	/**
-	 * Get the sum of all throws values.
-	 * @return Sum of all throws values
-	 */
-	public int getScore() {
-		return Arrays.stream(wuerfe).filter(Objects::nonNull).mapToInt(Wurf::getScore).sum();
-	}
-
-	/**
-	 * Get the number of throws that have been played.
-	 *
-	 *
-	 * @return Number of throws that have been played
-	 */
-	public int getAnzahlGespielteWuerfe() {
-		return (int) java.util.Arrays.stream(wuerfe).filter(Objects::nonNull).count();
-	}
-
-	/**
 	 * Get the sum of volle throws values.
+	 *
 	 * @return Sum of volle throws values
 	 */
 	public int getAnzahlVolle() {
@@ -141,7 +130,17 @@ public class GameSet {
 	}
 
 	/**
+	 * Get the number of throws that have been played.
+	 *
+	 * @return Number of throws that have been played
+	 */
+	public int getAnzahlGespielteWuerfe() {
+		return (int) java.util.Arrays.stream(wuerfe).filter(Objects::nonNull).count();
+	}
+
+	/**
 	 * Get the sum of abraeumen throws values.
+	 *
 	 * @return Sum of abraeumen throws values
 	 */
 	public int getAnzahlAbraeumen() {
@@ -157,6 +156,7 @@ public class GameSet {
 
 	/**
 	 * Get the number of throws with a score of 0.
+	 *
 	 * @return Number of missed throws
 	 */
 	public int getAnzahlFehler() {
@@ -173,10 +173,23 @@ public class GameSet {
 	/**
 	 * Get the number of total throws in the set.
 	 * If you want the number of throws that have been played, use {@link #getAnzahlGespielteWuerfe()}.
+	 *
 	 * @return Number of throws
 	 */
 	public int getAnzahlWuerfe() {
 		return throwCount;
+	}
+
+	/**
+	 * Set the remaining time for the set. If the time is 0, the set is {@link SetState#FINISHED}.
+	 *
+	 * @param time Remaining time in minutes
+	 */
+	public void setTime(double time) {
+		this.time = time;
+		if (time <= 0) {
+			state = SetState.FINISHED;
+		}
 	}
 //endregion
 

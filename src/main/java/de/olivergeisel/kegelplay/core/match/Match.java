@@ -1,6 +1,7 @@
 package de.olivergeisel.kegelplay.core.match;
 
 import de.olivergeisel.kegelplay.core.game.Game;
+import de.olivergeisel.kegelplay.core.point_system.PointSystem;
 import de.olivergeisel.kegelplay.core.team_and_player.Player;
 import de.olivergeisel.kegelplay.core.team_and_player.Team;
 import javafx.util.Pair;
@@ -11,21 +12,21 @@ import java.util.List;
 
 
 /**
- * Represents a match. Its cointains the complete match date.
+ * Represents a match. Its contains the complete match date.
  * <p>
- *     A match is a running event on some lanes. It is played by at least one team.
- *     A match has a {@link MatchConfig}, which defines the number of teams, players per team and how game is played.
- *     A match can be in one of the following states:
- *     <ul>
- *         <li>Not started</li>
- *         <li>Preparing</li>
- *         <li>Changing</li>
- *         <li>Running</li>
- *         <li>Finished</li>
- *         <li>Aborted</li>
- *     </ul>
- *
- *
+ * A match is a running event on some lanes. It is played by at least one team.
+ * A match has a {@link MatchConfig}, which defines the number of teams, players per team and how game is played.
+ * A match can be in one of the following states:
+ *  <ul>
+ *      <li>Not started</li>
+ *      <li>Preparing</li>
+ *      <li>Changing</li>
+ *      <li>Running</li>
+ *      <li>Finished</li>
+ *      <li>Aborted</li>
+ *  </ul>
+ * Normally a match has a {@link PointSystem}. This decides how the points are calculated in the match.
+ * A match has a {@link GeneralMatchInfo} which contains the general information about the match.
  */
 public abstract class Match<G extends Game> {
 
@@ -34,13 +35,16 @@ public abstract class Match<G extends Game> {
 	private final Path             path;
 	private       MatchState       state;
 	private       MatchStatusInfo  statusInfo;
+	private PointSystem<G> pointSystem;
 
-	protected Match(MatchConfig config, GeneralMatchInfo generalMatchInfo, MatchStatusInfo statusInfo, Path path) {
+	protected Match(MatchConfig config, GeneralMatchInfo generalMatchInfo, MatchStatusInfo statusInfo,
+			PointSystem<G> pointSystem, Path path) {
 		this.config = config;
 		this.statusInfo = statusInfo;
 		state = new NotStarted();
 		this.generalMatchInfo = generalMatchInfo;
 		this.path = path;
+		this.pointSystem = pointSystem;
 	}
 
 	public static <G extends Game> List<G> getGames(Team<G>... teams) {
@@ -53,6 +57,8 @@ public abstract class Match<G extends Game> {
 		}
 		return games;
 	}
+
+	//region setter/getter
 
 	public List<Pair<Integer, Integer>> getPlayerForSet(int set) {
 		var schema = config.getSchema();
@@ -75,8 +81,15 @@ public abstract class Match<G extends Game> {
 	public void rereadAll() {
 
 	}
-
-	//region setter/getter
+	/**
+	 * Returns the current set number of the match.
+	 * <b>Starting by 1</b>
+	 *
+	 * @return Current set number
+	 */
+	public int getCurrentSet() {
+		return statusInfo.getCurrentSet();
+	}
 	public MatchStatusInfo getStatusInfo() {
 		return statusInfo;
 	}
@@ -86,24 +99,8 @@ public abstract class Match<G extends Game> {
 	}
 
 	/**
-	 * Returns the current set number of the match.
-	 * <b>Starting by 1</b>
-	 * @return Current set number
-	 */
-	public int getCurrentSet() {
-		return statusInfo.getCurrentSet();
-	}
-
-	public List<Pair<Integer, Integer>> getPlayerForSet() {
-		return getPlayerForSet(getCurrentSet());
-	}
-
-	public Path getBaseDir() {
-		return path;
-	}
-
-	/**
 	 * Returns the players that are currently playing. They are in the order of the lanes.
+	 *
 	 * @return List of players on the lanes
 	 */
 	public List<Player<G>> getCurrentPlayers() {
@@ -135,6 +132,18 @@ public abstract class Match<G extends Game> {
 			}
 		}
 		return back;*/
+	}
+
+	public List<Pair<Integer, Integer>> getPlayerForSet() {
+		return getPlayerForSet(getCurrentSet());
+	}
+
+	public Path getBaseDir() {
+		return path;
+	}
+
+	public void setPointSystem(PointSystem<G> pointSystem) {
+		this.pointSystem = pointSystem;
 	}
 
 	public GeneralMatchInfo getGeneralMatchInfo() {

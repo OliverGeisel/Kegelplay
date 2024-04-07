@@ -1,8 +1,10 @@
 package de.olivergeisel.kegelplay.core.match;
 
+import de.olivergeisel.kegelplay.core.game.GameInfo;
 import de.olivergeisel.kegelplay.infrastructure.ini.IniFile;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -45,6 +47,31 @@ public class MatchSchema {
 				LOGGER.log(System.Logger.Level.DEBUG, "Lane is not used");
 			}
 		}
+	}
+
+	public GameInfo getGameInfoFor(int team, int player) {
+		var setCount = 0;
+		var volleSet = new HashSet<Integer>();
+		var abrauemerSet = new HashSet<Integer>();
+		var timeSet = new HashSet<Integer>();
+		for (var lane : lanes) {
+			for (var set : lane.getSaetze()) {
+				if (set.player() == player && set.team() == team) {
+					setCount++;
+					volleSet.add(set.volle());
+					abrauemerSet.add(set.abraeumen());
+					timeSet.add(set.time());
+				}
+			}
+		}
+		var symmetric = volleSet.size() == 1 && abrauemerSet.size() == 1 && timeSet.size() == 1;
+		if (!symmetric) {
+			throw new IllegalArgumentException("Player does not play symmetric");
+		}
+		var volle = volleSet.iterator().next();
+		var abraeumen = abrauemerSet.iterator().next();
+		var time = timeSet.iterator().next();
+		return new GameInfo(setCount, volle, abraeumen, time, symmetric);
 	}
 
 	//region setter/getter

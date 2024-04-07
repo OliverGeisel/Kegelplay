@@ -1,12 +1,14 @@
 package de.olivergeisel.kegelplay.core.match;
 
+import de.olivergeisel.kegelplay.core.game.GameKind;
+
 import java.util.List;
 
 /**
  * Configuration of a match. This will not change during the match.
 
  */
-public class MatchConfig {
+public abstract class MatchConfig {
 
 	private int          playersPerTeam;
 	private int          teams;
@@ -15,7 +17,7 @@ public class MatchConfig {
 	private GameKind     kind;
 	private MatchSchema  schema;
 
-	public MatchConfig(int playersPerTeam, int teams, GameKind kind, int laneCount, List<String> laneNames) {
+	protected MatchConfig(int playersPerTeam, int teams, GameKind kind, int laneCount, List<String> laneNames) {
 		this.playersPerTeam = playersPerTeam;
 		this.teams = teams;
 		this.kind = kind;
@@ -23,7 +25,7 @@ public class MatchConfig {
 		this.laneNames = laneNames;
 	}
 
-	public MatchConfig(MatchSchema schema, GameKind kind) {
+	protected MatchConfig(MatchSchema schema, GameKind kind) {
 		this.playersPerTeam = schema.getPlayersPerCycle();
 		this.teams = schema.getTeams();
 		this.kind = kind;

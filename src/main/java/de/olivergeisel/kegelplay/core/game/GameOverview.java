@@ -13,8 +13,7 @@ public class GameOverview {
 		this.teams = teams;
 	}
 
-//region setter/getter
-	//region getter / setter
+	//region setter/getter
 	public LocalDateTime getDate() {
 		return date;
 	}
@@ -38,6 +37,5 @@ public class GameOverview {
 	public void setTeams(String[] teams) {
 		this.teams = teams;
 	}
-//endregion
 //endregion
 }

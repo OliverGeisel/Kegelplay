@@ -1,12 +1,15 @@
 package de.olivergeisel.kegelplay.core.team_and_player;
 
-public class TeamN extends Team {
+import de.olivergeisel.kegelplay.core.game.Game;
 
-	public TeamN(String name, int numberPlayers) {
-		super(name, new Player[numberPlayers], new Player[4]);
+public class TeamN<G extends Game> extends Team<G> {
+
+	public TeamN(String name, GeneralTeamInfo info, int numberPlayers) {
+		super(name, info, new Player[numberPlayers], new Player[4]);
 	}
 
-	public TeamN(String name, Player[] players, Player[] substitutions) throws IllegalArgumentException {
-		super(name, players, substitutions);
+	public TeamN(String name, GeneralTeamInfo info, Player<G>[] players, Player<G>[] substitutions)
+			throws IllegalArgumentException {
+		super(name, info, players, substitutions);
 	}
 }

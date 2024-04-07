@@ -2,12 +2,19 @@ package de.olivergeisel.kegelplay.infrastructure.data_reader;
 
 import de.olivergeisel.kegelplay.core.game.Game;
 import de.olivergeisel.kegelplay.core.team_and_player.Player;
+import de.olivergeisel.kegelplay.core.team_and_player.Team;
 import de.olivergeisel.kegelplay.infrastructure.ini.IniFile;
 import de.olivergeisel.kegelplay.infrastructure.ini.IniRegion;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
+/**
+ * Create all players and substitutes of a {@link Team} from an IniFile.
+ *
+ * @param <G> Game type
+ */
 public class TeamPlayerCreator<G extends Game> {
 
 	private final IniFile teamIni;
@@ -16,7 +23,7 @@ public class TeamPlayerCreator<G extends Game> {
 		this.teamIni = teamIni;
 	}
 
-	public PlayerAndSubstitute createTeam() {
+	public PlayerAndSubstitute<G> createPlayerOfTeam() {
 		var playersRaw =
 				teamIni.getRegions().stream().filter(region -> region.getName().startsWith("Spieler ")).toList();
 		var substitutesRaw =
@@ -32,13 +39,7 @@ public class TeamPlayerCreator<G extends Game> {
 		for (int i = 0; i < substitutesCount; i++) {
 			substitutes[i] = createPlayer(substitutesRaw.get(i));
 		}
-		return new PlayerAndSubstitute(players, substitutes);
-	}
-
-	private Player<G> createPlayerRedu(IniRegion region) {
-		var name = region.getValue("Name");
-		var firstName = region.getValue("Vorname");
-		return new Player(firstName, name);
+		return new PlayerAndSubstitute<G>(players, substitutes);
 	}
 
 	private Player<G> createPlayer(IniRegion region) {
@@ -56,7 +57,28 @@ public class TeamPlayerCreator<G extends Game> {
 		return new Player<>(firstName, name, club, "", birthDateLocal);
 	}
 
-	public record PlayerAndSubstitute(Player[] player, Player[] substitute) {
+	public record PlayerAndSubstitute<G extends Game>(Player<G>[] player, Player<G>[] substitute) {
 
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (!(o instanceof PlayerAndSubstitute<?> that)) return false;
+
+			return Arrays.equals(player, that.player) && Arrays.equals(substitute, that.substitute);
+		}
+
+		@Override
+		public int hashCode() {
+			int result = Arrays.hashCode(player);
+			result = 31 * result + Arrays.hashCode(substitute);
+			return result;
+		}
+
+		@Override
+		public String toString() {
+			return STR."PlayerAndSubstitute{player=\{Arrays.toString(player)}, substitute=\{Arrays.toString(
+					substitute)}\{'}'}";
+		}
 	}
 }
