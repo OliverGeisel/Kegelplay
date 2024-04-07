@@ -2,9 +2,7 @@ package de.olivergeisel.kegelplay.gui;
 
 import de.olivergeisel.kegelplay.core.game.Game;
 import de.olivergeisel.kegelplay.core.match.Match;
-import de.olivergeisel.kegelplay.core.match.Match1Team;
 import de.olivergeisel.kegelplay.core.team_and_player.Player;
-import de.olivergeisel.kegelplay.infrastructure.csv.CsvService;
 import de.olivergeisel.kegelplay.infrastructure.data_reader.KeglerheimGeneralReader;
 import de.olivergeisel.kegelplay.infrastructure.update.MatchUpdater;
 import javafx.application.Platform;
@@ -18,47 +16,32 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class DisplayGameController<G extends Game> implements Initializable {
+public abstract class DisplayGameController<G extends Game> implements Initializable {
 
 	private static final long          REFRESH_INTERVAL = 2 * 5 * 1_000L; // 10 Sekunden in Millisekunden
 	private static final System.Logger LOGGER           = System.getLogger(DisplayGameController.class.getName());
 
-	private Match<G>                match;
-	private KeglerheimGeneralReader dataReader;
-	private CsvService              csvService;
-	private MatchUpdater<G>         matchUpdater;
 
-	@FXML
-	private Label showLabel;
-	@FXML
-	private VBox lane1;
-	@FXML
-	private VBox lane2;
-	@FXML
-	private VBox lane3;
-	@FXML
-	private VBox lane4;
+	private final MatchUpdater<G>         matchUpdater;
+	private final Match<G>                match;
+	private       KeglerheimGeneralReader dataReader;
+
+
+	@FXML private Label showLabel;
+	@FXML private VBox  lane1;
+	@FXML private VBox  lane2;
+	@FXML private VBox  lane3;
+	@FXML private VBox  lane4;
 
 	public DisplayGameController(Match<G> match) {
-		this.csvService = new CsvService();
 		this.match = match;
 		matchUpdater = new MatchUpdater<>(match);
-	}
-
-	private void initMatch() {
-		var today = LocalDate.now();
-		//var dateString = today.format(DateTimeFormatter.ofPattern(KeglerheimGeneralReader.TODAY_FORMAT));
-		var path = Paths.get("Blockstart 120 Wurf 6Sp 2M_000");
-		match = new Match1Team<>(path);
-		dataReader = new KeglerheimGeneralReader(path, true);
-		dataReader.updateMatch(match);
-		// 1 Team 4 Spieler
-		setPlayers(Arrays.stream(match.getTeams()[0].getPlayers()).toList());
 	}
 
 	/**
@@ -99,7 +82,7 @@ public class DisplayGameController<G extends Game> implements Initializable {
 		headerController.setPlayer(player);
 		var tabelle = lane.getChildren().get(1);
 		var tabellenController = (TableController) tabelle.getProperties().get(FXMLLoader.CONTROLLER_KEYWORD);
-		tabellenController.setGame(player.getGame());
+		tabellenController.setGame(player.getGame(), match);
 		var fallbild = lane.getChildren().get(2);
 		var fallbildController = (FallbildController) fallbild.getProperties().get(FXMLLoader.CONTROLLER_KEYWORD);
 		fallbildController.setWurfbild(player.getGame().getLastWurf().bild());
@@ -114,13 +97,6 @@ public class DisplayGameController<G extends Game> implements Initializable {
 
 	@FXML
 	public void onAbout(ActionEvent actionEvent) {}
-
-	/**
-	 * Call only once
-	 */
-	public void update() {
-		csvService.update();
-	}
 
 	//region setter/getter
 	public void setPlayers(List<Player<G>> players) {

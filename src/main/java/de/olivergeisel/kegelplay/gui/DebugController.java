@@ -2,6 +2,7 @@ package de.olivergeisel.kegelplay.gui;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.olivergeisel.kegelplay.infrastructure.data_reader.KeglerheimGeneralReader;
+import de.olivergeisel.kegelplay.infrastructure.data_reader.UnsupportedMatchSchema;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -111,6 +112,8 @@ public class DebugController {
 								var match = dataReader.initNewMatch();
 							} catch (Exception e) {
 								Thread.sleep(1000);
+							} catch (UnsupportedMatchSchema e) {
+								throw new RuntimeException(e);
 							}
 							Thread.sleep(100);
 						}

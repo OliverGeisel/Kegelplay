@@ -1,6 +1,11 @@
 package de.olivergeisel.kegelplay.gui;
 
 import de.olivergeisel.kegelplay.core.game.Game;
+import de.olivergeisel.kegelplay.core.game.Game120;
+import de.olivergeisel.kegelplay.core.match.Match;
+import de.olivergeisel.kegelplay.core.point_system.PointSystem;
+import de.olivergeisel.kegelplay.core.point_system._2Teams120PointSystem;
+import de.olivergeisel.kegelplay.core.point_system._2TeamsMatchPoints;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -39,8 +44,10 @@ public class TableController implements Initializable {
 		grid.getProperties().put(FXMLLoader.CONTROLLER_KEYWORD, this);
 	}
 
-	private void updateTable() {
+	private void updateTable(Match match) {
 		var rowcount = grid.getRowCount();
+		PointSystem<Game120> pointsystem = new _2Teams120PointSystem();
+		var points = pointsystem.getMatchPoints(match);
 		for (var lane : grid.getChildren()) {
 			if (lane instanceof Label label) {
 				var row = GridPane.getRowIndex(label);
@@ -55,7 +62,14 @@ public class TableController implements Initializable {
 						case 2 -> label.setText(Integer.toString(game.getTotalAbraeumen()));
 						case 3 -> label.setText(Integer.toString(game.getTotalScore()));
 						case 4 -> label.setText(Integer.toString(game.getTotalFehlwurf()));
-						case 5 -> label.setText("0");
+						case 5 -> {
+							var player = game.getPlayer();
+							if (points instanceof _2TeamsMatchPoints<?> teamPoints) {
+								var gamePoints =
+										teamPoints.getGamePointsForPlayer(player.getCompleteName()).getPoints();
+								label.setText(Double.toString(gamePoints));
+							}
+						}
 						default -> throw new IllegalStateException(STR."Unexpected value: \{col}");
 					}
 					continue;
@@ -67,17 +81,21 @@ public class TableController implements Initializable {
 					case 2 -> label.setText(Integer.toString(durchgang.getAnzahlAbraeumen()));
 					case 3 -> label.setText(Integer.toString(durchgang.getScore()));
 					case 4 -> label.setText(Integer.toString(durchgang.getAnzahlFehler()));
-					case 5 -> label.setText("0");
+					case 5 -> {
+						var player = game.getPlayer();
+						var point = points.getGameSetPointsFor(player.getCompleteName(), durchgang.getGameSetNumber());
+						label.setText(Double.toString(point));
+					}
 					default -> throw new IllegalStateException(STR."Unexpected value: \{col}");
 				}
 			}
 		}
 	}
 
-//region setter/getter
-	public void setGame(Game game) {
+public void setGame(Game game, Match match) {
 		this.game = game;
-		updateTable();
+	updateTable(match);
 	}
+//region setter/getter
 //endregion
 }
