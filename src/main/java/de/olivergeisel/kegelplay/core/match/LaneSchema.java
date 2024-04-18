@@ -19,7 +19,7 @@ public class LaneSchema {
 	 * @param region the region of the lane
 	 * @throws IllegalArgumentException if the lane schema is invalid
 	 */
-	public LaneSchema(IniRegion region, int cycles, int playerPerCycle) throws IllegalArgumentException,
+	public LaneSchema(IniRegion region, int cycles, int playerPerCycle, boolean singleTeam) throws IllegalArgumentException,
 			UnusedLaneException {
 		name = region.getName();
 		if (region.size() % 5 != 0) {
@@ -28,14 +28,15 @@ public class LaneSchema {
 		var setCount = region.size() / 5;
 		saetze = new java.util.ArrayList<>(setCount);
 		// check if is used
-		if (!isUsed(region)) {
+		if (!isUsed(region, singleTeam)) {
 			throw new UnusedLaneException("Lane is not used");
 		}
 		for (int c = 0; c < cycles; c++) {
 			for (int i = 1; i <= setCount; i++) {
 				final var number = i - 1 + c * playerPerCycle;
 				var player = Integer.parseInt(region.getValue(STR."Spieler \{i}"));
-				var team = Integer.parseInt(region.getValue(STR."Mannschaft \{i}"));
+				var parsedTeam = Integer.parseInt(region.getValue(STR."Mannschaft \{i}"));
+				var team = singleTeam?0:parsedTeam;
 				var volle = Integer.parseInt(region.getValue(STR."Volle \{i}"));
 				var abraeumen = Integer.parseInt(region.getValue(STR."Abraeumer \{i}"));
 				var time = Integer.parseInt(region.getValue(STR."Zeit \{i}"));
@@ -44,7 +45,7 @@ public class LaneSchema {
 		}
 	}
 
-	private boolean isUsed(IniRegion region) {
+	private boolean isUsed(IniRegion region, boolean singleTeam) {
 		var playerF = Arrays.stream(region.getKeys()).filter(it -> it.startsWith("Spieler")).toList();
 		for (var player : playerF) {
 			var value = region.getValue(player);
@@ -53,6 +54,9 @@ public class LaneSchema {
 			}
 		}
 		var teamF = Arrays.stream(region.getKeys()).filter(it -> it.startsWith("Mannschaft")).toList();
+		if (singleTeam){
+			return true;
+		}
 		for (var team : teamF) {
 			var value = region.getValue(team);
 			if (value.isEmpty() || value.equals("-1")) { // -1 is not used

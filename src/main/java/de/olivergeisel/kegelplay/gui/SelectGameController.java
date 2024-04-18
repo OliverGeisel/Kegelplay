@@ -1,6 +1,20 @@
 package de.olivergeisel.kegelplay.gui;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import static java.lang.Math.round;
+import java.net.URL;
+import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.ResourceBundle;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import de.olivergeisel.kegelplay.core.game.Game;
 import de.olivergeisel.kegelplay.core.game.GameKind;
 import de.olivergeisel.kegelplay.core.match.Match;
@@ -24,25 +38,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
-
-import static java.lang.Math.round;
-
 public class SelectGameController implements Initializable {
 
 	private static final double ASPECT_RATIO = 16.0 / 10; // Gewünschtes Seitenverhältnis (z. B. 16:9)
 	@FXML
-	Label label;
+	private Label 				label;
 	private Service<Void>       service;
 	private Path                datePath;
 	@FXML

@@ -78,14 +78,16 @@
 
     <build>
         <plugins>
-            <plugin>
+         <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
                     <source>${java-version}</source>
                     <target>${java-version}</target>
-                    <compilerArgs>--enable-preview</compilerArgs>
+                    <compilerArgs>
+                        <arg>--enable-preview</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
@@ -97,7 +99,12 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>de.olivergeisel.kegelplay/de.olivergeisel.kegelplay.KegelplayApplication
+                        <compilerArgs>
+                            <arg>--module-path</arg>
+                            <arg>${project.build.directory}/modules</arg>
+                        </compilerArgs>
+                            <mainClass>
+                            de.olivergeisel.kegelplay/de.olivergeisel.kegelplay.KegelplayApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

@@ -23,6 +23,11 @@ public class Game120Builder extends GameBuilder<Game120> {
 			}
 			gameSet.set(throwInGameSet, wurf, 12);
 		}
+		if (sets.size() < 4) { // fill up with empty sets
+			for (int j = sets.size(); j < 4; j++) {
+				sets.add(new GameSet(30, 15, 15, j));
+			}
+		}
 		var game = new Game120(null);
 		game.setDurchgaenge(sets);
 		return game;

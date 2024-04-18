@@ -1,13 +1,13 @@
 package de.olivergeisel.kegelplay.core.game;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import de.olivergeisel.kegelplay.core.team_and_player.Player;
 import de.olivergeisel.kegelplay.infrastructure.csv.CSVFileReader;
 import javafx.beans.InvalidationListener;
 import javafx.beans.WeakInvalidationListener;
 import javafx.util.Subscription;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * A Game120 is a game with 120 throws.
@@ -193,7 +193,7 @@ public class Game120 extends Game {
 	@Override
 	public void setDurchgaenge(List<GameSet> durgaenge) throws IllegalArgumentException {
 		if (durgaenge.size() != ANZAHL_DURCHGAENGE) {
-			throw new IllegalArgumentException("Anzahl der Durchgänge stimmt nicht");
+			throw new IllegalArgumentException(STR."Anzahl der Durchgänge stimmt nicht. Erwarte \{ANZAHL_DURCHGAENGE}; waren aber \{durgaenge.size()}");
 		}
 		for (int i = 0; i < ANZAHL_DURCHGAENGE; i++) {
 			sets[i] = durgaenge.get(i);

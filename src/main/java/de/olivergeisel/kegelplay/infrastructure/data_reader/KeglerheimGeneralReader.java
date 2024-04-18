@@ -60,7 +60,7 @@ public class KeglerheimGeneralReader extends GeneralReader {
 		// decide by Teams
 		switch (teamNumber) {
 			case 1 -> {
-				return new Match1Team<>(baseDir);
+				return new Match1Team<>(config, general, stateInfo, pointSystem, teams.get(0), baseDir);
 			}
 			case 2 -> {
 				return new Match2Teams<>(config, general, stateInfo, pointSystem, teams.get(0), teams.get(1), baseDir);

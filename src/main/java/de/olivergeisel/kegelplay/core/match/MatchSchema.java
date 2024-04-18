@@ -26,6 +26,11 @@ public class MatchSchema {
 		var allgemeinRegion = wksIniFile.getRegion("Allgemein");
 		name = allgemeinRegion.getValue("Name");
 		teams = Integer.parseInt(allgemeinRegion.getValue("Art")) + 1;
+		var singleTeam = false;
+		if (teams == 1){
+			LOGGER.log(System.Logger.Level.DEBUG, "Only one Team");
+			singleTeam = true;
+		}
 		if (teams != correctNumberTeams) {
 			throw new IllegalArgumentException("Number of teams is not correct");
 		}
@@ -41,7 +46,7 @@ public class MatchSchema {
 				break;
 			}
 			try {
-				lanes.add(new LaneSchema(lane, cycles, playersPerCycle));
+				lanes.add(new LaneSchema(lane, cycles, playersPerCycle,singleTeam));
 				count++;
 			} catch (IllegalArgumentException | UnusedLaneException e) {
 				LOGGER.log(System.Logger.Level.DEBUG, "Lane is not used");
