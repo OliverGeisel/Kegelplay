@@ -58,8 +58,6 @@ public abstract class Match<G extends Game> {
 		return games;
 	}
 
-	//region setter/getter
-
 	public List<Pair<Integer, Integer>> getPlayerForSet(int set) {
 		var schema = config.getSchema();
 		var back = new LinkedList<Pair<Integer, Integer>>();
@@ -81,6 +79,16 @@ public abstract class Match<G extends Game> {
 	public void rereadAll() {
 
 	}
+
+	//region setter/getter
+	public PointSystem<G> getPointSystem() {
+		return pointSystem;
+	}
+
+	public void setPointSystem(PointSystem<G> pointSystem) {
+		this.pointSystem = pointSystem;
+	}
+
 	/**
 	 * Returns the current set number of the match.
 	 * <b>Starting by 1</b>
@@ -90,6 +98,7 @@ public abstract class Match<G extends Game> {
 	public int getCurrentSet() {
 		return statusInfo.getCurrentSet();
 	}
+
 	public MatchStatusInfo getStatusInfo() {
 		return statusInfo;
 	}
@@ -140,10 +149,6 @@ public abstract class Match<G extends Game> {
 
 	public Path getBaseDir() {
 		return path;
-	}
-
-	public void setPointSystem(PointSystem<G> pointSystem) {
-		this.pointSystem = pointSystem;
 	}
 
 	public GeneralMatchInfo getGeneralMatchInfo() {

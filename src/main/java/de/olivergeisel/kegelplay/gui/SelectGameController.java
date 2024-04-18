@@ -5,6 +5,9 @@ import de.olivergeisel.kegelplay.core.game.Game;
 import de.olivergeisel.kegelplay.core.game.GameKind;
 import de.olivergeisel.kegelplay.core.match.Match;
 import de.olivergeisel.kegelplay.core.match.Match1Team;
+import de.olivergeisel.kegelplay.core.point_system.AllAgainstAll120_4PlayerPointSystem;
+import de.olivergeisel.kegelplay.core.point_system.PointSystem;
+import de.olivergeisel.kegelplay.core.point_system._2Teams120PointSystem;
 import de.olivergeisel.kegelplay.infrastructure.data_reader.KeglerheimGeneralReader;
 import de.olivergeisel.kegelplay.infrastructure.data_reader.UnsupportedMatchSchema;
 import javafx.concurrent.Service;
@@ -108,6 +111,13 @@ public class SelectGameController implements Initializable {
 		var dataReader = new KeglerheimGeneralReader(datePath.resolve(selectedGame), true);
 		var kind = gameKind.getValue();
 		var selectedView = view.getValue();
+		var systemSelect = pointSystem.getValue();
+		PointSystem pointSystem = switch (systemSelect) {
+			case "4 Spieler gegeneinander" -> new AllAgainstAll120_4PlayerPointSystem();
+			case "2 Teams paarweise" -> new _2Teams120PointSystem();
+			case "Teams summe", "Paarweise gegeneinander" -> null;
+			default -> throw new IllegalStateException(STR."Unexpected value: \{systemSelect}");
+		};
 		Match match;
 		try {
 			match = dataReader.initNewMatch();
@@ -115,6 +125,7 @@ public class SelectGameController implements Initializable {
 			e.printStackTrace();
 			return;
 		}
+		match.setPointSystem(pointSystem);
 		DisplayGameController<? extends Game> controller =
 				switch (selectedView) {
 					case "4 gegeneinander" -> {
