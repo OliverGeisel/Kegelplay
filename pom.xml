@@ -97,13 +97,17 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>de.olivergeisel.kegelplay/de.olivergeisel.kegelplay.KegelplayApplication</mainClass>
+                            <mainClass>de.olivergeisel.kegelplay/de.olivergeisel.kegelplay.KegelplayApplication
+                            </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
                             <noManPages>true</noManPages>
                             <stripDebug>true</stripDebug>
                             <noHeaderFiles>true</noHeaderFiles>
+                            <options>
+                                <option>--enable-preview</option>
+                            </options>
                         </configuration>
                     </execution>
                 </executions>
