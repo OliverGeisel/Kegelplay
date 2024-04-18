@@ -5,7 +5,10 @@ import de.olivergeisel.kegelplay.core.game.GameSet;
 import de.olivergeisel.kegelplay.core.match.Match;
 import de.olivergeisel.kegelplay.core.team_and_player.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * The point system for a match where all players play against each other.
@@ -64,18 +67,17 @@ public class AllAgainstAll120_4PlayerPointSystem extends PointSystem<Game120> {
 	 * @throws IllegalStateException    if the set is not started yet
 	 */
 	private GameSetPointsCollection getSetPoints(int setNumber, Player<Game120>... players)
-			throws IllegalArgumentException,
-			IllegalStateException {
+			throws IllegalArgumentException, IllegalStateException {
 		if (players.length != 4) {
 			throw new IllegalArgumentException("there must be exactly 4 players");
 		}
 		if (setNumber < 0 || setNumber > 3) {
 			throw new IllegalArgumentException("setNumber must be between 0 and 3");
 		}
-		if (Arrays.stream(players).map(player -> player.getGame().getDurchgang(setNumber))
+	/*	if (Arrays.stream(players).map(player -> player.getGame().getDurchgang(setNumber))
 				  .anyMatch(GameSet::isNotStarted)) {
 			throw new IllegalStateException("set not started");
-		}
+		}*/
 		var player1 = players[0];
 		var player2 = players[1];
 		var player3 = players[2];
@@ -120,12 +122,12 @@ public class AllAgainstAll120_4PlayerPointSystem extends PointSystem<Game120> {
 		List<Integer> sortedScores = new ArrayList<>(scorePlayerMapping.keySet());
 		sortedScores.sort(Integer::compareTo);
 		sortedScores = sortedScores.reversed(); // highest score first
-		var pointMapping = new HashMap<Integer, Integer>();
+		var pointMapping = new HashMap<Integer, Double>();
 		var points = new LinkedList<>(POINTS_PER_SET);
 		for (Integer score : sortedScores) {
 			var players = scorePlayerMapping.get(score);
-			for (int j = 0; j < players.size(); j++) {
-				pointMapping.computeIfAbsent(score, k -> 0);
+			for (Player<Game120> player : players) {
+				pointMapping.computeIfAbsent(score, k -> 0.);
 				pointMapping.put(score, pointMapping.get(score) + points.removeFirst());
 			}
 			var normalized = pointMapping.get(score) / players.size();

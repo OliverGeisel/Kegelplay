@@ -1,9 +1,9 @@
 package de.olivergeisel.kegelplay.core.match;
 
-import de.olivergeisel.kegelplay.infrastructure.ini.IniRegion;
-
 import java.util.Arrays;
 import java.util.List;
+
+import de.olivergeisel.kegelplay.infrastructure.ini.IniRegion;
 
 
 /**
@@ -17,7 +17,11 @@ public class LaneSchema {
 	/**
 	 * Constructor for LaneSchema
 	 * @param region the region of the lane
+     * @param cycles number of Cycles in the MatchSchema
+     * @param playerPerCycle number of Players per Cycle
+     * @param singleTeam has to be ture if only one team is in the match
 	 * @throws IllegalArgumentException if the lane schema is invalid
+	 * @throws UnusedLaneException if the lane is not played
 	 */
 	public LaneSchema(IniRegion region, int cycles, int playerPerCycle, boolean singleTeam) throws IllegalArgumentException,
 			UnusedLaneException {

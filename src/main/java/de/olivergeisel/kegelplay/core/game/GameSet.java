@@ -82,6 +82,18 @@ public class GameSet {
 	}
 
 	/**
+	 * Set the remaining time for the set. If the time is 0, the set is {@link SetState#FINISHED}.
+	 *
+	 * @param time Remaining time in minutes
+	 */
+	public void setTime(double time) {
+		this.time = time;
+		if (time <= 0) {
+			state = SetState.FINISHED;
+		}
+	}
+
+	/**
 	 * Get the sum of all throws values.
 	 *
 	 * @return Sum of all throws values
@@ -178,18 +190,6 @@ public class GameSet {
 	 */
 	public int getAnzahlWuerfe() {
 		return throwCount;
-	}
-
-	/**
-	 * Set the remaining time for the set. If the time is 0, the set is {@link SetState#FINISHED}.
-	 *
-	 * @param time Remaining time in minutes
-	 */
-	public void setTime(double time) {
-		this.time = time;
-		if (time <= 0) {
-			state = SetState.FINISHED;
-		}
 	}
 //endregion
 

@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0" minHeight="50" minWidth="50"
             xmlns="http://javafx.com/javafx/11.0.14-internal" fx:controller="de.olivergeisel.kegelplay.gui.SelectGameController">
     <children>
         <Button layoutX="296.0" layoutY="79.0" mnemonicParsing="false" onAction="#loadToday" text="Heute Laden"/>
@@ -11,7 +11,7 @@
         <VBox fx:id="vBox" prefHeight="400.0" prefWidth="240.0"/>
         <DatePicker fx:id="datePicker" layoutX="289.0" layoutY="150.0" onAction="#loadDay"/>
         <ChoiceBox fx:id="gameKind" layoutX="301.0" layoutY="227.0" prefWidth="150.0"/>
-        <ChoiceBox fx:id="pointSystem" layoutX="304.0" layoutY="273.0" prefWidth="150.0"/>
+        <ChoiceBox fx:id="pointSystemField" layoutX="304.0" layoutY="273.0" prefWidth="150.0"/>
         <ChoiceBox fx:id="view" layoutX="300.0" layoutY="318.0" prefWidth="150.0"/>
         <Label layoutX="304.0" layoutY="210.0" text="Spiel"/>
         <Label layoutX="303.0" layoutY="252.0" text="Punktesystem"/>

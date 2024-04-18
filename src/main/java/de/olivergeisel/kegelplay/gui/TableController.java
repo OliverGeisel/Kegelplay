@@ -1,8 +1,12 @@
 package de.olivergeisel.kegelplay.gui;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import de.olivergeisel.kegelplay.core.game.Game;
 import de.olivergeisel.kegelplay.core.game.Game120;
 import de.olivergeisel.kegelplay.core.match.Match;
+import de.olivergeisel.kegelplay.core.point_system.AllAgainstAll120_4PlayerPointSystem;
 import de.olivergeisel.kegelplay.core.point_system.PointSystem;
 import de.olivergeisel.kegelplay.core.point_system._2TeamsMatchPoints;
 import javafx.fxml.FXML;
@@ -10,9 +14,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class TableController implements Initializable {
 
@@ -67,6 +68,11 @@ public class TableController implements Initializable {
 								var gamePoints =
 										teamPoints.getGamePointsForPlayer(player.getCompleteName()).getPoints();
 								label.setText(Double.toString(gamePoints));
+							}
+							if (match.getPointSystem() instanceof AllAgainstAll120_4PlayerPointSystem allAgainst){
+								var matchPoints = allAgainst.getMatchPoints(match);
+								double playerPoints =(double) matchPoints.getMatchPoints().get(player);
+								label.setText(Double.toString(playerPoints));
 							}
 						}
 						default -> throw new IllegalStateException(STR."Unexpected value: \{col}");
