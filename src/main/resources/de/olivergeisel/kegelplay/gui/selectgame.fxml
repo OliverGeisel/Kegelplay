@@ -3,18 +3,27 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0" minHeight="50" minWidth="50"
-            xmlns="http://javafx.com/javafx/11.0.14-internal" fx:controller="de.olivergeisel.kegelplay.gui.SelectGameController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" minHeight="50" minWidth="50" prefHeight="400.0"
+            prefWidth="550.0" xmlns="http://javafx.com/javafx/11.0.14-internal"
+            fx:controller="de.olivergeisel.kegelplay.gui.SelectGameController">
     <children>
-        <Button layoutX="296.0" layoutY="79.0" mnemonicParsing="false" onAction="#loadToday" text="Heute Laden"/>
-        <Label fx:id="label" layoutX="148.0" layoutY="167.0" prefHeight="17.0" prefWidth="48.0"/>
-        <VBox fx:id="vBox" prefHeight="400.0" prefWidth="240.0"/>
-        <DatePicker fx:id="datePicker" layoutX="289.0" layoutY="150.0" onAction="#loadDay"/>
-        <ChoiceBox fx:id="gameKind" layoutX="301.0" layoutY="227.0" prefWidth="150.0"/>
-        <ChoiceBox fx:id="pointSystemField" layoutX="304.0" layoutY="273.0" prefWidth="150.0"/>
-        <ChoiceBox fx:id="view" layoutX="300.0" layoutY="318.0" prefWidth="150.0"/>
-        <Label layoutX="304.0" layoutY="210.0" text="Spiel"/>
-        <Label layoutX="303.0" layoutY="252.0" text="Punktesystem"/>
-        <Label layoutX="303.0" layoutY="298.0" text="View"/>
+        <Button layoutX="260.0" layoutY="14.0" mnemonicParsing="false" onAction="#loadToday" text="Heute Laden"/>
+        <ScrollPane fitToHeight="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                    minHeight="-Infinity" minViewportHeight="200.0" minViewportWidth="150.0" minWidth="-Infinity"
+                    prefHeight="400.0" prefViewportHeight="400.0" prefViewportWidth="200.0" prefWidth="215.0">
+            <content>
+                <VBox fx:id="vBox" minHeight="-Infinity" minWidth="-Infinity"/>
+            </content>
+        </ScrollPane>
+        <DatePicker fx:id="datePicker" layoutX="363.0" layoutY="14.0" onAction="#loadDay"/>
+        <ChoiceBox fx:id="gameKind" layoutX="260.0" layoutY="97.0" prefWidth="150.0"/>
+        <ChoiceBox fx:id="pointSystemField" layoutX="260.0" layoutY="139.0" prefWidth="150.0"/>
+        <ChoiceBox fx:id="view" layoutX="260.0" layoutY="187.0" prefWidth="150.0"/>
+        <Label layoutX="265.0" layoutY="79.0" text="Spiel"/>
+        <Label layoutX="265.0" layoutY="122.0" text="Punktesystem"/>
+        <Label layoutX="265.0" layoutY="167.0" text="View"/>
+        <CheckBox fx:id="frameless" layoutX="260.0" layoutY="231.0" mnemonicParsing="false" prefHeight="25.0"
+                  prefWidth="83.0" text="Rahmenlos"/>
+        <CheckBox fx:id="onTop" layoutX="260.0" layoutY="260.0" mnemonicParsing="false" text="Immer im Vordergrund"/>
     </children>
 </AnchorPane>

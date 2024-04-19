@@ -1,5 +1,6 @@
 package de.olivergeisel.kegelplay.gui;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.olivergeisel.kegelplay.core.game.Game;
 import de.olivergeisel.kegelplay.core.match.Match;
 import de.olivergeisel.kegelplay.core.team_and_player.Player;
@@ -16,6 +17,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.nio.file.Path;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -24,9 +27,20 @@ import java.util.TimerTask;
 
 public abstract class DisplayGameController<G extends Game> implements Initializable {
 
-	private static final long          REFRESH_INTERVAL = 2 * 5 * 1_000L; // 10 Sekunden in Millisekunden
-	private static final System.Logger LOGGER           = System.getLogger(DisplayGameController.class.getName());
+	private static final long          REFRESH_INTERVAL;
+	private static final System.Logger LOGGER = System.getLogger(DisplayGameController.class.getName());
 
+	static {
+		var mapper = new ObjectMapper();
+		var path = Path.of("./configs/settings.json");
+		long selectedInterval = 10 * 1000; // 10 seconds
+		try {
+			var parsed = mapper.readTree(path.toFile());
+			selectedInterval = parsed.get("refreshRate").asLong();
+		} catch (Exception _) {
+		}
+		REFRESH_INTERVAL = selectedInterval;
+	}
 
 	private final MatchUpdater<G>         matchUpdater;
 	private final Match<G>                match;
@@ -65,11 +79,14 @@ public abstract class DisplayGameController<G extends Game> implements Initializ
 			public void run() {
 				Platform.runLater(() -> {
 					// update
-					LOGGER.log(System.Logger.Level.INFO, STR."Update start: \{LocalDateTime.now()}");
+					var start = LocalDateTime.now();
+					LOGGER.log(System.Logger.Level.INFO, STR."Update start: \{start}");
 					matchUpdater.updateMatch();
 					var players = match.getCurrentPlayers();
 					setPlayers(players);
-					LOGGER.log(System.Logger.Level.INFO, STR."Update complete: \{LocalDateTime.now()}");
+					var end = LocalDateTime.now();
+					var difference = Duration.between(start, end);
+					LOGGER.log(System.Logger.Level.INFO, STR."Update complete: Duration: \{difference.toMillis()} ms");
 				});
 			}
 		}, 0, REFRESH_INTERVAL);
@@ -79,7 +96,9 @@ public abstract class DisplayGameController<G extends Game> implements Initializ
 	private void setLane(Player<G> player, VBox lane) {
 		var header = (GridPane) lane.getChildren().getFirst();
 		var headerController = (HeaderController) header.getProperties().get(FXMLLoader.CONTROLLER_KEYWORD);
-		headerController.setPlayer(player);
+		if (!player.equals(headerController.getPlayer())) {
+			headerController.setPlayer(player);
+		}
 		var tabelle = lane.getChildren().get(1);
 		var tabellenController = (TableController) tabelle.getProperties().get(FXMLLoader.CONTROLLER_KEYWORD);
 		tabellenController.setGame(player.getGame(), match);

@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A game.
@@ -181,6 +182,26 @@ public abstract class Game implements Observable {
 
 	public abstract void setDurchgaenge(List<GameSet> durgaenge);
 //endregion
+
+	@Override
+	public final boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Game game)) return false;
+
+		return substitutions.equals(game.substitutions) && substitutedPlayers.equals(game.substitutedPlayers)
+			   && Objects.equals(player, game.player) && Objects.equals(date, game.date)
+			   && Objects.equals(state, game.state);
+	}
+
+	@Override
+	public int hashCode() {
+		int result = substitutions.hashCode();
+		result = 31 * result + substitutedPlayers.hashCode();
+		result = 31 * result + Objects.hashCode(player);
+		result = 31 * result + Objects.hashCode(date);
+		result = 31 * result + Objects.hashCode(state);
+		return result;
+	}
 
 
 	private class GameState {

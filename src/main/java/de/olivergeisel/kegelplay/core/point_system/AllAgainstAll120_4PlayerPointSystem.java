@@ -5,10 +5,7 @@ import de.olivergeisel.kegelplay.core.game.GameSet;
 import de.olivergeisel.kegelplay.core.match.Match;
 import de.olivergeisel.kegelplay.core.team_and_player.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * The point system for a match where all players play against each other.
@@ -90,7 +87,7 @@ public class AllAgainstAll120_4PlayerPointSystem extends PointSystem<Game120> {
 		var pair2 = new GameSetPlayer(player2, player2Set);
 		var pair3 = new GameSetPlayer(player3, player3Set);
 		var pair4 = new GameSetPlayer(player4, player4Set);
-		return evalSetScores(List.of(pair1, pair2, pair3, pair4));
+		return evalSetScores(pair1, pair2, pair3, pair4);
 	}
 
 	/**
@@ -112,7 +109,7 @@ public class AllAgainstAll120_4PlayerPointSystem extends PointSystem<Game120> {
 	 * @param scores the scores of the players in the set
 	 * @return the points for the set per player
 	 */
-	private GameSetPointsCollection evalSetScores(List<GameSetPlayer> scores) {
+	private GameSetPointsCollection evalSetScores(GameSetPlayer... scores) {
 		var scorePlayerMapping = new HashMap<Integer, List<Player<Game120>>>();
 		for (var score : scores) {
 			var points = score.set().getScore();
@@ -136,7 +133,8 @@ public class AllAgainstAll120_4PlayerPointSystem extends PointSystem<Game120> {
 		var back = new GameSetPointsCollection();
 		for (var score : pointMapping.entrySet()) {
 			for (var player : scorePlayerMapping.get(score.getKey())) {
-				var gameSet = scores.stream().filter(s -> s.player().equals(player)).findFirst().orElseThrow().set();
+				var gameSet =
+						Arrays.stream(scores).filter(s -> s.player().equals(player)).findFirst().orElseThrow().set();
 				back.setScore(player, score.getValue(), gameSet);
 			}
 		}

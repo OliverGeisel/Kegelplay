@@ -5,11 +5,14 @@ import de.olivergeisel.kegelplay.core.game.Game120;
 import de.olivergeisel.kegelplay.core.game.GameKind;
 import de.olivergeisel.kegelplay.core.match.Match;
 import de.olivergeisel.kegelplay.core.match.MatchStatusInfo;
+import de.olivergeisel.kegelplay.core.team_and_player.Player;
 import de.olivergeisel.kegelplay.core.team_and_player.Team;
 import de.olivergeisel.kegelplay.infrastructure.csv.GameCSVFileReader;
 import de.olivergeisel.kegelplay.infrastructure.ini.IniFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -54,6 +57,35 @@ public class MatchUpdater<G extends Game> {
 	}
 
 	private void updateTeam(Team<G> team) {
+		// TODO read the players again. This is necessary because the players could have changed in the meantime
+		//  (e.g. a player was substituted)
+		var dir = match.getBaseDir().resolve(STR."\{team.getName()}.ini");
+		try {
+			var teamIniFile = new IniFile(dir);
+			var players = teamIniFile.getRegions().stream().filter(r -> r.getName().startsWith("Spieler")).toList();
+			for (var region : players) {
+				var name = region.getValue("Name");
+				var vorname = region.getValue("Vorname");
+				var number = Integer.parseInt(region.getName().split(" ")[1]);
+				var player = team.getPlayer(number - 1);
+				if (!(player.getNachname().equals(name) && player.getVorname().equals(vorname))) {
+					var club = region.getValue("Verein");
+					LocalDate birthdate;
+					try {
+						birthdate = LocalDate.parse(region.getValue("Geburtstag"));
+					} catch (DateTimeParseException e) {
+						birthdate = null;
+					}
+					var teamName = team.getName();
+					var newPlayer = new Player<G>(vorname, name, club, teamName, birthdate);
+					var game = player.getGame();
+					game.setPlayer(newPlayer);
+					team.setPlayer(number - 1, newPlayer);
+				}
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 		loadTeamGames(team);
 	}
 
@@ -61,11 +93,11 @@ public class MatchUpdater<G extends Game> {
 		for (var playerFolder : Objects.requireNonNull(
 				match.getBaseDir().resolve(team.getName()).toFile().listFiles())) {
 			var path = playerFolder.toPath().resolve("werte.csv");
-			var playerName = playerFolder.getName();
-			var game = new GameCSVFileReader<Game120>(path, GameKind.GAME_120).readGame();
-			var player =
-					Arrays.stream(team.getPlayers()).filter(p -> p.getCompleteNameWithCommata().equals(playerName))
-						  .findFirst().orElseThrow();
+			var playerName = playerFolder.getName(); // Todo reuse old Reader if not changed
+			var game = new GameCSVFileReader<Game120>(path, GameKind.GAME_120).readGame(); // Todo allow other games
+			var player = Arrays.stream(team.getPlayers())
+							   .filter(p -> p.getCompleteNameWithCommata().equals(playerName))
+							   .findFirst().orElseThrow();
 			game.setPlayer(player);
 		}
 	}

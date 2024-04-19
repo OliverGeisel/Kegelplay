@@ -8,6 +8,11 @@ import java.util.Objects;
 
 /**
  * Represents a player.
+ *
+ * @param <G> The type of the game the player is playing.
+ *
+ * @since 1.0
+ * @version 1.0
  */
 public class Player<G extends Game> {
 
@@ -42,6 +47,8 @@ public class Player<G extends Game> {
 			case FINISHED -> new Finished();
 		};
 	}
+
+	//region setter/getter
 	public String getVorname() {
 		return vorname;
 	}
@@ -66,7 +73,6 @@ public class Player<G extends Game> {
 		return playerID;
 	}
 
-	//region setter/getter
 	public G getGame() {
 		return game;
 	}

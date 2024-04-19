@@ -15,7 +15,8 @@ import java.util.ResourceBundle;
 
 public class HeaderController implements Initializable {
 
-	private static String DEFAULT_IMAGE = "file:./images/kegeln.png";
+	private static final String DEFAULT_IMAGE = "file:./images/kegeln.png";
+
 
 	private Player    player;
 	@FXML
@@ -26,9 +27,9 @@ public class HeaderController implements Initializable {
 	private Label     verein;
 	@FXML
 	private ImageView image;
-
 	@FXML
 	private GridPane grid;
+
 
 	public HeaderController() {
 	}
@@ -40,7 +41,6 @@ public class HeaderController implements Initializable {
 	private static String getImagePathJPG(Player player) {
 		return STR."./images/\{player.getClub()}/\{player.getCompleteName()}.jpg";
 	}
-
 
 	/**
 	 * Called to initialize a controller after its root element has been
@@ -56,6 +56,9 @@ public class HeaderController implements Initializable {
 		vorname.setText("Vorname");
 		name.setText("Name");
 		verein.setText("Verein");
+		vorname.setWrapText(true);
+		name.setWrapText(true);
+		verein.setWrapText(true);
 		image.setImage(new Image(DEFAULT_IMAGE));
 
 		vorname.getProperties().put(FXMLLoader.CONTROLLER_KEYWORD, this);
@@ -67,24 +70,13 @@ public class HeaderController implements Initializable {
 		image.fitWidthProperty().bind(grid.widthProperty().multiply(0.4));
 	}
 
-	/*
-	public HeaderController(Player player) {
-		this.player = player;
-		vorname.setText(player.getVorname());
-		name.setText(player.getNachname());
-		verein.setText(player.getClub());
-		var imagePath = getImagePath(player);
-		var imageFile = new File(imagePath);
-		if (imageFile.exists()) {
-			this.image.setImage(new Image(imagePath));
-		} else {
-			var fallBack = STR."file:src/main/resources/images/\{player.getClub()}/club.png";
-			this.image.setImage(new Image(fallBack));
-		}
-
-	}*/
-
 	//region setter/getter
+
+
+	public Player getPlayer() {
+		return player;
+	}
+
 	public void setPlayer(Player player) {
 		this.player = player;
 		vorname.setText(player.getVorname());

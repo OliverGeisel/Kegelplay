@@ -8,6 +8,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class KegelplayApplication extends Application {
 	@Override
@@ -15,12 +16,13 @@ public class KegelplayApplication extends Application {
 		FXMLLoader fxmlLoader = new FXMLLoader(KegelplayApplication.class.getResource("gui/hello-view.fxml"));
 		Scene scene = new Scene(fxmlLoader.load(), 320, 240);
 		stage.setTitle("Kegelplay");
-		stage.setMaxWidth(Screen.getPrimary().getVisualBounds().getWidth());
-		stage.setMaxHeight(Screen.getPrimary().getVisualBounds().getHeight());
+		var visualBounds = Screen.getPrimary().getVisualBounds();
+		stage.setMaxWidth(visualBounds.getWidth());
+		stage.setMaxHeight(visualBounds.getHeight());
 		stage.setOpacity(0.99);
 		stage.setScene(scene);
 
-		var image = new Image(getClass().getResourceAsStream("/icons/kegeln.png"));
+		var image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/kegeln.png")));
 		stage.getIcons().add(image);
 
 		stage.show();
