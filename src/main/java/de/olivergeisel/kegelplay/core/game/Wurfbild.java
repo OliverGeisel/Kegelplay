@@ -6,6 +6,7 @@ package de.olivergeisel.kegelplay.core.game;
  * if a pin is fallen the value is true.
  */
 public class Wurfbild {
+
 	private final boolean one;
 	private final boolean two;
 	private final boolean three;
@@ -63,6 +64,12 @@ public class Wurfbild {
 		this.nine = fields[8];
 	}
 
+	/**
+	 * Returns the hit of a specific Pin.
+	 * @param i number of the pin
+	 * @return true if the pin is fallen
+	 * @throws IllegalArgumentException if the position is not in the range of 1-9
+	 */
 	public boolean get(int i) throws IllegalArgumentException {
 		return switch (i) {
 			case 1 -> one;

@@ -5,8 +5,7 @@ import de.olivergeisel.kegelplay.infrastructure.ini.IniRegion;
 public record GeneralMatchInfo(String name, String location, String facility, String matchLeader1,
 							   String matchLeader2, String kind, String schemaName, int matchDay, String season,
 							   String matchNumber, String matchLevel, String leage, String referee,
-							   String refereeNumber,
-							   int testPitchCount, int testPitchTime) {
+							   String refereeNumber, int testPitchCount, int testPitchTime) {
 
 	public GeneralMatchInfo(IniRegion region) {
 		this(region.getValue("Name"),

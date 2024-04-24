@@ -67,7 +67,7 @@ public class MatchUpdater<G extends Game> {
 				var name = region.getValue("Name");
 				var vorname = region.getValue("Vorname");
 				var number = Integer.parseInt(region.getName().split(" ")[1]);
-				var player = team.getPlayer(number - 1);
+				var player = team.getPlayer(number);
 				if (!(player.getNachname().equals(name) && player.getVorname().equals(vorname))) {
 					var club = region.getValue("Verein");
 					LocalDate birthdate;
