@@ -42,21 +42,32 @@ public class _2Teams120PointSystem extends PointSystem<Game120> {
 		return back;
 	}
 
-	private static void setFinalPoints(GamePointsTeam<Game120> player1Points, GamePointsTeam<Game120> player2Points,
+	/**
+	 * Sets the final points for the players of a match.
+	 * The player with the most set points gets 1 point.
+	 * If both players have the same set points, the player with the most score gets 1 point.
+	 * If both players have the same score, both get 0,5 points.
+	 *
+	 * @param player1Game the points of team 1
+	 * @param player2Game the points of team 2
+	 * @param player1       the player 1
+	 * @param player2       the player 2
+	 */
+	private static void setFinalPoints(GamePointsTeam<Game120> player1Game, GamePointsTeam<Game120> player2Game,
 			Player<Game120> player1, Player<Game120> player2) {
-		if (player1Points.getSumGameSetPoints() > player2Points.getSumGameSetPoints()) {
-			player1Points.setPoints(1.0);
-		} else if (player1Points.getSumGameSetPoints() < player2Points.getSumGameSetPoints()) {
-			player2Points.setPoints(1.0);
+		if (player1Game.getSumGameSetPoints() > player2Game.getSumGameSetPoints()) {
+			player1Game.setPoints(1.0);
+		} else if (player1Game.getSumGameSetPoints() < player2Game.getSumGameSetPoints()) {
+			player2Game.setPoints(1.0);
 		} else {
 			if (player1.getGame().getTotalScore() > player2.getGame().getTotalScore()) {
-				player1Points.setPoints(1.0);
+				player1Game.setPoints(1.0);
 			} else if (player1.getGame().getTotalScore() < player2.getGame().getTotalScore()) {
-				player2Points.setPoints(1.0);
+				player2Game.setPoints(1.0);
 			} else {
 				// draw (both get 0.5 points
-				player1Points.setPoints(0.5);
-				player2Points.setPoints(0.5);
+				player1Game.setPoints(0.5);
+				player2Game.setPoints(0.5);
 			}
 		}
 	}
@@ -84,6 +95,7 @@ public class _2Teams120PointSystem extends PointSystem<Game120> {
 				player1Points.addGameSetPoints(player1, setPoints.getGamePoints(player1));
 				player2Points.addGameSetPoints(player2, setPoints.getGamePoints(player2));
 			}
+			setFinalPoints(player1Points, player2Points, player1, player2);
 			team1Result.add(player1Points);
 			team2Result.add(player2Points);
 		}

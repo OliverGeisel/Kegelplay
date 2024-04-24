@@ -58,6 +58,10 @@ public abstract class MatchConfig {
 		return laneNames;
 	}
 
+	public void setLaneNames(List<String> laneNames) {
+		this.laneNames = laneNames;
+	}
+
 	public GameKind getKind() {
 		return kind;
 	}

@@ -1,49 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" minHeight="500" minWidth="1200" xmlns="http://javafx.com/javafx/21.0.1">
+<?import javafx.scene.text.Font?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" minHeight="500" minWidth="1200"
+      xmlns="http://javafx.com/javafx/11.0.14-internal">
     <children>
         <HBox minWidth="800.0" snapToPixel="false">
             <children>
-                <VBox fx:id="lane1" styleClass="margin-left-1 margin-right-1">
+                <VBox fx:id="lane1" maxWidth="1.7976931348623157E308" styleClass="margin-left-1 margin-right-1">
                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                               maxWidth="1.7976931348623157E308" text="BAHN X" textAlignment="CENTER"
+                               VBox.vgrow="ALWAYS">
+                            <font>
+                                <Font name="Arial Bold" size="30.0"/>
+                            </font>
+                        </Label>
                         <fx:include source="header.fxml" />
                         <fx:include source="tabelle.fxml" />
-                        <fx:include source="fallbild.fxml" />
+                        <fx:include source="fallbild.fxml" styleClass="margin-top-1" VBox.vgrow="ALWAYS"/>
                     </children>
+                    <HBox.margin>
+                        <Insets left="10.0"/>
+                    </HBox.margin>
                 </VBox>
-                <VBox fx:id="lane2">
+                <VBox fx:id="lane2" maxWidth="1.7976931348623157E308">
                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                               maxWidth="1.7976931348623157E308" text="BAHN X" textAlignment="CENTER"
+                               VBox.vgrow="ALWAYS">
+                            <font>
+                                <Font name="Arial Bold" size="30.0"/>
+                            </font>
+                        </Label>
                         <fx:include source="header.fxml" />
                         <fx:include source="tabelle.fxml" />
-                        <fx:include source="fallbild.fxml" />
+                        <fx:include source="fallbild.fxml" styleClass="margin-top-1"/>
                     </children>
                     <HBox.margin>
                         <Insets left="10.0" />
                     </HBox.margin>
                 </VBox>
-                <VBox fx:id="lane3">
+                <VBox fx:id="lane3" maxWidth="1.7976931348623157E308">
                     <children>
-                        <fx:include source="header.fxml" />
-                        <fx:include source="tabelle.fxml" />
-                        <fx:include source="fallbild.fxml" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                               maxWidth="1.7976931348623157E308" text="BAHN X" textAlignment="CENTER"
+                               VBox.vgrow="ALWAYS">
+                            <font>
+                                <Font name="Arial Bold" size="30.0"/>
+                            </font>
+                        </Label>
+                        <fx:include maxHeight="Infinity" source="header.fxml"/>
+                        <fx:include maxHeight="Infinity" source="tabelle.fxml"/>
+                        <fx:include maxHeight="Infinity" source="fallbild.fxml" styleClass="margin-top-1"/>
                     </children>
                     <HBox.margin>
                         <Insets left="10.0" />
                     </HBox.margin>
                 </VBox>
-                <VBox fx:id="lane4">
+                <VBox fx:id="lane4" maxWidth="1.7976931348623157E308">
                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                               maxWidth="1.7976931348623157E308" text="BAHN X" textAlignment="CENTER"
+                               VBox.vgrow="ALWAYS">
+                            <font>
+                                <Font name="Arial Bold" size="30.0"/>
+                            </font>
+                        </Label>
                         <fx:include source="header.fxml" />
                         <fx:include source="tabelle.fxml" />
-                        <fx:include source="fallbild.fxml" />
+                        <fx:include source="fallbild.fxml" styleClass="margin-top-1" VBox.vgrow="ALWAYS"/>
                     </children>
                     <HBox.margin>
-                        <Insets left="10.0" />
+                        <Insets left="10.0" right="10.0"/>
                     </HBox.margin>
                 </VBox>
-
             </children>
         </HBox>
     </children>

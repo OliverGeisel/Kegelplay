@@ -12,5 +12,19 @@
   },
   "refreshRate": 5000,
   "paths": {
-  }
+  },
+  "lanes": [
+    "Bahn 1",
+    "Bahn 2",
+    "Bahn 3",
+    "Bahn 4",
+    "Bahn 5",
+    "Bahn 6",
+    "Bahn 7",
+    "Bahn 8",
+    "Bahn 9",
+    "Bahn 10",
+    "Bahn 11",
+    "Bahn 12"
+  ]
 }

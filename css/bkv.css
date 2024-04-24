@@ -105,7 +105,8 @@
     -fx-border-style: solid;
     -fx-border-radius: 5px;
     -fx-background-repeat: no-repeat;
-    -fx-background-size: cover;
+    -fx-background-size: auto;
+    -fx-padding: 0px;
 }
 
 
@@ -130,7 +131,7 @@
 }
 
 .pin-stand {
-    -fx-fill: green;
+    -fx-fill: blue;
     -fx-stroke: lightgreen;
     -fx-stroke-width: 2;
 }
@@ -159,6 +160,30 @@
     -fx-text-fill: #000000;
 }
 
+
+.margin-top-1 {
+    -fx-margin: 1em 0 0 0;
+}
+
+.margin-top-2 {
+    -fx-margin: 2em 0 0 0;
+}
+
+.margin-top-3 {
+    -fx-margin: 3em 0 0 0;
+}
+
+.margin-right-1 {
+    -fx-margin: 0 1em 0 0;
+}
+
+.margin-right-2 {
+    -fx-margin: 0 2em 0 0;
+}
+
+.margin-right-3 {
+    -fx-margin: 0 3em 0 0;
+}
 
 .margin-left-1 {
     -fx-margin: 0 0 0 1em;

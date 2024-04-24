@@ -66,8 +66,20 @@ public class HeaderController implements Initializable {
 		verein.getProperties().put(FXMLLoader.CONTROLLER_KEYWORD, this);
 		image.getProperties().put(FXMLLoader.CONTROLLER_KEYWORD, this);
 		grid.getProperties().put(FXMLLoader.CONTROLLER_KEYWORD, this);
-
-		image.fitWidthProperty().bind(grid.widthProperty().multiply(0.4));
+		// Todo check if can be swapped with only set instead bind
+		grid.widthProperty().addListener((observableValue, old, newValue) -> {
+			var width = newValue.doubleValue();
+			var height = grid.getHeight();
+			var imageWidth = image.getImage().getWidth();
+			var imageHeight = image.getImage().getHeight();
+			var imageRatio = imageWidth / imageHeight;
+			var newHeight = 0.38 * width / imageRatio;
+			if (newHeight > 0.95 * height) {
+				image.fitHeightProperty().bind(grid.heightProperty().multiply(0.95));
+			} else {
+				image.fitWidthProperty().bind(grid.widthProperty().multiply(0.38));
+			}
+		});
 	}
 
 	//region setter/getter

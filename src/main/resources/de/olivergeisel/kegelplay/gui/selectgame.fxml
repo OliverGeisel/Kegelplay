@@ -25,5 +25,7 @@
         <CheckBox fx:id="frameless" layoutX="260.0" layoutY="231.0" mnemonicParsing="false" prefHeight="25.0"
                   prefWidth="83.0" text="Rahmenlos"/>
         <CheckBox fx:id="onTop" layoutX="260.0" layoutY="260.0" mnemonicParsing="false" text="Immer im Vordergrund"/>
+        <ChoiceBox fx:id="screenSelect" layoutX="257.0" layoutY="298.0" prefWidth="150.0"/>
+        <Label layoutX="261.0" layoutY="277.0" text="Bildschirm"/>
     </children>
 </AnchorPane>

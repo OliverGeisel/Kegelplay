@@ -20,31 +20,31 @@ public class FallbildController implements InvalidationListener, Initializable {
 	private static final double PIN_WIDTH_RATIO = 8.5 / 100.;
 
 	private static final double SQRT_2 = Math.sqrt(2);
-	@FXML
-	private              AnchorPane anchorPane;
-
 
 	private WurfbildSubscribe wurfbild;
+
 	@FXML
-	private Rectangle         square;
+	private AnchorPane anchorPane;
 	@FXML
-	private Circle            pin1;
+	private Rectangle  square;
 	@FXML
-	private Circle            pin2;
+	private Circle     pin1;
 	@FXML
-	private Circle            pin3;
+	private Circle     pin2;
 	@FXML
-	private Circle            pin4;
+	private Circle     pin3;
 	@FXML
-	private Circle            pin5;
+	private Circle     pin4;
 	@FXML
-	private Circle            pin6;
+	private Circle     pin5;
 	@FXML
-	private Circle            pin7;
+	private Circle     pin6;
 	@FXML
-	private Circle            pin8;
+	private Circle     pin7;
 	@FXML
-	private Circle            pin9;
+	private Circle     pin8;
+	@FXML
+	private Circle     pin9;
 
 	private void updatePinToHit(Circle pin) {
 		updatePinTo(pin, "pin-hit");

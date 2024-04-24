@@ -44,7 +44,7 @@ public class HelloController {
 
 	@FXML
 	public void onNeuFensterClick(ActionEvent actionEvent) throws IOException {
-		var oldScene = ((Pane) actionEvent.getSource()).getScene();
+		var oldScene = ((Button) actionEvent.getSource()).getScene();
 		var stage = (Stage) oldScene.getWindow();
 		var fxmlLoader = new FXMLLoader(getClass().getResource("selectgame.fxml"));
 		Pane stackPane = fxmlLoader.load();

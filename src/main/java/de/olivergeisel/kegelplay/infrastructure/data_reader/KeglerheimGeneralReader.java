@@ -1,5 +1,6 @@
 package de.olivergeisel.kegelplay.infrastructure.data_reader;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.olivergeisel.kegelplay.core.game.*;
 import de.olivergeisel.kegelplay.core.match.*;
 import de.olivergeisel.kegelplay.core.point_system.PointSystem;
@@ -99,7 +100,6 @@ public class KeglerheimGeneralReader extends GeneralReader {
 			return new Team4<>(teamName, info, playerAndSubstitute.player(), playerAndSubstitute.substitute());
 		}
 		return new TeamN<>(teamName, info, playerAndSubstitute.player(), playerAndSubstitute.substitute());
-
 	}
 
 	@Override
@@ -140,6 +140,8 @@ public class KeglerheimGeneralReader extends GeneralReader {
 			var schema = new MatchSchema(schemaFile, teamCount, playerPerTeamCount);
 			var kind = GameKind.fromGameInfo(schema.getGameInfoFor(0, 0));
 			config = new NormalMatchConfig(schema, kind);
+			var laneNames = readCorrectLaneNamed(baseDir);
+			config.setLaneNames(laneNames);
 		} catch (IOException e) {
 			LOGGER.log(System.Logger.Level.ERROR, STR."Could not read schema file for mactch: \{baseDir}");
 			throw new RuntimeException("could not init new match", e);
@@ -167,6 +169,31 @@ public class KeglerheimGeneralReader extends GeneralReader {
 		// create match
 		return createMatch(config, general, stateInfo, pointSystem, teams, baseDir);
 	}
+
+	private List<String> readCorrectLaneNamed(Path baseDir) {
+		var back = new LinkedList<String>();
+		try {
+			var iniFile = new IniFile(baseDir.resolve("Backup-Daten/start.ini"));
+			var bahnRegion = iniFile.getRegion("Bahnen");
+			var temp = new LinkedList<Integer>();
+			for (var bahn : bahnRegion.getKeys()) {
+				if (bahnRegion.getValue(bahn).equals("1")) {
+					temp.add(Integer.parseInt(bahn.split(" ")[1]));
+				}
+			}
+			temp.sort(Comparator.naturalOrder());
+			ObjectMapper mapper = new ObjectMapper();
+			var json = mapper.readTree(Path.of("configs/settings.json").toFile());
+			var lanes = json.get("lanes");
+			for (var index : temp) {
+				back.add(lanes.get(index).asText());
+			}
+		} catch (IOException e) {
+			LOGGER.log(System.Logger.Level.ERROR, STR."Could not read backup for match: \{baseDir}");
+		}
+		return back;
+	}
+
 
 	/**
 	 * Load the games of a team

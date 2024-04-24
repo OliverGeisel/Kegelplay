@@ -14,11 +14,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -52,6 +56,8 @@ public class SelectGameController implements Initializable {
 	private ChoiceBox<String>   view;
 	@FXML
 	private ChoiceBox<String> pointSystemField;
+	@FXML
+	private ChoiceBox<String> screenSelect;
 	@FXML
 	private CheckBox          frameless;
 	@FXML
@@ -119,6 +125,8 @@ public class SelectGameController implements Initializable {
 		var selectedGame = button.getText();
 		var oldScene = button.getScene();
 		var stage = (Stage) oldScene.getWindow();
+		//stage.close();
+		stage = new Stage();
 		var fxmlLoader = new FXMLLoader(getClass().getResource("display-game.fxml"));
 		var datePath = this.datePath;
 		var dataReader = new KeglerheimGeneralReader(datePath.resolve(selectedGame), true);
@@ -166,22 +174,40 @@ public class SelectGameController implements Initializable {
 			e.printStackTrace();
 			return;
 		}
+		//  Todo check if view is not wrong for the match
 		var scene = new Scene(stackPane);
 		scene.getStylesheets().add("file:css/bkv.css");
 		stage.setTitle(title);
+		stage.setResizable(true);
+		var image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/kegeln.png")));
+		stage.getIcons().add(image);
 		stage.setHeight(stackPane.getPrefHeight());
 		stage.setWidth(stackPane.getPrefWidth());
 		stage.setMinHeight(stackPane.getMinHeight());
 		stage.setMinWidth(stackPane.getMinWidth());
+		stage.initStyle(StageStyle.DECORATED);
 		stage.centerOnScreen();
 		stage.setScene(scene);
+		var screens = Screen.getScreens();
+		var screenIndex = Integer.parseInt(screenSelect.getValue().split(" ")[1]) - 1;
+		var selectedScreen = screens.get(screenIndex);
+		Rectangle2D bounds = selectedScreen.getBounds();
+
+		// Setzen der Position und Größe des neuen Fensters basierend auf dem zweiten Bildschirm
+		stage.setX(bounds.getMinX() + (bounds.getWidth() - 400) / 2); // 400 ist die Breite des neuen Fensters
+		stage.setY(bounds.getMinY() + (bounds.getHeight() - 300) / 2); // 300 ist die Höhe des neuen Fensters
+
+
+		stage.setMaxWidth(selectedScreen.getBounds().getWidth() + 20);
+		stage.setMaxHeight(selectedScreen.getBounds().getHeight());
 		stage.show();
 		if (frameless.isSelected()) {
 			stage.setFullScreen(true);
 		} else {
+			Stage finalStage = stage;
 			scene.widthProperty().addListener((observableValue, oldWidth, newWidth) -> {
 				double newHeight = round(newWidth.doubleValue() / ASPECT_RATIO);
-				stage.setHeight(newHeight);
+				finalStage.setHeight(newHeight);
 			});
 		}
 		stage.setAlwaysOnTop(onTop.isSelected());
@@ -207,5 +233,10 @@ public class SelectGameController implements Initializable {
 		var pointSystems =
 				List.of("4 Spieler gegeneinander", "2 Teams paarweise", "Teams summe", "Paarweise gegeneinander");
 		pointSystemField.getItems().addAll(pointSystems);
+		var screens = Screen.getScreens();
+		for (int i = 0; i < screens.size(); i++) {
+			screenSelect.getItems().add(STR."Screen \{i + 1}");
+		}
+		screenSelect.setValue(STR."Screen 1");
 	}
 }

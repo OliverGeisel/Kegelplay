@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -44,6 +45,7 @@ public abstract class DisplayGameController<G extends Game> implements Initializ
 
 	private final MatchUpdater<G>         matchUpdater;
 	private final Match<G>                match;
+	private final Timer timer;
 	private       KeglerheimGeneralReader dataReader;
 
 
@@ -56,6 +58,7 @@ public abstract class DisplayGameController<G extends Game> implements Initializ
 	public DisplayGameController(Match<G> match) {
 		this.match = match;
 		matchUpdater = new MatchUpdater<>(match);
+		timer = new Timer();
 	}
 
 	/**
@@ -69,11 +72,7 @@ public abstract class DisplayGameController<G extends Game> implements Initializ
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		init();
-	}
-
-	private void init() {
-		Timer timer = new Timer();
+		int i = 1;
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
@@ -90,19 +89,43 @@ public abstract class DisplayGameController<G extends Game> implements Initializ
 				});
 			}
 		}, 0, REFRESH_INTERVAL);
+		for (var lane : List.of(lane1, lane2, lane3, lane4)) {
+			final Label bahnLabel = (Label) lane.getChildren().getFirst();
+			bahnLabel.setText(STR."Bahn \{i++}");
+			final Pane finalTabelle = (Pane) lane.getChildren().get(1);
+			final Pane finalHeader = (Pane) lane.getChildren().get(2);
+			final Pane finalFallbild = (Pane) lane.getChildren().get(3);
+			lane.heightProperty().addListener((observableValue, oldHeight, newHeight) -> {
+				double subFrameHeight2 = newHeight.doubleValue() * 0.25;
+				finalTabelle.setPrefHeight(subFrameHeight2);
+				finalHeader.setPrefHeight(subFrameHeight2);
+				finalFallbild.setPrefHeight(newHeight.doubleValue() * .5);
+			});
+		}
+	}
+
+	@FXML
+	private void onClose() {
+		timer.cancel();
 	}
 
 
 	private void setLane(Player<G> player, VBox lane) {
-		var header = (GridPane) lane.getChildren().getFirst();
+		var lanes = match.getConfig().getLaneNames();
+		var parent = (Pane) lane.getParent();
+		var index = parent.getChildren().indexOf(lane);
+		var bahn = (Label) lane.getChildren().getFirst();
+		bahn.setText(lanes.get(index));
+		bahn.setText(lanes.get(index));
+		var header = (GridPane) lane.getChildren().get(1);
 		var headerController = (HeaderController) header.getProperties().get(FXMLLoader.CONTROLLER_KEYWORD);
 		if (!player.equals(headerController.getPlayer())) {
 			headerController.setPlayer(player);
 		}
-		var tabelle = lane.getChildren().get(1);
+		var tabelle = lane.getChildren().get(2);
 		var tabellenController = (TableController) tabelle.getProperties().get(FXMLLoader.CONTROLLER_KEYWORD);
 		tabellenController.setGame(player.getGame(), match);
-		var fallbild = lane.getChildren().get(2);
+		var fallbild = lane.getChildren().get(3);
 		var fallbildController = (FallbildController) fallbild.getProperties().get(FXMLLoader.CONTROLLER_KEYWORD);
 		fallbildController.setWurfbild(player.getGame().getLastWurf().bild());
 	}
@@ -122,6 +145,9 @@ public abstract class DisplayGameController<G extends Game> implements Initializ
 		if (players.size() != 4) {
 			throw new IllegalArgumentException("Es müssen 4 Spieler übergeben werden");
 		}
+		lane1.getScene().getWindow().setOnCloseRequest(event -> {
+			timer.cancel();
+		});
 		var player = players.getFirst();
 		setLane(player, lane1);
 		player = players.get(1);
