@@ -58,4 +58,21 @@ public class HelloController {
 		stage.centerOnScreen();
 		stage.show();
 	}
+
+	@FXML
+	public void onTeamAgainstClick(ActionEvent actionEvent) throws IOException {
+		var oldScene = ((Button) actionEvent.getSource()).getScene();
+		var stage = (Stage) oldScene.getWindow();
+		var fxmlLoader = new FXMLLoader(getClass().getResource("team-overview-ranking.fxml"));
+		Pane stackPane = fxmlLoader.load();
+		var scene = new Scene(stackPane);
+		stage.setTitle("Team gegen Team");
+		stage.setHeight(stackPane.getPrefHeight());
+		stage.setWidth(stackPane.getPrefWidth());
+		stage.setScene(scene);
+		stage.setMinHeight(400);
+		stage.setMinWidth(800);
+		stage.centerOnScreen();
+		stage.show();
+	}
 }

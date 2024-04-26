@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.14-internal"
+      fx:controller="de.olivergeisel.kegelplay.gui.TeamOverviewRankingController">
+    <children>
+        <HBox>
+            <children>
+                <fx:include source="team-completeview.fxml" HBox.hgrow="ALWAYS"/>
+                <fx:include source="team-completeview.fxml"/>
+                <fx:include source="team-completeview.fxml"/>
+                <fx:include source="team-completeview.fxml"/>
+            </children>
+        </HBox>
+        <fx:include source="team-table.fxml"/>
+    </children>
+</VBox>

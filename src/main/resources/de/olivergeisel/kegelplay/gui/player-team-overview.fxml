@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="playerBox" maxHeight="-Infinity" maxWidth="-Infinity"
+      minHeight="-Infinity"
+      minWidth="-Infinity" prefHeight="114.0" prefWidth="200.0"
+      xmlns="http://javafx.com/javafx/11.0.14-internal"
+      fx:controller="de.olivergeisel.kegelplay.gui.PlayerTeamOverviewController">
+    <children>
+        <Label fx:id="playerLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+               maxWidth="1.7976931348623157E308" minHeight="15.0" prefHeight="15.0" prefWidth="200.0" text="Spieler "
+               VBox.vgrow="ALWAYS">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Label>
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                       maxWidth="1.7976931348623157E308" text="W" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                       maxWidth="1.7976931348623157E308" text="V" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"
+                       GridPane.vgrow="ALWAYS">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                       maxWidth="1.7976931348623157E308" text="R" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS"
+                       GridPane.vgrow="ALWAYS">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                       maxWidth="1.7976931348623157E308" text="F" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS"
+                       GridPane.vgrow="ALWAYS">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                       maxWidth="1.7976931348623157E308" text="G" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS"
+                       GridPane.vgrow="ALWAYS">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+
+                <Label fx:id="throwLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                       maxWidth="1.7976931348623157E308" text="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1"
+                       GridPane.vgrow="ALWAYS">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="VolleLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                       maxWidth="1.7976931348623157E308" text="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"
+                       GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="rauemerLabel" alignment="CENTER" contentDisplay="CENTER"
+                       maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="0"
+                       GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="missLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                       maxWidth="1.7976931348623157E308" text="0" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS"
+                       GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="sumLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                       maxWidth="1.7976931348623157E308" text="0" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS"
+                       GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+
+            </children>
+        </GridPane>
+    </children>
+</VBox>
