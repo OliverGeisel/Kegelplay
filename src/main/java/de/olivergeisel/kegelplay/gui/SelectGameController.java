@@ -59,6 +59,8 @@ public class SelectGameController implements Initializable {
 	@FXML
 	private ChoiceBox<String> screenSelect;
 	@FXML
+	private ChoiceBox<String> cssFile;
+	@FXML
 	private CheckBox          frameless;
 	@FXML
 	private CheckBox          onTop;
@@ -176,7 +178,7 @@ public class SelectGameController implements Initializable {
 		}
 		//  Todo check if view is not wrong for the match
 		var scene = new Scene(stackPane);
-		scene.getStylesheets().add("file:css/bkv.css");
+		scene.getStylesheets().add(STR."file:css/\{cssFile.getValue()}");
 		stage.setTitle(title);
 		stage.setResizable(true);
 		var image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/kegeln.png")));
@@ -238,5 +240,12 @@ public class SelectGameController implements Initializable {
 			screenSelect.getItems().add(STR."Screen \{i + 1}");
 		}
 		screenSelect.setValue(STR."Screen 1");
+		File cssFolder = new File("css");
+		var cssFiles = cssFolder.listFiles();
+		for (var css : cssFiles) {
+			cssFile.getItems().add(css.getName());
+		}
+		cssFile.setValue(cssFiles[0].getName());
+
 	}
 }

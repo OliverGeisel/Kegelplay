@@ -27,5 +27,7 @@
         <CheckBox fx:id="onTop" layoutX="260.0" layoutY="260.0" mnemonicParsing="false" text="Immer im Vordergrund"/>
         <ChoiceBox fx:id="screenSelect" layoutX="257.0" layoutY="298.0" prefWidth="150.0"/>
         <Label layoutX="261.0" layoutY="277.0" text="Bildschirm"/>
+        <ChoiceBox fx:id="cssFile" layoutX="257.0" layoutY="342.0" prefWidth="150.0"/>
+        <Label layoutX="261.0" layoutY="323.0" text="CSS-Datei"/>
     </children>
 </AnchorPane>
