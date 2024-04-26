@@ -1,5 +1,8 @@
 package de.olivergeisel.kegelplay.gui;
 
+import java.io.IOException;
+import static java.lang.Math.round;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,10 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-
-import static java.lang.Math.round;
 
 public class HelloController {
 	private static final double ASPECT_RATIO = 16.0 / 9; // Gewünschtes Seitenverhältnis (z. B. 16:9)
@@ -70,6 +69,8 @@ public class HelloController {
 		stage.setHeight(stackPane.getPrefHeight());
 		stage.setWidth(stackPane.getPrefWidth());
 		stage.setScene(scene);
+		stage.setMaxHeight(1080);
+		stage.setMaxWidth(1920);
 		stage.setMinHeight(400);
 		stage.setMinWidth(800);
 		stage.centerOnScreen();

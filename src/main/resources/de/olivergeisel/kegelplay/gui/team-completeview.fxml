@@ -3,13 +3,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="teamBox" maxWidth="1.7976931348623157E308" prefHeight="400.0"
       prefWidth="200.0" xmlns="http://javafx.com/javafx/11.0.14-internal"
       fx:controller="de.olivergeisel.kegelplay.gui.TeamCompleteViewController">
     <children>
+    <VBox prefHeight="200.0" prefWidth="100.0">
         <Label fx:id="teamLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-               maxWidth="1.7976931348623157E308" text="Team " VBox.vgrow="ALWAYS">
+               maxWidth="1.7976931348623157E308" text="Team " VBox.vgrow="ALWAYS" minWidth="150">
             <font>
                 <Font size="30.0"/>
             </font>
@@ -24,6 +26,7 @@
                 <fx:include source="player-team-overview.fxml"/>
             </children>
         </VBox>
+    </VBox>
 
     </children>
     <opaqueInsets>

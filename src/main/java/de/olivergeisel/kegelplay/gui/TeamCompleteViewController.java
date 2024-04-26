@@ -1,14 +1,14 @@
 package de.olivergeisel.kegelplay.gui;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import de.olivergeisel.kegelplay.core.team_and_player.Team;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class TeamCompleteViewController implements Initializable {
 
