@@ -122,6 +122,15 @@ public abstract class Team<G extends Game> {
 	}
 
 
+	public int getTeamTotalThrows() {
+		int score = 0;
+		for (Player<G> player : players) {
+			score += player.getGame().getNumberOfWurf();
+		}
+		return score;
+	}
+
+
 
 
 	public String getName() {

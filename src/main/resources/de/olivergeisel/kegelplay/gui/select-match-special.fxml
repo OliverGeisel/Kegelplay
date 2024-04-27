@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" minHeight="50" minWidth="50" prefHeight="400.0"
+            prefWidth="550.0" xmlns="http://javafx.com/javafx/11.0.14-internal"
+            fx:controller="de.olivergeisel.kegelplay.gui.SelectGameSpecialController">
+    <children>
+        <Button layoutX="260.0" layoutY="14.0" mnemonicParsing="false" onAction="#loadToday" text="Heute Laden"/>
+        <ScrollPane fitToHeight="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                    minHeight="-Infinity" minViewportHeight="200.0" minViewportWidth="150.0" minWidth="-Infinity"
+                    prefHeight="400.0" prefViewportHeight="400.0" prefViewportWidth="200.0" prefWidth="215.0">
+            <content>
+                <VBox fx:id="vBox" minHeight="-Infinity" minWidth="-Infinity"/>
+            </content>
+        </ScrollPane>
+        <DatePicker fx:id="datePicker" layoutX="363.0" layoutY="14.0" onAction="#loadDay"/>
+        <CheckBox fx:id="frameless" layoutX="260.0" layoutY="231.0" mnemonicParsing="false" prefHeight="25.0"
+                  prefWidth="83.0" text="Rahmenlos"/>
+        <CheckBox fx:id="onTop" layoutX="260.0" layoutY="260.0" mnemonicParsing="false" text="Immer im Vordergrund"/>
+        <ChoiceBox fx:id="screenSelect" layoutX="257.0" layoutY="298.0" prefWidth="150.0"/>
+        <Label layoutX="261.0" layoutY="277.0" text="Bildschirm"/>
+        <ChoiceBox fx:id="cssFile" layoutX="257.0" layoutY="342.0" prefWidth="150.0"/>
+        <Label layoutX="261.0" layoutY="323.0" text="CSS-Datei"/>
+        <ChoiceBox fx:id="match1Select" layoutX="253.0" layoutY="85.0" onInputMethodTextChanged="#updateDisable"
+                   prefWidth="150.0"/>
+        <ChoiceBox fx:id="match2Select" layoutX="253.0" layoutY="149.0" onInputMethodTextChanged="#updateDisable"
+                   prefWidth="150.0"/>
+        <Label layoutX="261.0" layoutY="132.0" text="Match 2"/>
+        <Label layoutX="261.0" layoutY="68.0" text="Match 1"/>
+        <Button fx:id="loadButton" defaultButton="true" disable="true" layoutX="436.0" layoutY="188.0"
+                mnemonicParsing="false" onAction="#loadSelectedGames" text="Laden"/>
+    </children>
+</AnchorPane>
