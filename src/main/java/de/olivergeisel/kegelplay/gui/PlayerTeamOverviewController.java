@@ -1,14 +1,14 @@
 package de.olivergeisel.kegelplay.gui;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import de.olivergeisel.kegelplay.core.game.Game;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class PlayerTeamOverviewController implements Initializable {
 
@@ -17,6 +17,8 @@ public class PlayerTeamOverviewController implements Initializable {
 	private VBox  playerBox;
 	@FXML
 	private Label playerLabel;
+	@FXML
+	private Label bahnLabel;
 	@FXML
 	private Label throwLabel;
 	@FXML
@@ -44,8 +46,9 @@ public class PlayerTeamOverviewController implements Initializable {
 	}
 
 
-	public void update(Game game) {
-		playerLabel.setText(game.getPlayer().getCompleteName());
+	public void update(Game game, String bahn) {
+		playerLabel.setText(STR."\{game.getPlayer().getVorname()} \{game.getPlayer().getNachname()}");
+		bahnLabel.setText(bahn);
 		throwLabel.setText(String.valueOf(game.getNumberOfWurf()));
 		volleLabel.setText(String.valueOf(game.getTotalVolle()));
 		abraeumenLabel.setText(String.valueOf(game.getTotalAbraeumen()));

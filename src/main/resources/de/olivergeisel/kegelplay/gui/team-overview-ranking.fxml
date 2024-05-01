@@ -2,16 +2,15 @@
 
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.14-internal"
-      fx:controller="de.olivergeisel.kegelplay.gui.TeamOverviewRankingController">
+<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.14-internal">
     <children>
         <HBox>
             <children>
-                <fx:include fx:id="team1" source="team-completeview.fxml" HBox.hgrow="ALWAYS"/>
-                <fx:include fx:id="team2" source="team-completeview.fxml"/>
-                <fx:include fx:id="team3" source="team-completeview.fxml"/>
-                <fx:include fx:id="team4" source="team-completeview.fxml"/>
-                <fx:include fx:id="teamOverview" source="team-table.fxml"/>
+                <fx:include fx:id="team1" source="team-completeview.fxml" styleClass="column-odd" HBox.hgrow="ALWAYS"/>
+                <fx:include fx:id="team2" source="team-completeview.fxml" styleClass="column-even" HBox.hgrow="ALWAYS"/>
+                <fx:include fx:id="team3" source="team-completeview.fxml" styleClass="column-odd" HBox.hgrow="ALWAYS"/>
+                <fx:include fx:id="team4" source="team-completeview.fxml" styleClass="column-even" HBox.hgrow="ALWAYS"/>
+                <fx:include fx:id="teamOverview" source="team-table.fxml" alignment="CENTER" HBox.hgrow="ALWAYS"/>
             </children>
         </HBox>
     </children>

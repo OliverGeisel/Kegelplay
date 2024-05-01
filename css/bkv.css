@@ -10,6 +10,40 @@
     -fx-background-radius: 7px;
 }
 
+.active-player {
+    -fx-background-color: #fff676;
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-attachment: fixed
+}
+
+.row-even{
+    -fx-background-color: #caf5b1;
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-attachment: fixed
+}
+
+.row-odd{
+    -fx-background-color: #a5f327;
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-attachment: fixed
+}
+
+.column-odd{
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-attachment: fixed
+}
+
+.column-even{
+    -fx-background-color: #e7e7e7;
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-attachment: fixed
+}
+
 .primary-complementary-color {
     -fx-color: #eeede0;
     -fx-text-fill: #eeede0;

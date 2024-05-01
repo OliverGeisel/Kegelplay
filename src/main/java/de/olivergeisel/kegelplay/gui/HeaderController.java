@@ -1,5 +1,9 @@
 package de.olivergeisel.kegelplay.gui;
 
+import java.io.File;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import de.olivergeisel.kegelplay.core.team_and_player.Player;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,10 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-
-import java.io.File;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class HeaderController implements Initializable {
 
@@ -104,7 +104,10 @@ public class HeaderController implements Initializable {
 				this.image.setImage(new Image(STR."file:\{imagePath}"));
 			} else {
 				var fallBack = STR."images/\{player.getClub()}/logo.png";
+				var fallBackJPG = STR."images/\{player.getClub()}/logo.jpg";
 				if (new File(fallBack).exists()) {
+					this.image.setImage(new Image(STR."file:\{fallBack}"));
+				} else if(new File(fallBackJPG).exists()){
 					this.image.setImage(new Image(STR."file:\{fallBack}"));
 				} else {
 					this.image.setImage(new Image(DEFAULT_IMAGE));

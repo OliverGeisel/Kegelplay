@@ -10,7 +10,14 @@
       fx:controller="de.olivergeisel.kegelplay.gui.PlayerTeamOverviewController">
     <children>
         <Label fx:id="playerLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-               maxWidth="1.7976931348623157E308" minHeight="15.0" prefHeight="15.0" prefWidth="200.0" text="Spieler "
+               maxWidth="1.7976931348623157E308" minHeight="15.0" prefHeight="15.0" prefWidth="200.0" text="Spieler"
+               VBox.vgrow="ALWAYS">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Label>
+        <Label fx:id="bahnLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+               maxWidth="1.7976931348623157E308" minHeight="15.0" prefHeight="15.0" prefWidth="200.0" text="Bahn"
                VBox.vgrow="ALWAYS">
             <font>
                 <Font name="System Bold" size="14.0"/>
@@ -71,14 +78,14 @@
                         <Font size="14.0"/>
                     </font>
                 </Label>
-                <Label fx:id="VolleLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                <Label fx:id="volleLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
                        maxWidth="1.7976931348623157E308" text="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"
                        GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                     <font>
                         <Font size="14.0"/>
                     </font>
                 </Label>
-                <Label fx:id="rauemerLabel" alignment="CENTER" contentDisplay="CENTER"
+                <Label fx:id="abraeumenLabel" alignment="CENTER" contentDisplay="CENTER"
                        maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="0"
                        GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                     <font>

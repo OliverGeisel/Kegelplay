@@ -1,24 +1,5 @@
 package de.olivergeisel.kegelplay.gui;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import de.olivergeisel.kegelplay.core.game.Game120;
-import de.olivergeisel.kegelplay.core.match.Match;
-import de.olivergeisel.kegelplay.infrastructure.data_reader.KeglerheimGeneralReader;
-import de.olivergeisel.kegelplay.infrastructure.data_reader.UnsupportedMatchSchema;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -29,6 +10,30 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.ResourceBundle;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import de.olivergeisel.kegelplay.core.game.Game120;
+import de.olivergeisel.kegelplay.core.match.Match;
+import de.olivergeisel.kegelplay.infrastructure.data_reader.KeglerheimGeneralReader;
+import de.olivergeisel.kegelplay.infrastructure.data_reader.UnsupportedMatchSchema;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class SelectGameSpecialController implements Initializable {
 
@@ -142,7 +147,7 @@ public class SelectGameSpecialController implements Initializable {
 		var datePath = this.datePath;
 		var dataReader1 = new KeglerheimGeneralReader(datePath.resolve(selectedGame1), true);
 		var dataReader2 = new KeglerheimGeneralReader(datePath.resolve(selectedGame2), true);
-		var title = "";
+		var title = "2. Bundesliga Aufstiegsspiele";
 		Match<Game120> match1;
 		try {
 			match1 = dataReader1.initNewMatch();
@@ -172,10 +177,10 @@ public class SelectGameSpecialController implements Initializable {
 		stage.setResizable(true);
 		var image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/kegeln.png")));
 		stage.getIcons().add(image);
-		stage.setHeight(stackPane.getPrefHeight());
-		stage.setWidth(stackPane.getPrefWidth());
-		stage.setMinHeight(stackPane.getMinHeight());
-		stage.setMinWidth(stackPane.getMinWidth());
+		stage.setHeight(400);
+		stage.setWidth(800);
+		stage.setMinHeight(200);
+		stage.setMinWidth(400);
 		stage.initStyle(StageStyle.DECORATED);
 		stage.centerOnScreen();
 		stage.setScene(scene);
@@ -184,18 +189,18 @@ public class SelectGameSpecialController implements Initializable {
 		var selectedScreen = screens.get(screenIndex);
 		Rectangle2D bounds = selectedScreen.getBounds();
 
-		// Setzen der Position und Größe des neuen Fensters basierend auf dem zweiten Bildschirm
-		stage.setX(bounds.getMinX() + (bounds.getWidth() - 400) / 2); // 400 ist die Breite des neuen Fensters
-		stage.setY(bounds.getMinY() + (bounds.getHeight() - 300) / 2); // 300 ist die Höhe des neuen Fensters
+		stage.setX(bounds.getMinX() + (bounds.getWidth() - 500) / 2);
+		stage.setY(bounds.getMinY() + (bounds.getHeight() - 800) / 2); 
 
 
-		stage.setMaxWidth(selectedScreen.getBounds().getWidth() + 20);
-		stage.setMaxHeight(selectedScreen.getBounds().getHeight());
+		stage.setMaxWidth(2000);
+		stage.setMaxHeight(2000);
 		stage.show();
 		if (frameless.isSelected()) {
 			stage.setFullScreen(true);
 		}
 		stage.setAlwaysOnTop(onTop.isSelected());
+		controller.binding();
 	}
 
 	/**

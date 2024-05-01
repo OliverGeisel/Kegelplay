@@ -200,8 +200,8 @@ public class SelectGameController implements Initializable {
 		stage.setY(bounds.getMinY() + (bounds.getHeight() - 300) / 2); // 300 ist die Höhe des neuen Fensters
 
 
-		stage.setMaxWidth(selectedScreen.getBounds().getWidth() + 20);
-		stage.setMaxHeight(selectedScreen.getBounds().getHeight());
+		stage.setMaxWidth(1920 + 20);
+		stage.setMaxHeight(1080);
 		stage.show();
 		if (frameless.isSelected()) {
 			stage.setFullScreen(true);

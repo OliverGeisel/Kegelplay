@@ -1,5 +1,12 @@
 package de.olivergeisel.kegelplay.gui;
 
+import java.net.URL;
+import java.nio.file.Path;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ResourceBundle;
+
 import de.olivergeisel.kegelplay.core.game.Game120;
 import de.olivergeisel.kegelplay.core.team_and_player.Team;
 import de.olivergeisel.kegelplay.infrastructure.ini.IniFile;
@@ -8,13 +15,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-
-import java.net.URL;
-import java.nio.file.Path;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ResourceBundle;
 
 public class TeamTableController implements Initializable {
 
@@ -33,12 +33,14 @@ public class TeamTableController implements Initializable {
 			vorlaufMap.put(team.getName(), getVorlauf(team.getName()));
 		}
 		var teamsSort = teams.stream()
-							 .sorted(Comparator.comparingInt(t -> (t.getTeamScore() + vorlaufMap.get(t.getName()))))
-							 .toList();
+				.sorted(Comparator.comparingInt(t -> (t.getTeamScore() + vorlaufMap.get(t.getName()))))
+				.toList().reversed();
 		for (var child : children) {
 			if (child instanceof Label label) {
 				var rowIndex = GridPane.getRowIndex(label);
+				rowIndex = rowIndex == null ? 0 : rowIndex;
 				var columnIndex = GridPane.getColumnIndex(label);
+				columnIndex = columnIndex == null ? 0 : columnIndex;
 				if (rowIndex == 0) { // header
 					continue;
 				}
@@ -52,19 +54,20 @@ public class TeamTableController implements Initializable {
 					case 4 -> label.setText(String.valueOf(team.getTeamTotalMissThrow()));
 					case 5 ->
 						// set the vorlauf value
-							label.setText(Integer.toString(vorlauf));
+						label.setText(Integer.toString(vorlauf));
 					case 6 -> // set total score
-							label.setText(STR."\{vorlauf + team.getTeamScore()}");
+						label.setText(STR."\{vorlauf + team.getTeamScore()}");
 					case 7 -> { // difference to the next team
-						if (rowIndex == 2) {
+						if (rowIndex == 1) {
 							label.setText("0"); // Todo not needed
+						} else {
+							var sum = team.getTeamScore() + vorlauf;
+							var prefTeam = teamsSort.get(rowIndex - 2);
+							var vorlaufPrevious = vorlaufMap.get(prefTeam.getName());
+							var sumPrevious = prefTeam.getTeamScore() + vorlaufPrevious;
+							var diff = sum - sumPrevious;
+							label.setText(String.valueOf(diff));
 						}
-						var sum = team.getTeamScore() + vorlauf;
-						var prefTeam = teamsSort.get(rowIndex - 2);
-						var vorlaufPrevious = vorlaufMap.get(prefTeam.getName());
-						var sumPrevious = prefTeam.getTeamScore() + vorlaufPrevious;
-						var diff = sum - sumPrevious;
-						label.setText(String.valueOf(diff));
 					}
 				}
 
@@ -83,6 +86,5 @@ public class TeamTableController implements Initializable {
 			return 0;
 		}
 	}
-
 
 }
