@@ -45,7 +45,7 @@ public class PlayerTeamOverviewController implements Initializable {
 
 
 	public void update(Game game) {
-		playerLabel.setText(game.getPlayer().getCompleteName());
+		playerLabel.setText(game.getCurrentPlayer().getCompleteName());
 		throwLabel.setText(String.valueOf(game.getNumberOfWurf()));
 		volleLabel.setText(String.valueOf(game.getTotalVolle()));
 		abraeumenLabel.setText(String.valueOf(game.getTotalAbraeumen()));

@@ -7,6 +7,7 @@ import de.olivergeisel.kegelplay.core.match.Match;
 import de.olivergeisel.kegelplay.core.match.MatchStatusInfo;
 import de.olivergeisel.kegelplay.core.team_and_player.Player;
 import de.olivergeisel.kegelplay.core.team_and_player.Team;
+import de.olivergeisel.kegelplay.infrastructure.csv.CSVFileReader;
 import de.olivergeisel.kegelplay.infrastructure.csv.GameCSVFileReader;
 import de.olivergeisel.kegelplay.infrastructure.ini.IniFile;
 
@@ -85,6 +86,27 @@ public class MatchUpdater<G extends Game> {
 			}
 		} catch (IOException e) {
 			throw new RuntimeException(e);
+		}
+		// second read from csv for substitutions
+		var teamCsv = new CSVFileReader(match.getBaseDir().resolve(STR."\{team.getName()}.csv"));
+		var lines = teamCsv.getData();
+		var playerNumber = 0;
+		for (var playerLine : lines) {
+			var sub1Name = playerLine[7];
+			var sub1Vorname = playerLine[8];
+			var sub2Name = playerLine[12];
+			var sub2Vorname = playerLine[13];
+			var originalPlayer = team.getPlayer(playerNumber);
+			var game = originalPlayer.getGame();
+			if (sub1Name.length() < 3 || sub1Vorname.length() < 3) {
+				var sub = new Player<G>(sub1Vorname, sub1Name);
+				game.setSubstitution1(sub);
+			}
+			if (sub2Name.length() < 3 || sub2Vorname.length() < 3) {
+				var sub = new Player<G>(sub2Vorname, sub2Name);
+				game.setSubstitution1(sub);
+			}
+			playerNumber++;
 		}
 		loadTeamGames(team);
 	}

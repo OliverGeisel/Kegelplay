@@ -1,13 +1,13 @@
 package de.olivergeisel.kegelplay.core.game;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import de.olivergeisel.kegelplay.core.team_and_player.Player;
 import de.olivergeisel.kegelplay.infrastructure.csv.CSVFileReader;
 import javafx.beans.InvalidationListener;
 import javafx.beans.WeakInvalidationListener;
 import javafx.util.Subscription;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * A Game120 is a game with 120 throws.
@@ -24,8 +24,8 @@ public class Game120 extends Game {
 		this(player, LocalDateTime.now());
 	}
 
-	public Game120(Player player, List<Player> substitutions, LocalDateTime date) {
-		super(player, substitutions, date);
+	public Game120(Player player, Player substitution1, Player substitution2, LocalDateTime date) {
+		super(player, substitution1, substitution2, date);
 	}
 
 	protected Game120(Player player, LocalDateTime date) {
