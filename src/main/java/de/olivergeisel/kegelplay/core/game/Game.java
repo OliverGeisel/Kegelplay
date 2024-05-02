@@ -5,7 +5,6 @@ import de.olivergeisel.kegelplay.core.team_and_player.Player;
 import javafx.beans.Observable;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -18,11 +17,11 @@ import java.util.Objects;
 public abstract class Game implements Observable {
 
 
-	private final List<Player>  substitutions      = new ArrayList<>();
-	private final List<Player>  substitutedPlayers = new ArrayList<>();
-	private       Player        player; // current player
-	private       LocalDateTime date;
-	private       GameState     state;
+	private Player        substitution1;
+	private Player        substitution2; // todo better substitution system.
+	private Player        player; // original player
+	private LocalDateTime date;
+	private GameState     state;
 
 	protected Game(Player player, LocalDateTime date) {
 		this.player = player;
@@ -37,9 +36,10 @@ public abstract class Game implements Observable {
 		this(player, LocalDateTime.now());
 	}
 
-	protected Game(Player player, List<Player> substitutions, LocalDateTime date) {
+	protected Game(Player player, Player substitution1, Player substitution2, LocalDateTime date) {
 		this(player, date);
-		this.substitutions.addAll(substitutions);
+		this.substitution1 = substitution1;
+		this.substitution2 = substitution2;
 	}
 
 	/**
@@ -64,20 +64,27 @@ public abstract class Game implements Observable {
 		}
 	}
 
-	public void substitute(Player player) {
-		if (substitutions.contains(player)) {
-			substitutions.remove(player);
-			substitutedPlayers.add(this.player);
-			this.player = player;
-		}
-		throw new IllegalArgumentException("Spieler nicht in der Liste der Ersatzspieler");
-	}
-
 	public abstract void start();
 
 	public abstract GameSet getDurchgang(int durchgang);
 
 	//region setter/getter
+
+	/**
+	 * Returns the player that is currently play the game. This can be the original player or one of the two
+	 * substitutions. If sub1 is not null then he will be returned except sub2 isn`t.
+	 * @return Player that is currently play
+	 */
+	public Player getCurrentPlayer() {
+		if (substitution2 != null) {
+			return substitution2;
+		}
+		if (substitution1 != null) {
+			return substitution1;
+		}
+		return player;
+	}
+
 	public abstract GameInfo getGameInfo();
 
 	/**
@@ -180,6 +187,14 @@ public abstract class Game implements Observable {
 		return getDurchgang(getSets().length - 1);
 	}
 
+	public void setSubstitution1(Player player) {
+		substitution1 = player;
+	}
+
+	public void setSubstitution2(Player player) {
+		substitution2 = player;
+	}
+
 	public abstract void setDurchgaenge(List<GameSet> durgaenge);
 //endregion
 
@@ -188,15 +203,15 @@ public abstract class Game implements Observable {
 		if (this == o) return true;
 		if (!(o instanceof Game game)) return false;
 
-		return substitutions.equals(game.substitutions) && substitutedPlayers.equals(game.substitutedPlayers)
+		return substitution1.equals(game.substitution1) && substitution2.equals(game.substitution2)
 			   && Objects.equals(player, game.player) && Objects.equals(date, game.date)
 			   && Objects.equals(state, game.state);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = substitutions.hashCode();
-		result = 31 * result + substitutedPlayers.hashCode();
+		int result = substitution1.hashCode();
+		result = 31 * result + substitution2.hashCode();
 		result = 31 * result + Objects.hashCode(player);
 		result = 31 * result + Objects.hashCode(date);
 		result = 31 * result + Objects.hashCode(state);
