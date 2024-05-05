@@ -7,8 +7,10 @@ import de.olivergeisel.kegelplay.core.team_and_player.Team;
 import javafx.util.Pair;
 
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -141,6 +143,17 @@ public abstract class Match<G extends Game> {
 			}
 		}
 		return back;*/
+	}
+
+	public Map<Player<G>, String> getCurrentPlayerBahnMapping(){
+		var bahnNames = config.getLaneNames();
+		var players =  getCurrentPlayers();
+		var back = new HashMap<Player<G>, String>();
+		int i= 0;
+		for (var player: players){
+			back.put(player, bahnNames.get(i++));
+		}
+		return back;
 	}
 
 	public List<Pair<Integer, Integer>> getPlayerForSet() {
