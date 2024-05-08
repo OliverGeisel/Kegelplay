@@ -4,9 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.olivergeisel</groupId>
-    <artifactId>kegelplay</artifactId>
+    <groupId>de.kegelplay</groupId>
+    <artifactId>project</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <name>Kegelplay</name>
     <description>Kegelplay is a graphical application to display various kegel-sport games.
         It is written in Java and uses JavaFX as GUI framework.
@@ -97,7 +98,7 @@
 
     <build>
         <plugins>
-         <plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
@@ -118,12 +119,12 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                        <compilerArgs>
-                            <arg>--module-path</arg>
-                            <arg>${project.build.directory}/modules</arg>
-                        </compilerArgs>
+                            <compilerArgs>
+                                <arg>--module-path</arg>
+                                <arg>${project.build.directory}/modules</arg>
+                            </compilerArgs>
                             <mainClass>
-                            de.olivergeisel.kegelplay/de.olivergeisel.kegelplay.KegelplayApplication
+                                de.olivergeisel.kegelplay/de.olivergeisel.kegelplay.KegelplayApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
@@ -147,4 +148,11 @@
             <url>https://repo.maven.apache.org/maven2/</url>
         </repository>
     </repositories>
+
+    <modules>
+        <module>de.kegelplay.core</module>
+        <module>application</module>
+        <module>point-system</module>
+    </modules>
+
 </project>

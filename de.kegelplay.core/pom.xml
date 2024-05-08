@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>core</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>Kegelplay Core</name>
+
+    <parent>
+        <groupId>de.kegelplay</groupId>
+        <artifactId>project</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <description>Kegelplay is eco-system to handle 9Pin Bowling games and matches.
+        It is written in Java. The core module is the base for all other modules.
+        In this module are the classes to handle players, teams, games and matches.
+    </description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <junit.version>5.10.1</junit.version>
+        <java-version>21</java-version>
+        <javafx-version>21.0.1</javafx-version>
+    </properties>
+
+
+</project>
