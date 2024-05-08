@@ -1,14 +1,25 @@
 package de.olivergeisel.kegelplay.core.team_and_player;
 
 import de.olivergeisel.kegelplay.core.game.Game;
+import de.olivergeisel.kegelplay.core.match.Match;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A team in a match.
- * A team consists of players and substitutes.
+ * A team in a {@link Match}. This is the basic class for a team in a {@link Match}.
+ * A team consists of active {@link Player}s and the substitutes ({@link Player} too). Every general information about
+ * the team is stored in a {@link GeneralTeamInfo} object. It can be accessed by the {@link #getGeneralTeamInfo()}.
+ *
+ * @param <G> the type of the {@link Game}
+ * @see Player
+ * @see Game
+ * @see GeneralTeamInfo
+ *
+ * @version 1.0.0
+ * @since 1.0.0
+ * @author Oliver Geisel
  */
 public abstract class Team<G extends Game> {
 
@@ -16,8 +27,6 @@ public abstract class Team<G extends Game> {
 	private       String                    name;
 	private       Player<G>[]               players;
 	private       Player<G>[]               substitutes;
-	private       int                       numberOfPlayers;
-	private       int                       numberOfSubstitutes;
 	private       GeneralTeamInfo           generalTeamInfo;
 
 	protected Team(String name, GeneralTeamInfo teamInfo, Player<G>[] players, Player<G>[] substitutes) {
@@ -28,13 +37,12 @@ public abstract class Team<G extends Game> {
 
 	}
 
-	protected Team(String name, Player<G>[] players, Player<G>[] substitutes, int numberOfPlayers,
-			int numberOfSubstitutes) {
+	protected Team(String name, Player<G>[] players, Player<G>[] substitutes, GeneralTeamInfo teamInfo,
+			int numberOfPlayers, int numberOfSubstitutes) {
 		this.name = name;
 		this.players = players;
 		this.substitutes = substitutes;
-		this.numberOfPlayers = numberOfPlayers;
-		this.numberOfSubstitutes = numberOfSubstitutes;
+		this.generalTeamInfo = teamInfo;
 		if (players.length != numberOfPlayers) {
 			throw new IllegalArgumentException(
 					STR."A team with \{numberOfPlayers} players must have \{numberOfPlayers} players.");
@@ -45,6 +53,13 @@ public abstract class Team<G extends Game> {
 		}
 	}
 
+	/**
+	 * Returns the player with the given index.
+	 *
+	 * @param index the index of the player
+	 * @return the player with the given index
+	 * @throws IllegalArgumentException if the index is out of bounds
+	 */
 	public Player<G> getPlayer(int index) throws IllegalArgumentException {
 		try {
 			return players[index];
@@ -53,16 +68,36 @@ public abstract class Team<G extends Game> {
 		}
 	}
 
+	/**
+	 * Returns the player with the given name.
+	 *
+	 * @param name the name of the player. The name must be the complete name with commata.
+	 * @return the player with the given name
+	 * @throws NoPlayerFoundException if no player with the given name is found
+	 */
 	public Player<G> getPlayer(String name) throws NoPlayerFoundException {
 		for (Player<G> player : players) {
-			if (player.getCompleteName().equals(name)) {
+			if (player == null) {
+				continue; // todo maybe throw exception or assure not possible
+			}
+			if (player.getCompleteNameWithCommata().equals(name)) {
 				return player;
 			}
 		}
 		throw new NoPlayerFoundException();
 	}
 
-	public Player<G> getSubstitute(int index) {
+	/**
+	 * Returns the substitute with the given index.
+	 *
+	 * @param index the index of the substitute
+	 * @return the substitute with the given index
+	 * @throws IllegalArgumentException if the index is out of bounds
+	 */
+	public Player<G> getSubstitute(int index) throws IllegalArgumentException {
+		if (index < 0 || index >= substitutes.length) {
+			throw new IllegalArgumentException(STR."Index out of bounds: \{index}");
+		}
 		return substitutes[index];
 	}
 
@@ -89,6 +124,15 @@ public abstract class Team<G extends Game> {
 	}
 
 	//region setter/getter
+
+	/**
+	 * Returns all information in the form of a {@link GeneralTeamInfo} for the team.
+	 * @return the {@link GeneralTeamInfo} of the team
+	 */
+	public GeneralTeamInfo getGeneralTeamInfo() {
+		return generalTeamInfo;
+	}
+
 	public int getTeamScore() {
 		int score = 0;
 		for (Player<G> player : players) {
@@ -129,8 +173,6 @@ public abstract class Team<G extends Game> {
 		}
 		return score;
 	}
-
-
 
 
 	public String getName() {

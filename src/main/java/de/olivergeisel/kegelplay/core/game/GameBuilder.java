@@ -2,13 +2,16 @@ package de.olivergeisel.kegelplay.core.game;
 
 
 /**
- * Builder for games. A game builder can build a game from a source or an empty game.
+ * Builder for {@link Game}. A GameBuilder can build a game from a source or an empty game.
  *
  * @param <G> The type of the game.
- * @version 1.0.0
  * @see Game
  * @see GameSource
+ *
  * @since 1.0.0
+ * @version 1.0.0
+ * @author Oliver Geisel
+ *
  */
 public abstract class GameBuilder<G extends Game> {
 

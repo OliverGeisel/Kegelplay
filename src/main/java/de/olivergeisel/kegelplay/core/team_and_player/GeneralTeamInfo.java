@@ -2,28 +2,34 @@ package de.olivergeisel.kegelplay.core.team_and_player;
 
 import de.olivergeisel.kegelplay.infrastructure.ini.IniFile;
 
+/**
+ * Contains all information about a team.
+ *
+ * @see Team
+ *
+ * @version 1.0.0
+ * @since 1.0.0
+ * @author Oliver Geisel
+ */
 public class GeneralTeamInfo {
-	private String name;
-	private String gameClass;
-	private String league;
-	private String district;
-	private String leader;
-	private String observer;
-	private String clubNumber;
-	private int    numberOfPlayers;
-	private int    numberOfSubstitutes;
 
-	protected GeneralTeamInfo() {
-		name = "";
-		gameClass = "";
-		league = "";
-		district = "";
-		leader = "";
-		observer = "";
-		clubNumber = "";
-		numberOfPlayers = 0;
-		numberOfSubstitutes = 0;
-	}
+	private final String name;
+	private final String gameClass;
+	private final String league;
+	private final String district;
+	private final String leader;
+	private final String observer;
+	private final String clubNumber;
+	private final int    numberOfPlayers;
+	private final int    numberOfSubstitutes;
+
+
+	/**
+	 * Creates a new GeneralTeamInfo object from an IniFile.
+	 *
+	 * @param iniFile The IniFile that contains the information.
+	 * @see IniFile
+	 */
 	public GeneralTeamInfo(IniFile iniFile) {
 		var region = iniFile.getRegion("Allgemein");
 		name = region.getValue("Name");
@@ -35,6 +41,31 @@ public class GeneralTeamInfo {
 		clubNumber = region.getValue("Vereins-Nr");
 		numberOfPlayers = Integer.parseInt(region.getValue("Anzahl Spieler"));
 		numberOfSubstitutes = Integer.parseInt(region.getValue("Anzahl Ersatzspieler"));
+	}
+
+	public GeneralTeamInfo(String name, String gameClass, String league, String district, String leader,
+			String observer, String clubNumber, int numberOfPlayers, int numberOfSubstitutes) {
+		this.name = name;
+		this.gameClass = gameClass;
+		this.league = league;
+		this.district = district;
+		this.leader = leader;
+		this.observer = observer;
+		this.clubNumber = clubNumber;
+		this.numberOfPlayers = numberOfPlayers;
+		this.numberOfSubstitutes = numberOfSubstitutes;
+	}
+
+	protected GeneralTeamInfo() {
+		name = "";
+		gameClass = "";
+		league = "";
+		district = "";
+		leader = "";
+		observer = "";
+		clubNumber = "";
+		numberOfPlayers = 0;
+		numberOfSubstitutes = 0;
 	}
 
 	//region setter/getter

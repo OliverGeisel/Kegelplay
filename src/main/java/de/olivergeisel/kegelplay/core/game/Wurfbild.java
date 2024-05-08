@@ -1,9 +1,16 @@
 package de.olivergeisel.kegelplay.core.game;
 
 /**
- * Represents a single pitch.
+ * Represents a single throw ({@link Wurf}).
  * It can display the concrete fallen pins.
  * if a pin is fallen the value is true.
+ * The pins are numbered from 1 to 9.
+ *
+ * @see Wurf
+ *
+ * @version 1.0.0
+ * @since 1.0.0
+ * @author Oliver Geisel
  */
 public class Wurfbild {
 
@@ -86,11 +93,16 @@ public class Wurfbild {
 	}
 
 	//region setter/getter
+
+	/**
+	 * Get the number of fallen pins.
+	 * @return number of fallen pins
+	 */
 	public int getWert() {
 		int sum = 0;
 		for (int i = 1; i <= 9; i++) {
 			if (get(i)) {
-				sum++;
+				++sum;
 			}
 		}
 		return sum;

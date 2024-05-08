@@ -2,6 +2,19 @@ package de.olivergeisel.kegelplay.core.team_and_player;
 
 import de.olivergeisel.kegelplay.core.game.Game;
 
+/**
+ * Represents a {@link Team} with exact 4 players.
+ *
+ * @param <G> the type of the game
+ * @see Team
+ * @see Player
+ * @see GeneralTeamInfo
+ * @see Game
+ *
+ * @version 1.0.0
+ * @since 1.0.0
+ * @author Oliver Geisel
+ */
 public class Team4<G extends Game> extends Team<G> {
 
 	/**

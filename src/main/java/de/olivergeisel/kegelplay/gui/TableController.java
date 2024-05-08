@@ -1,8 +1,5 @@
 package de.olivergeisel.kegelplay.gui;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import de.olivergeisel.kegelplay.core.game.Game;
 import de.olivergeisel.kegelplay.core.game.Game120;
 import de.olivergeisel.kegelplay.core.match.Match;
@@ -14,6 +11,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class TableController implements Initializable {
 
@@ -66,7 +66,8 @@ public class TableController implements Initializable {
 							var player = game.getPlayer();
 							if (points instanceof _2TeamsMatchPoints<?> teamPoints) {
 								var gamePoints =
-										teamPoints.getGamePointsForPlayer(player.getCompleteName()).getPoints();
+										teamPoints.getGamePointsForPlayer(player.getCompleteNameWithUnderscore())
+												  .getPoints();
 								label.setText(Double.toString(gamePoints));
 							}
 							if (match.getPointSystem() instanceof AllAgainstAll120_4PlayerPointSystem allAgainst){
@@ -82,13 +83,14 @@ public class TableController implements Initializable {
 				var durchgang = game.getDurchgang(row - 1);
 				switch (col) {
 					case 0 -> label.setText(Integer.toString(durchgang.getAnzahlGespielteWuerfe()));
-					case 1 -> label.setText(Integer.toString(durchgang.getAnzahlVolle()));
-					case 2 -> label.setText(Integer.toString(durchgang.getAnzahlAbraeumen()));
+					case 1 -> label.setText(Integer.toString(durchgang.getVolleScore()));
+					case 2 -> label.setText(Integer.toString(durchgang.getAbraeumenScore()));
 					case 3 -> label.setText(Integer.toString(durchgang.getScore()));
 					case 4 -> label.setText(Integer.toString(durchgang.getAnzahlFehler()));
 					case 5 -> {
 						var player = game.getPlayer();
-						var point = points.getGameSetPointsFor(player.getCompleteName(), durchgang.getGameSetNumber());
+						var point = points.getGameSetPointsFor(player.getCompleteNameWithUnderscore(),
+								durchgang.getGameSetNumber());
 						label.setText(Double.toString(point));
 					}
 					default -> throw new IllegalStateException(STR."Unexpected value: \{col}");

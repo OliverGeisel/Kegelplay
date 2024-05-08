@@ -1,5 +1,6 @@
 package de.olivergeisel.kegelplay.core.game;
 
+import de.olivergeisel.kegelplay.core.match.Match;
 import de.olivergeisel.kegelplay.core.team_and_player.Player;
 import de.olivergeisel.kegelplay.infrastructure.csv.CSVFileReader;
 import javafx.beans.InvalidationListener;
@@ -10,9 +11,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * A Game120 is a game with 120 throws.
- * The game is played in 4 Durchgänge with 30 throws each.
-
+ * A Game120 is a game with 120 throws. This is the international standard for a game in classic 9pin bowling.
+ * The game is played in 4 {@link GameSet Durchgänge} with 30 throws each.
+ * The player has to play 15 Volle and 15 Abraeumen in each {@link GameSet}.
+ *
+ * @see Game
+ * @see GameSet
+ * @see Player
+ * @see Match
+ *
+ * @version 1.0.0
+ * @since 1.0.0
+ * @author Oliver Geisel
  */
 public class Game120 extends Game {
 
@@ -116,8 +126,18 @@ public class Game120 extends Game {
 		return super.subscribe(invalidationSubscriber);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @param durchgang the number of the {@link GameSet} to get
+	 *                  (0 <= durchgang < 4)
+	 * @return the {@link GameSet} at the given number
+	 * @throws IllegalArgumentException if the number is out of bounds
+	 */
 	@Override
-	public GameSet getDurchgang(int durchgang) {
+	public GameSet getDurchgang(int durchgang) throws IllegalArgumentException {
+		if (durchgang < 0 || durchgang >= ANZAHL_DURCHGAENGE) {
+			throw new IllegalArgumentException(STR."Index out of bounds: \{durchgang}. Game120 has only 4 Durchgänge.");
+		}
 		return sets[durchgang];
 	}
 
@@ -126,6 +146,7 @@ public class Game120 extends Game {
 	public GameInfo getGameInfo() {
 		return new GameInfo(4, 15, 15, 12, true);
 	}
+
 	@Override
 	public GameKind getGameKind() {
 		return GameKind.GAME_120;
@@ -141,7 +162,7 @@ public class Game120 extends Game {
 		var back = 0;
 		for (GameSet set : sets) {
 			if (set.getState() == SetState.FINISHED) {
-				back += set.getAnzahlWuerfe();
+				back += set.getThrowCount();
 			} else {
 				back += set.getAnzahlGespielteWuerfe();
 			}
@@ -171,7 +192,7 @@ public class Game120 extends Game {
 	public int getTotalVolle() {
 		var back = 0;
 		for (GameSet set : sets) {
-			back += set.getAnzahlVolle();
+			back += set.getVolleScore();
 		}
 		return back;
 	}
@@ -180,7 +201,7 @@ public class Game120 extends Game {
 	public int getTotalAbraeumen() {
 		var back = 0;
 		for (GameSet set : sets) {
-			back += set.getAnzahlAbraeumen();
+			back += set.getAbraeumenScore();
 		}
 		return back;
 	}
@@ -193,7 +214,8 @@ public class Game120 extends Game {
 	@Override
 	public void setDurchgaenge(List<GameSet> durgaenge) throws IllegalArgumentException {
 		if (durgaenge.size() != ANZAHL_DURCHGAENGE) {
-			throw new IllegalArgumentException(STR."Anzahl der Durchgänge stimmt nicht. Erwarte \{ANZAHL_DURCHGAENGE}; waren aber \{durgaenge.size()}");
+			throw new IllegalArgumentException(
+					STR."Anzahl der Durchgänge stimmt nicht. Erwarte \{ANZAHL_DURCHGAENGE}; waren aber \{durgaenge.size()}");
 		}
 		for (int i = 0; i < ANZAHL_DURCHGAENGE; i++) {
 			sets[i] = durgaenge.get(i);
