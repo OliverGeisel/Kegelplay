@@ -9,6 +9,26 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+
+/**
+ * Represents an .ini file. An ini file is a file that contains regions. Each region is a block of lines that are
+ * separated by a name. The region contains key-value pairs that are stored in a map.
+ * Each region has a name at the beginning of the block.
+ * <p>
+ * <b>Example:</b>
+ * <pre>
+ *     [RegionName]
+ *     key1=value1
+ *     key2=value
+ *     ...
+ * </pre>
+ * </p>
+ * @see IniRegion
+ *
+ * @version 1.0.0
+ * @since 1.0.0
+ * @author Oliver Geisel
+ */
 public class IniFile {
 
 	private static final System.Logger LOGGER = System.getLogger(IniFile.class.getName());
@@ -16,6 +36,16 @@ public class IniFile {
 	private String          name;
 	private List<IniRegion> regions = new java.util.ArrayList<>();
 
+
+	/**
+	 * Creates a new IniFile object from a Path.
+	 *
+	 * @param path The path to the file.
+	 * @param encoding The encoding of the file.
+	 * @throws IOException If the file could not be read.
+	 * @throws IniFileException If the file is not a valid ini file.
+	 * @throws IllegalArgumentException If the path is null, the file does not exist or the file does not end with .ini.
+	 */
 	public IniFile(Path path, String encoding) throws IOException, IniFileException, IllegalArgumentException {
 		if (path == null) {
 			throw new IllegalArgumentException("path must not be null");
@@ -47,6 +77,14 @@ public class IniFile {
 		}
 	}
 
+	/**
+	 * Creates a new IniFile object from a Path with default encoding ISO-8859-1.
+	 *
+	 * @param path The path to the file.
+	 * @throws IOException If the file could not be read.
+	 * @throws IniFileException If the file is not a valid ini file.
+	 * @throws IllegalArgumentException If the path is null, the file does not exist or the file does not end with .ini.
+	 */
 	public IniFile(Path path) throws IOException, IniFileException, IllegalArgumentException {
 		this(path, "ISO-8859-1");
 	}
@@ -58,13 +96,11 @@ public class IniFile {
 	/**
 	 * Create IniFile with multiple regions
 	 *
-	 * @param firstLine first line of the ini file
+	 * @param firstLine first line of the ini file. Is the name of the first region
 	 * @param lines all lines of the ini file
-	 *  @throws IniFileException if the first line is not a region
+	 *  @throws IniFileException if the first line is not the name of a region
 	 */
-	private void createWithMultipleRegions(String firstLine, String[] lines)
-			throws IniFileException {
-		// iterate threw lines
+	private void createWithMultipleRegions(String firstLine, String[] lines) throws IniFileException {
 		String regionName;
 		List<String> regionLines = new LinkedList<>();
 		if (!firstLine.startsWith("[") || !firstLine.endsWith("]")) {
@@ -79,7 +115,7 @@ public class IniFile {
 				regionName = trimmedLine.substring(1, trimmedLine.length() - 1);
 				regionLines = new java.util.ArrayList<>();
 				currentRegion = new IniRegion(regionName, regionLines.toArray(String[]::new));
-				this.regions.add(currentRegion);
+				regions.add(currentRegion);
 			} else {
 				if (!trimmedLine.contains("=")) {
 					LOGGER.log(System.Logger.Level.INFO, "invalid pair {line} in ini file");
@@ -94,12 +130,21 @@ public class IniFile {
 		}
 	}
 
+	/**
+	 * Create IniFile with only one region ({@link IniRegion})
+	 * The given lines are the lines of the region. The region has no name. If you want the name of the region, you
+	 * get the empty string.
+	 *
+	 * @see IniRegion
+	 * @param lines all lines of the ini region
+	 * @throws IniFileException if one key value pair is not valid
+	 */
 	private void creatWithOneRegion(String[] lines) {
 		var map = new java.util.HashMap<String, String>();
 		for (var line : lines) {
 			var keyValue = line.split("=");
 			if (keyValue.length != 2) {
-				throw new IniFileException("invalid ini file");
+				throw new IniFileException(STR."invalid ini file! Missing value or key in line: \{line}");
 			}
 			map.put(keyValue[0].trim(), keyValue[1].trim());
 		}
@@ -110,19 +155,42 @@ public class IniFile {
 		return regions.stream().filter(r -> r.getName().equals(name)).findFirst().orElse(null);
 	}
 
-	public IniRegion getRegion(int index) {
+	/**
+	 * Get a region by its index.
+	 *
+	 * @param index The index of the region.
+	 * @return The region at the index.
+	 * @throws IndexOutOfBoundsException If the index is out of bounds.
+	 */
+	public IniRegion getRegion(int index) throws IndexOutOfBoundsException {
 		return regions.get(index);
 	}
 
 	//region setter/getter
+
+	/**
+	 * Get the name of the ini file.
+	 *
+	 * @return The name of the ini file.
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Get all regions of the ini file.
+	 *
+	 * @return An unmodifiable list of all regions.
+	 */
 	public List<IniRegion> getRegions() {
 		return Collections.unmodifiableList(regions);
 	}
 
+	/**
+	 * Get the number of regions in the ini file.
+	 *
+	 * @return The number of regions.
+	 */
 	public int getRegionCount() {
 		return regions.size();
 	}

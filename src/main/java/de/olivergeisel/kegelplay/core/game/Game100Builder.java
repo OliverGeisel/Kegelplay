@@ -1,8 +1,4 @@
-package de.olivergeisel.kegelplay.infrastructure.data_reader;
-
-import de.olivergeisel.kegelplay.core.game.Game;
-import de.olivergeisel.kegelplay.core.game.GameBuilder;
-import de.olivergeisel.kegelplay.core.game.GameSource;
+package de.olivergeisel.kegelplay.core.game;
 
 public class Game100Builder extends GameBuilder<Game> {
 	/**

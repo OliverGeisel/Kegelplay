@@ -1,5 +1,8 @@
 package de.olivergeisel.kegelplay.core.team_and_player;
 
+/**
+ * Exception to be thrown when no player is found.
+ */
 public class NoPlayerFoundException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;

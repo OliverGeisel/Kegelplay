@@ -3,10 +3,19 @@ package de.olivergeisel.kegelplay.core.game;
 import java.util.Arrays;
 import java.util.Objects;
 
+import static java.lang.Math.max;
+
 /**
  * Represents a set of a game.
  * A set consists of a number of throws. The number of throws is divided into full throws and throws to clear the pins.
  * A set is completed when all throws have been made or the time has expired.
+ *
+ * @see Wurf
+ * @see Game
+ *
+ * @version 1.0.0
+ * @since 1.0.0
+ * @author Oliver Geisel
  */
 public class GameSet {
 
@@ -53,13 +62,32 @@ public class GameSet {
 	 * @throws IndexOutOfBoundsException if the number is out of bounds
 	 */
 	public void set(int number, Wurf w, double time) throws IndexOutOfBoundsException {
-		wuerfe[number] = w;
-		state = allThrowsAreSet() ? SetState.FINISHED : SetState.IN_PROGRESS;
+		set(number, w);
 		setTime(time);
 	}
 
+	public void reset(int index) throws IllegalStateException, IllegalArgumentException {
+		if (index < 0 || index >= throwCount)
+			throw new IllegalArgumentException(STR."Wurf \{index} don't exist");
+		if (wuerfe[index] == null)
+			throw new IllegalStateException(STR."Wurf \{index} is already null");
+		wuerfe[index] = null;
+		if (getAnzahlGespielteWuerfe() == 0) {
+			state = SetState.NOT_STARTED;
+		} else {
+			state = time == 0 ? SetState.FINISHED : SetState.IN_PROGRESS;
+		}
+	}
+
+	/**
+	 * Get the throw at the given number. Can be null if throw was set yet.
+	 *
+	 * @param wurf Number of the throw
+	 * @return Wurf at the given number. Is null if the throw was set yet.
+	 * @throws IllegalArgumentException if the number is out of bounds
+	 */
 	public Wurf get(int wurf) throws IllegalArgumentException {
-		if (wurf >= throwCount) throw new IllegalArgumentException(STR."Wurf \{wurf} existiert nicht");
+		if (wurf < 0 || wurf >= throwCount) throw new IllegalArgumentException(STR."Wurf \{wurf} existiert nicht");
 		return wuerfe[wurf];
 	}
 
@@ -73,23 +101,48 @@ public class GameSet {
 	}
 
 	//region setter/getter
+
+	/**
+	 * Number of maximum volle throws in this set.
+	 * @return Number of maximum volle throws
+	 */
+	public int getAnzahlVolle() {
+		return anzahlVolle;
+	}
+
+	/**
+	 * Number of the set in the {@link Game}.
+	 * @return Number of the set
+	 */
 	public int getGameSetNumber() {
 		return gameSetNumber;
 	}
 
+	/**
+	 * Get the remaining time for the set.
+	 * If the time is 0, the set is {@link SetState#FINISHED}.
+	 * @return Remaining time in minutes
+	 */
 	public double getTime() {
 		return time;
 	}
 
 	/**
 	 * Set the remaining time for the set. If the time is 0, the set is {@link SetState#FINISHED}.
+	 * If the time is not 0 and all throws are set, the set is {@link SetState#FINISHED}.
+	 * If the time is not 0 and no throw is set, the set is {@link SetState#NOT_STARTED}.
+	 * Otherwise the set is {@link SetState#IN_PROGRESS}.
 	 *
 	 * @param time Remaining time in minutes
 	 */
 	public void setTime(double time) {
-		this.time = time;
-		if (time <= 0) {
+		this.time = max(0, time);
+		if (this.time <= 0 || allThrowsAreSet()) {
 			state = SetState.FINISHED;
+		} else if (getAnzahlGespielteWuerfe() == 0) {
+			state = SetState.NOT_STARTED;
+		} else {
+			state = SetState.IN_PROGRESS;
 		}
 	}
 
@@ -106,6 +159,11 @@ public class GameSet {
 		return state;
 	}
 
+	/**
+	 * Get the last {@link Wurf} of this set. This is either the last throw that was set, null if no throw was set
+	 * yet or the last throw that was set but not the possible last throw of the set, because the time has expired.
+	 * @return Last {@link Wurf} or null, if no throw was set yet
+	 */
 	public Wurf getLastWurf() {
 		for (int i = throwCount - 1; i >= 0; i--) {
 			if (wuerfe[i] != null) return wuerfe[i];
@@ -130,7 +188,7 @@ public class GameSet {
 	 *
 	 * @return Sum of volle throws values
 	 */
-	public int getAnzahlVolle() {
+	public int getVolleScore() {
 		var back = 0;
 		for (int i = 0; i < anzahlVolle; ++i) {
 			var wurf = wuerfe[i];
@@ -155,7 +213,7 @@ public class GameSet {
 	 *
 	 * @return Sum of abraeumen throws values
 	 */
-	public int getAnzahlAbraeumen() {
+	public int getAbraeumenScore() {
 		var back = 0;
 		for (int i = anzahlVolle; i < throwCount; ++i) {
 			var wurf = wuerfe[i];
@@ -188,9 +246,34 @@ public class GameSet {
 	 *
 	 * @return Number of throws
 	 */
-	public int getAnzahlWuerfe() {
+	public int getThrowCount() {
 		return throwCount;
 	}
 //endregion
 
+	@Override
+	public final boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof GameSet gameSet)) return false;
+
+		return throwCount == gameSet.throwCount && anzahlVolle == gameSet.anzahlVolle
+			   && Double.compare(time, gameSet.time) == 0 && gameSetNumber == gameSet.gameSetNumber
+			   && Arrays.equals(wuerfe, gameSet.wuerfe) && state == gameSet.state;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = throwCount;
+		result = 31 * result + anzahlVolle;
+		result = 31 * result + Arrays.hashCode(wuerfe);
+		result = 31 * result + Double.hashCode(time);
+		result = 31 * result + state.hashCode();
+		result = 31 * result + gameSetNumber;
+		return result;
+	}
+
+	@Override
+	public String toString() {
+		return STR."GameSet{state=\{state}, gameSetNumber=\\{gameSetNumber}, wuerfe=\{Arrays.toString(wuerfe)}'}";
+	}
 }

@@ -10,9 +10,32 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * A game.
- * A game is played by one {@link Player}.
- * Represents the current state of a game in a {@link Match}
+ * Represents the current state of a game in a {@link Match}.
+ * A game is played by one {@link Player}. It consists of {@link GameSet}s.
+ * This is only the abstract class for a game. The concrete implementation is done by the subclasses.
+ * The diffenenct between the subclasses is the number of {@link GameSet}s and the specific configuration of the
+ * {@link GameSet}s.
+ * <br>
+ * A game can be in different states.
+ * <p>
+ *     A game is in the state {@link NotStartedState} if it has not yet started.
+ *     A game is in the state {@link RunningState} if it is currently being played.
+ *     A game is in the state {@link PausedState} if it is currently paused.
+ *     A game is in the state {@link FinishedState} if it is finished.
+ * </p>
+ * <p>
+ * 		A game is played by one {@link Player} at a time. Each game can substitute the original player with maximum
+ * 	two other players. The {@link #getCurrentPlayer()} method returns the current player. This can be the original
+ * 	player or one of the two substitutions.
+ * </p>
+ *
+ * @see GameSet
+ * @see Player
+ * @see Match
+ *
+ * @version 1.0.0
+ * @since 1.0.0
+ * @author Oliver Geisel
  */
 public abstract class Game implements Observable {
 
@@ -23,6 +46,11 @@ public abstract class Game implements Observable {
 	private LocalDateTime date;
 	private GameState     state;
 
+
+	protected Game(Player player) {
+		this(player, LocalDateTime.now());
+	}
+
 	protected Game(Player player, LocalDateTime date) {
 		this.player = player;
 		if (player != null) {
@@ -30,10 +58,6 @@ public abstract class Game implements Observable {
 		}
 		this.date = date;
 		state = new NotStartedState();
-	}
-
-	protected Game(Player player) {
-		this(player, LocalDateTime.now());
 	}
 
 	protected Game(Player player, Player substitution1, Player substitution2, LocalDateTime date) {
@@ -66,7 +90,14 @@ public abstract class Game implements Observable {
 
 	public abstract void start();
 
-	public abstract GameSet getDurchgang(int durchgang);
+	/**
+	 * Returns the {@link GameSet} of the game at the given number.
+	 *
+	 * @param durchgang Number of the {@link GameSet}
+	 * @return {@link GameSet} at the given number
+	 * @throws IllegalArgumentException if the number is out of bounds
+	 */
+	public abstract GameSet getDurchgang(int durchgang) throws IllegalArgumentException;
 
 	//region setter/getter
 
@@ -85,6 +116,10 @@ public abstract class Game implements Observable {
 		return player;
 	}
 
+	/**
+	 * Returns the {@link GameInfo} of the game.
+	 * @return {@link GameInfo} of the game
+	 */
 	public abstract GameInfo getGameInfo();
 
 	/**

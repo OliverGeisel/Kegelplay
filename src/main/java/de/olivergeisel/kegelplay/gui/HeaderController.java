@@ -35,11 +35,11 @@ public class HeaderController implements Initializable {
 	}
 
 	private static String getImagePathPNG(Player player) {
-		return STR."./images/\{player.getClub()}/\{player.getCompleteName()}.png";
+		return STR."./images/\{player.getClub()}/\{player.getCompleteNameWithUnderscore()}.png";
 	}
 
 	private static String getImagePathJPG(Player player) {
-		return STR."./images/\{player.getClub()}/\{player.getCompleteName()}.jpg";
+		return STR."./images/\{player.getClub()}/\{player.getCompleteNameWithUnderscore()}.jpg";
 	}
 
 	/**

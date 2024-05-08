@@ -16,6 +16,16 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+/**
+ * Reader for a {@link Match} for the program used in the Keglerheim.
+ *
+ * @see Match
+ * @see GeneralReader
+ *
+ * @version 1.0.0
+ * @since 1.0.0
+ * @author Oliver Geisel
+ */
 public class KeglerheimGeneralReader extends GeneralReader {
 
 	public static final  String        TODAY_FORMAT = "dd.MM.yyyy";

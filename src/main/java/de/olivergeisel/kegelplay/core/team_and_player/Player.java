@@ -1,18 +1,27 @@
 package de.olivergeisel.kegelplay.core.team_and_player;
 
 import de.olivergeisel.kegelplay.core.game.Game;
+import de.olivergeisel.kegelplay.core.match.Match;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 
 /**
- * Represents a player.
+ * Represents a player. Each player has a first name, a last name, a state, a game, a club, a team, a birthday and a
+ * {@link PlayerID}.
+ * A player play exactly one {@link Game} per {@link Match}. A player can be substituted by another player.
+ *
  *
  * @param <G> The type of the game the player is playing.
  *
- * @since 1.0
- * @version 1.0
+ * @see Game
+ * @see PlayerID
+ * @see Match
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Oliver Geisel
  */
 public class Player<G extends Game> {
 
@@ -81,10 +90,29 @@ public class Player<G extends Game> {
 		this.game = game;
 	}
 
+	/**
+	 * Returns the complete name of the player. This is the first name followed by the last name.
+	 * The string is trimmed.
+	 * @return the complete name of the player
+	 */
 	public String getCompleteName() {
+		return STR."\{vorname} \{nachname}".trim();
+	}
+
+	/**
+	 * Returns the complete name of the player. Each blank and ',' is replaced by an underscore.
+	 * @see #getCompleteName()
+	 * @return the complete name of the player
+	 */
+	public String getCompleteNameWithUnderscore() {
 		return STR."\{vorname}_\{nachname}".replace(" ", "_").replace(",", "_").trim();
 	}
 
+	/**
+	 * Returns the complete name of the player. the for and surname are separated by a ','. The string is trimmed.
+	 * @see #getCompleteName()
+	 * @return the complete name of the player
+	 */
 	public String getCompleteNameWithCommata() {
 		return STR."\{nachname},\{vorname}".trim();
 	}

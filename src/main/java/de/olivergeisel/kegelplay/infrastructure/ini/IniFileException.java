@@ -1,5 +1,9 @@
 package de.olivergeisel.kegelplay.infrastructure.ini;
 
+
+/**
+ * Exception to be thrown when an ini file is invalid.
+ */
 public class IniFileException extends RuntimeException {
 	public IniFileException(String invalidIniFile) {
 		super(invalidIniFile);

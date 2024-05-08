@@ -71,12 +71,12 @@ public class _2TeamsMatchPoints<G extends Game> extends MatchPoints<Team<G>> {
 	@Override
 	public double getGameSetPointsFor(String player, int gameSetNumber) throws IllegalArgumentException {
 		for (var gamePoints : gamePointsTeam1) {
-			if (gamePoints.getPlayer().getCompleteName().equals(player)) {
+			if (gamePoints.getPlayer().getCompleteNameWithUnderscore().equals(player)) {
 				return gamePoints.getGameSetPointsFor(gameSetNumber);
 			}
 		}
 		for (var gamePoints : gamePointsTeam2) {
-			if (gamePoints.getPlayer().getCompleteName().equals(player)) {
+			if (gamePoints.getPlayer().getCompleteNameWithUnderscore().equals(player)) {
 				return gamePoints.getGameSetPointsFor(gameSetNumber);
 			}
 		}
@@ -85,12 +85,12 @@ public class _2TeamsMatchPoints<G extends Game> extends MatchPoints<Team<G>> {
 
 	public GamePoints getGamePointsForPlayer(String player) {
 		for (var gamePoints : gamePointsTeam1) {
-			if (gamePoints.getPlayer().getCompleteName().equals(player)) {
+			if (gamePoints.getPlayer().getCompleteNameWithUnderscore().equals(player)) {
 				return gamePoints;
 			}
 		}
 		for (var gamePoints : gamePointsTeam2) {
-			if (gamePoints.getPlayer().getCompleteName().equals(player)) {
+			if (gamePoints.getPlayer().getCompleteNameWithUnderscore().equals(player)) {
 				return gamePoints;
 			}
 		}

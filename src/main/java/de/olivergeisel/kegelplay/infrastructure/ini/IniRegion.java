@@ -5,9 +5,26 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Represents a region in an ini file
+ * Represents a region in an .ini file ({@link IniFile}). A region is a block of lines that are separated by a name.
+ * The region contains key-value pairs that are stored in a map.
+ * Each region has a name at the beginning of the block.
+ * <p>
+ * <b>Example:</b>
+ * <pre>
+ *     [RegionName]
+ *     key1=value1
+ *     key2=value
+ *     ...
+ * </pre>
+ * </p>
+ * @see IniFile
+ *
+ * @version 1.0.0
+ * @since 1.0.0
+ * @author Oliver Geisel
  */
 public class IniRegion {
+
 	private final String              name;
 	private final Map<String, String> keyValuePairs = new java.util.HashMap<>();
 	private       String[]            lines;
