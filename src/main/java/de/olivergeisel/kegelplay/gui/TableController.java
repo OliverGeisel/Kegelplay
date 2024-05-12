@@ -4,6 +4,7 @@ import de.olivergeisel.kegelplay.core.game.Game;
 import de.olivergeisel.kegelplay.core.game.Game120;
 import de.olivergeisel.kegelplay.core.match.Match;
 import de.olivergeisel.kegelplay.core.point_system.AllAgainstAll120_4PlayerPointSystem;
+import de.olivergeisel.kegelplay.core.point_system.MatchPoints;
 import de.olivergeisel.kegelplay.core.point_system.PairPlayerAgainstPointSystem;
 import de.olivergeisel.kegelplay.core.point_system.PointSystem;
 import javafx.fxml.FXML;
@@ -47,7 +48,8 @@ public class TableController implements Initializable {
 	private void updateTable(Match match) {
 		var rowcount = grid.getRowCount();
 		PointSystem<Game120> pointsystem = match.getPointSystem();
-		var points = pointsystem.getMatchPoints(match);
+		MatchPoints points;
+		points = pointsystem.getMatchPoints(match);
 		for (var lane : grid.getChildren()) {
 			if (lane instanceof Label label) {
 				var row = GridPane.getRowIndex(label);

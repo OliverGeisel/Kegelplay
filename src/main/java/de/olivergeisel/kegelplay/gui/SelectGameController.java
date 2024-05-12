@@ -10,6 +10,7 @@ import de.olivergeisel.kegelplay.core.point_system.PairPlayerAgainstPointSystem;
 import de.olivergeisel.kegelplay.core.point_system.PointSystem;
 import de.olivergeisel.kegelplay.core.point_system._2Teams120PointSystem;
 import de.olivergeisel.kegelplay.infrastructure.data_reader.KeglerheimGeneralReader;
+import de.olivergeisel.kegelplay.infrastructure.data_reader.MatchNTeams;
 import de.olivergeisel.kegelplay.infrastructure.data_reader.UnsupportedMatchSchema;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -158,7 +159,10 @@ public class SelectGameController implements Initializable {
 				title = "Paarweise gegeneinander";
 				yield new PairPlayerAgainstPointSystem();
 			}
-			case "Teams summe" -> null;
+			case "Teams summe" -> {
+				title = "Teams summe";
+				yield new PairPlayerAgainstPointSystem();
+			}
 			default -> throw new IllegalStateException(STR."Unexpected value: \{systemSelect}");
 		};
 		match.setPointSystem(pointSystem);
@@ -174,6 +178,14 @@ public class SelectGameController implements Initializable {
 			case "2 Teams" -> {
 				fxmlLoader = new FXMLLoader(getClass().getResource("display-game.fxml"));
 				yield new _2TeamsAgainstController<>(match);
+			}
+			case "Vorlauf-Endlauf" -> {
+				if (match instanceof MatchNTeams match1Team) {
+					fxmlLoader = new FXMLLoader(getClass().getResource("vorlauf-endlauf.fxml"));
+					yield new VorlaufEndlaufController(match1Team);
+				} else {
+					throw new IllegalStateException(STR."Unexpected value: \{match}");
+				}
 			}
 			case "Halbfinale" -> {
 				if (match instanceof Match1Team match1Team) {
@@ -247,7 +259,7 @@ public class SelectGameController implements Initializable {
 		gameKind.getItems().addAll(GameKind.values());
 		gameKind.setValue(GameKind.GAME_120);
 		// view
-		var views = List.of("4 gegeneinander", "Halbfinale", "2 Teams", "N Teams");
+		var views = List.of("4 gegeneinander", "Vorlauf-Endlauf", "Halbfinale", "2 Teams", "N Teams");
 		view.getItems().addAll(views);
 		// pointSystem
 		var pointSystems =
