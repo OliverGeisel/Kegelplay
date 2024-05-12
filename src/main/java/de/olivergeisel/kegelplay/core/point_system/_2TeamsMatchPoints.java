@@ -1,6 +1,7 @@
 package de.olivergeisel.kegelplay.core.point_system;
 
 import de.olivergeisel.kegelplay.core.game.Game;
+import de.olivergeisel.kegelplay.core.match.Match;
 import de.olivergeisel.kegelplay.core.team_and_player.Player;
 import de.olivergeisel.kegelplay.core.team_and_player.Team;
 import javafx.util.Pair;
@@ -8,6 +9,21 @@ import javafx.util.Pair;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The MatchPoints for a {@link Match} with two {@link Team}s. The winner of the match is the team with the most
+ * pins (score/Holz).
+ *
+ * @param <G> The type of the {@link Game} that is played in the match.
+ *
+ * @see Game
+ * @see Match
+ * @see Player
+ * @see Team
+ *
+ * @version 1.0.0
+ * @since 1.0.0
+ * @author Oliver Geisel
+ */
 public class _2TeamsMatchPoints<G extends Game> extends MatchPoints<Team<G>> {
 
 	private final List<Pair<Player<G>, Player<G>>> pairs;
@@ -80,6 +96,8 @@ public class _2TeamsMatchPoints<G extends Game> extends MatchPoints<Team<G>> {
 		}
 		throw new IllegalArgumentException("Player not found");
 	}
+
+//region setter/getter
 	/**
 	 * Return the winner of the match.
 	 *
@@ -111,8 +129,6 @@ public class _2TeamsMatchPoints<G extends Game> extends MatchPoints<Team<G>> {
 		return totalPointsTeam1() > totalPointsTeam2() ?
 				Map.of(team1, winnerPoints, team2, 0.) : Map.of(team1, 0., team2, winnerPoints);
 	}
-
-//region setter/getter
 
 	/**
 	 * When all parties have equal points, the match is a draw.

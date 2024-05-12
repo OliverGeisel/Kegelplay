@@ -34,6 +34,23 @@ public class AllAgainstAll120_4PlayerPointSystem extends PointSystem<Game120> {
 		return new AllAgainstMatchScore<>(gamePoints);
 	}
 
+	/**
+	 * Get the winner of a match.
+	 * This can have multiple winners, if the match is a draw or the Pointssystem allows multiple winners (like
+	 * Qualifiers for a next round).
+	 *
+	 * @param match The match to get the winner from.
+	 * @return A list of Winners.
+	 */
+	@Override
+	public List<Winner> getWinner(Match<Game120> match) {
+		var matchPoints = getMatchPoints(match);
+		var winner = matchPoints.getWinner();
+		return List.of(
+				new Winner(STR."\{winner.getVorname()} \{winner.getNachname()}", winner.getGame().getTotalScore(),
+						Winner.WinnerType.PLAYER));
+	}
+
 	private GamePointsCollection getGamePoints(Player<Game120>... players) {
 		if (players.length != 4) {
 			throw new IllegalArgumentException("there must be exactly 4 players");

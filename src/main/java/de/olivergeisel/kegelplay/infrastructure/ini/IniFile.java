@@ -51,6 +51,10 @@ public class IniFile {
 		this(path, "ISO-8859-1");
 	}
 
+	public IniFile(String path) throws IOException, IniFileException, IllegalArgumentException {
+		this(Path.of(path));
+	}
+
 	/**
 	 * Create IniFile with multiple regions
 	 *

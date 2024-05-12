@@ -1,19 +1,19 @@
 package de.olivergeisel.kegelplay.gui;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import de.olivergeisel.kegelplay.core.game.Game;
 import de.olivergeisel.kegelplay.core.game.Game120;
 import de.olivergeisel.kegelplay.core.match.Match;
 import de.olivergeisel.kegelplay.core.point_system.AllAgainstAll120_4PlayerPointSystem;
+import de.olivergeisel.kegelplay.core.point_system.PairPlayerAgainstPointSystem;
 import de.olivergeisel.kegelplay.core.point_system.PointSystem;
-import de.olivergeisel.kegelplay.core.point_system._2TeamsMatchPoints;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class TableController implements Initializable {
 
@@ -64,14 +64,19 @@ public class TableController implements Initializable {
 						case 4 -> label.setText(Integer.toString(game.getTotalFehlwurf()));
 						case 5 -> {
 							var player = game.getPlayer();
-							if (points instanceof _2TeamsMatchPoints<?> teamPoints) {
+							/*if (points instanceof _2TeamsMatchPoints<?> teamPoints) {
 								var gamePoints =
 										teamPoints.getGamePointsForPlayer(player.getCompleteName()).getPoints();
 								label.setText(Double.toString(gamePoints));
+							}*/
+							if (pointsystem instanceof PairPlayerAgainstPointSystem pairSystem) {
+								var matchPoints = pairSystem.getMatchPoints(match);
+								double playerPoints = (double) matchPoints.getMatchPoints().get(player);
+								label.setText(Double.toString(playerPoints));
 							}
-							if (match.getPointSystem() instanceof AllAgainstAll120_4PlayerPointSystem allAgainst){
+							if (pointsystem instanceof AllAgainstAll120_4PlayerPointSystem allAgainst) {
 								var matchPoints = allAgainst.getMatchPoints(match);
-								double playerPoints =(double) matchPoints.getMatchPoints().get(player);
+								double playerPoints = (double) matchPoints.getMatchPoints().get(player);
 								label.setText(Double.toString(playerPoints));
 							}
 						}

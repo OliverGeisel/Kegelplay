@@ -106,6 +106,31 @@ public class _2Teams120PointSystem extends PointSystem<Game120> {
 				results.getValue(), 2.0);
 	}
 
+	/**
+	 * Get the winner of a match.
+	 * This can have multiple winners, if the match is a draw or the Pointssystem allows multiple winners (like
+	 * Qualifiers for a next round).
+	 *
+	 * @param match The match to get the winner from.
+	 * @return A list of Winners.
+	 */
+	@Override
+	public List<Winner> getWinner(Match<Game120> match) {
+		var winner = evalTeamScores(match.getTeams()[0], match.getTeams()[1]);
+		var team1Score = match.getTeams()[0].getTeamScore();
+		var team2Score = match.getTeams()[1].getTeamScore();
+		var team1Name = match.getTeams()[0].getName();
+		var team2Name = match.getTeams()[1].getName();
+		if (winner.getKey() > winner.getValue()) {
+			return List.of(new Winner(team1Name, team1Score, Winner.WinnerType.TEAM));
+		} else if (winner.getKey() < winner.getValue()) {
+			return List.of(new Winner(team2Name, team2Score, Winner.WinnerType.TEAM));
+		} else {
+			return List.of(new Winner(team1Name, team1Score, Winner.WinnerType.TEAM),
+					new Winner(team2Name, team2Score, Winner.WinnerType.TEAM));
+		}
+	}
+
 	private Pair<Double, Double> evalTeamScores(Team<Game120> team1, Team<Game120> team2) {
 		var team1Score = team1.getTeamScore();
 		var team2Score = team2.getTeamScore();

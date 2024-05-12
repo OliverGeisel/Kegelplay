@@ -13,6 +13,12 @@ import java.util.Map;
  * @see PointSystemCriteria#PLAYER
  * @see MatchPoints
  * @see Match
+ *
+ * @param <G> the type of the game that is played in the match
+ *
+ * @version 1.0.0
+ * @since 1.0.0
+ * @author Oliver Geisel
  */
 public class AllAgainstMatchScore<G extends Game> extends MatchPoints<Player<G>> {
 
@@ -31,6 +37,7 @@ public class AllAgainstMatchScore<G extends Game> extends MatchPoints<Player<G>>
 	 */
 	@Override
 	public double winnerPoints() {
+		// todo: check if this need to be implemented
 		return 0;
 	}
 
@@ -60,6 +67,7 @@ public class AllAgainstMatchScore<G extends Game> extends MatchPoints<Player<G>>
 	public boolean isDraw() {
 		return false;
 	}
+
 	/**
 	 * Return the winner of the match.
 	 *

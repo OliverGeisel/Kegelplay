@@ -6,6 +6,7 @@ import de.olivergeisel.kegelplay.core.game.GameKind;
 import de.olivergeisel.kegelplay.core.match.Match;
 import de.olivergeisel.kegelplay.core.match.Match1Team;
 import de.olivergeisel.kegelplay.core.point_system.AllAgainstAll120_4PlayerPointSystem;
+import de.olivergeisel.kegelplay.core.point_system.PairPlayerAgainstPointSystem;
 import de.olivergeisel.kegelplay.core.point_system.PointSystem;
 import de.olivergeisel.kegelplay.core.point_system._2Teams120PointSystem;
 import de.olivergeisel.kegelplay.infrastructure.data_reader.KeglerheimGeneralReader;
@@ -36,6 +37,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import static java.lang.Math.max;
 import static java.lang.Math.round;
 
 public class SelectGameController implements Initializable {
@@ -129,7 +131,7 @@ public class SelectGameController implements Initializable {
 		var stage = (Stage) oldScene.getWindow();
 		//stage.close();
 		stage = new Stage();
-		var fxmlLoader = new FXMLLoader(getClass().getResource("display-game.fxml"));
+		FXMLLoader fxmlLoader = null;
 		var datePath = this.datePath;
 		var dataReader = new KeglerheimGeneralReader(datePath.resolve(selectedGame), true);
 		var kind = gameKind.getValue();
@@ -152,19 +154,35 @@ public class SelectGameController implements Initializable {
 				title = "2 Mannschaften mit Satzpunkten";
 				yield new _2Teams120PointSystem();
 			}
-			case "Teams summe", "Paarweise gegeneinander" -> null;
+			case "Paarweise gegeneinander" -> {
+				title = "Paarweise gegeneinander";
+				yield new PairPlayerAgainstPointSystem();
+			}
+			case "Teams summe" -> null;
 			default -> throw new IllegalStateException(STR."Unexpected value: \{systemSelect}");
 		};
 		match.setPointSystem(pointSystem);
-		DisplayGameController<? extends Game> controller = switch (selectedView) {
+		GameController<? extends Game> controller = switch (selectedView) {
 			case "4 gegeneinander" -> {
 				if (match instanceof Match1Team<?> match1Team) {
+					fxmlLoader = new FXMLLoader(getClass().getResource("display-game.fxml"));
 					yield new _4PlayersAllAgainstController<>(match1Team);
 				} else {
 					throw new IllegalStateException(STR."Unexpected value: \{match}");
 				}
 			}
-			case "2 Teams" -> new _2TeamsAgainstController<>(match);
+			case "2 Teams" -> {
+				fxmlLoader = new FXMLLoader(getClass().getResource("display-game.fxml"));
+				yield new _2TeamsAgainstController<>(match);
+			}
+			case "Halbfinale" -> {
+				if (match instanceof Match1Team match1Team) {
+					fxmlLoader = new FXMLLoader(getClass().getResource("semi-final.fxml"));
+					yield new SemiFinalController(match1Team);
+				} else {
+					throw new IllegalStateException(STR."Unexpected value: \{match}");
+				}
+			}
 			case "N Teams" -> null;
 			default -> throw new IllegalStateException(STR."Unexpected value: \{selectedView}");
 		};
@@ -183,10 +201,10 @@ public class SelectGameController implements Initializable {
 		stage.setResizable(true);
 		var image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/kegeln.png")));
 		stage.getIcons().add(image);
-		stage.setHeight(stackPane.getPrefHeight());
-		stage.setWidth(stackPane.getPrefWidth());
-		stage.setMinHeight(stackPane.getMinHeight());
-		stage.setMinWidth(stackPane.getMinWidth());
+		stage.setHeight(max(stackPane.getPrefHeight(), 300));
+		stage.setWidth(max(stackPane.getPrefWidth(), 300));
+		stage.setMinHeight(max(stackPane.getMinHeight(), 100));
+		stage.setMinWidth(max(stackPane.getMinWidth(), 100));
 		stage.initStyle(StageStyle.DECORATED);
 		stage.centerOnScreen();
 		stage.setScene(scene);
@@ -200,8 +218,8 @@ public class SelectGameController implements Initializable {
 		stage.setY(bounds.getMinY() + (bounds.getHeight() - 300) / 2); // 300 ist die Höhe des neuen Fensters
 
 
-		stage.setMaxWidth(selectedScreen.getBounds().getWidth() + 20);
-		stage.setMaxHeight(selectedScreen.getBounds().getHeight());
+		stage.setMaxWidth(max(selectedScreen.getBounds().getWidth() + 20, 500));
+		stage.setMaxHeight(max(selectedScreen.getBounds().getHeight(), 500));
 		stage.show();
 		if (frameless.isSelected()) {
 			stage.setFullScreen(true);
@@ -229,7 +247,7 @@ public class SelectGameController implements Initializable {
 		gameKind.getItems().addAll(GameKind.values());
 		gameKind.setValue(GameKind.GAME_120);
 		// view
-		var views = List.of("4 gegeneinander", "2 Teams", "N Teams");
+		var views = List.of("4 gegeneinander", "Halbfinale", "2 Teams", "N Teams");
 		view.getItems().addAll(views);
 		// pointSystem
 		var pointSystems =

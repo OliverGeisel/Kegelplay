@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public abstract class DisplayGameController<G extends Game> implements Initializable {
+public abstract class DisplayGameController<G extends Game> implements GameController<G>, Initializable {
 
 	private static final long          REFRESH_INTERVAL;
 	private static final System.Logger LOGGER = System.getLogger(DisplayGameController.class.getName());
