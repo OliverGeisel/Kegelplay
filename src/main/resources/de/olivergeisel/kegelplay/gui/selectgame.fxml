@@ -29,5 +29,6 @@
         <Label layoutX="261.0" layoutY="277.0" text="Bildschirm"/>
         <ChoiceBox fx:id="cssFile" layoutX="257.0" layoutY="342.0" prefWidth="150.0"/>
         <Label layoutX="261.0" layoutY="323.0" text="CSS-Datei"/>
+        <CheckBox fx:id="debugView" layoutX="463.0" layoutY="346.0" mnemonicParsing="false" text="Debug"/>
     </children>
 </AnchorPane>

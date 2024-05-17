@@ -9,6 +9,9 @@ import de.olivergeisel.kegelplay.core.point_system.AllAgainstAll120_4PlayerPoint
 import de.olivergeisel.kegelplay.core.point_system.PairPlayerAgainstPointSystem;
 import de.olivergeisel.kegelplay.core.point_system.PointSystem;
 import de.olivergeisel.kegelplay.core.point_system._2Teams120PointSystem;
+import de.olivergeisel.kegelplay.core.team_and_player.Player;
+import de.olivergeisel.kegelplay.core.team_and_player.Team;
+import de.olivergeisel.kegelplay.infrastructure.data_reader.GeneralReader;
 import de.olivergeisel.kegelplay.infrastructure.data_reader.KeglerheimGeneralReader;
 import de.olivergeisel.kegelplay.infrastructure.data_reader.MatchNTeams;
 import de.olivergeisel.kegelplay.infrastructure.data_reader.UnsupportedMatchSchema;
@@ -20,6 +23,8 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
@@ -41,6 +46,23 @@ import java.util.ResourceBundle;
 import static java.lang.Math.max;
 import static java.lang.Math.round;
 
+
+/**
+ * Controller for the selection of a game.
+ * This controller is used to select a game from a list of games.
+ * each {@link Match} will be displayed in a special view. By selecting a {@link PointSystem} the view show the
+ * points for each {@link Player} or {@link Team} in the {@link Match}.
+ *
+ * @see Match
+ * @see GameController
+ * @see PointSystem
+ *
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Oliver Geisel
+ *
+ */
 public class SelectGameController implements Initializable {
 
 	private static final double        ASPECT_RATIO = 16.0 / 9; // Gewünschtes Seitenverhältnis (z. B. 16:9)
@@ -67,6 +89,8 @@ public class SelectGameController implements Initializable {
 	private CheckBox          frameless;
 	@FXML
 	private CheckBox          onTop;
+	@FXML
+	private CheckBox          debugView;
 
 
 	@FXML
@@ -128,24 +152,74 @@ public class SelectGameController implements Initializable {
 	public void loadSelectedGame(ActionEvent event) {
 		var button = (Button) event.getSource();
 		var selectedGame = button.getText();
-		var oldScene = button.getScene();
-		var stage = (Stage) oldScene.getWindow();
+		Stage stage;
 		//stage.close();
-		stage = new Stage();
-		FXMLLoader fxmlLoader = null;
+		FXMLLoader fxmlLoader;
 		var datePath = this.datePath;
 		var dataReader = new KeglerheimGeneralReader(datePath.resolve(selectedGame), true);
 		var kind = gameKind.getValue();
 		var selectedView = view.getValue();
 		var systemSelect = pointSystemField.getValue();
-		var title = "";
-		Match<?> match;
-		try {
-			match = dataReader.initNewMatch();
-		} catch (UnsupportedMatchSchema e) {
-			e.printStackTrace();
-			return;
+		Match<?> match = loadMatch(dataReader);
+		var title = loadPointSystemToMatch(systemSelect, match);
+		GameController controller;
+		var result = selectController(selectedView, match);
+		controller = result.controller;
+		fxmlLoader = result.loader;
+		if (debugView.isSelected()) {
+			stage = loadDebugScene(title, fxmlLoader, controller);
+		} else {
+			stage = loadScene(fxmlLoader, controller);
+			stage.setTitle(title);
 		}
+		//  Todo check if view is not wrong for the match
+		var scene = stage.getScene();
+		var stackPane = (Pane) scene.getRoot();
+		scene.getStylesheets().add(STR."file:css/\{cssFile.getValue()}");
+		stage.setResizable(true);
+		var image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/kegeln.png")));
+		stage.getIcons().add(image);
+		stage.setHeight(max(stackPane.getPrefHeight(), 300));
+		stage.setWidth(max(stackPane.getPrefWidth(), 300));
+		stage.setMinHeight(max(stackPane.getMinHeight(), 100));
+		stage.setMinWidth(max(stackPane.getMinWidth(), 100));
+		stage.initStyle(StageStyle.DECORATED);
+		stage.centerOnScreen();
+		stage.setScene(scene);
+		// set screen for the new window
+		var screens = Screen.getScreens();
+		var screenIndex = Integer.parseInt(screenSelect.getValue().split(" ")[1]) - 1;
+		var selectedScreen = screens.get(screenIndex);
+		Rectangle2D bounds = selectedScreen.getBounds();
+		// Setzen der Position und Größe des neuen Fensters basierend auf dem zweiten Bildschirm
+		stage.setX(bounds.getMinX() + (bounds.getWidth() - 400) / 2); // 400 ist die Breite des neuen Fensters
+		stage.setY(bounds.getMinY() + (bounds.getHeight() - 300) / 2); // 300 ist die Höhe des neuen Fensters
+		// Max values depending on Screen
+		stage.setMaxWidth(max(selectedScreen.getBounds().getWidth() + 20, 500));
+		stage.setMaxHeight(max(selectedScreen.getBounds().getHeight(), 500));
+		if (frameless.isSelected()) {
+			stage.setFullScreen(true);
+		} else {
+			scene.widthProperty().addListener((observableValue, oldWidth, newWidth) -> {
+				double newHeight = round(newWidth.doubleValue() / ASPECT_RATIO);
+				stage.setHeight(newHeight);
+			});
+		}
+		stage.setAlwaysOnTop(onTop.isSelected());
+		stage.show();
+	}
+
+	private Match<?> loadMatch(GeneralReader dataReader) {
+		try {
+			return dataReader.initNewMatch();
+		} catch (UnsupportedMatchSchema e) {
+			LOGGER.log(System.Logger.Level.ERROR, e.getMessage());
+			return null;
+		}
+	}
+
+	private String loadPointSystemToMatch(String systemSelect, Match<?> match) {
+		var title = "";
 		PointSystem pointSystem = switch (systemSelect) {
 			case "4 Spieler gegeneinander" -> {
 				title = "4 gegeneinander Satzpunkte";
@@ -166,83 +240,102 @@ public class SelectGameController implements Initializable {
 			default -> throw new IllegalStateException(STR."Unexpected value: \{systemSelect}");
 		};
 		match.setPointSystem(pointSystem);
-		GameController<? extends Game> controller = switch (selectedView) {
-			case "4 gegeneinander" -> {
-				if (match instanceof Match1Team<?> match1Team) {
-					fxmlLoader = new FXMLLoader(getClass().getResource("display-game.fxml"));
-					yield new _4PlayersAllAgainstController<>(match1Team);
-				} else {
-					throw new IllegalStateException(STR."Unexpected value: \{match}");
-				}
-			}
-			case "2 Teams" -> {
-				fxmlLoader = new FXMLLoader(getClass().getResource("display-game.fxml"));
-				yield new _2TeamsAgainstController<>(match);
-			}
-			case "Vorlauf-Endlauf" -> {
-				if (match instanceof MatchNTeams match1Team) {
-					fxmlLoader = new FXMLLoader(getClass().getResource("vorlauf-endlauf.fxml"));
-					yield new VorlaufEndlaufController(match1Team);
-				} else {
-					throw new IllegalStateException(STR."Unexpected value: \{match}");
-				}
-			}
-			case "Halbfinale" -> {
-				if (match instanceof Match1Team match1Team) {
-					fxmlLoader = new FXMLLoader(getClass().getResource("semi-final.fxml"));
-					yield new SemiFinalController(match1Team);
-				} else {
-					throw new IllegalStateException(STR."Unexpected value: \{match}");
-				}
-			}
-			case "N Teams" -> null;
-			default -> throw new IllegalStateException(STR."Unexpected value: \{selectedView}");
-		};
+		return title;
+	}
+
+	private Stage loadScene(FXMLLoader fxmlLoader, GameController<? extends Game> controller) {
 		fxmlLoader.setController(controller);
 		Pane stackPane;
 		try {
 			stackPane = fxmlLoader.load();
 		} catch (IOException e) {
 			e.printStackTrace();
-			return;
+			return null;
 		}
-		//  Todo check if view is not wrong for the match
 		var scene = new Scene(stackPane);
-		scene.getStylesheets().add(STR."file:css/\{cssFile.getValue()}");
-		stage.setTitle(title);
-		stage.setResizable(true);
-		var image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/kegeln.png")));
-		stage.getIcons().add(image);
-		stage.setHeight(max(stackPane.getPrefHeight(), 300));
-		stage.setWidth(max(stackPane.getPrefWidth(), 300));
-		stage.setMinHeight(max(stackPane.getMinHeight(), 100));
-		stage.setMinWidth(max(stackPane.getMinWidth(), 100));
-		stage.initStyle(StageStyle.DECORATED);
-		stage.centerOnScreen();
+		var stage = new Stage();
 		stage.setScene(scene);
-		var screens = Screen.getScreens();
-		var screenIndex = Integer.parseInt(screenSelect.getValue().split(" ")[1]) - 1;
-		var selectedScreen = screens.get(screenIndex);
-		Rectangle2D bounds = selectedScreen.getBounds();
+		return stage;
+	}
 
-		// Setzen der Position und Größe des neuen Fensters basierend auf dem zweiten Bildschirm
-		stage.setX(bounds.getMinX() + (bounds.getWidth() - 400) / 2); // 400 ist die Breite des neuen Fensters
-		stage.setY(bounds.getMinY() + (bounds.getHeight() - 300) / 2); // 300 ist die Höhe des neuen Fensters
+	private ControllerAndLoader selectController(String selectedView, Match match) {
+		FXMLLoader loader = null;
+		var controller = switch (selectedView) {
+			case "4 gegeneinander" -> {
+				if (match instanceof Match1Team<?> match1Team) {
+					loader = new FXMLLoader(getClass().getResource("display-game.fxml"));
+					yield new _4PlayersAllAgainstController<>(match1Team);
+				} else {
+					throw new IllegalStateException(
+							STR."Unexpected value: \{match} is not matching Matchtpe for this view");
+				}
+			}
+			case "2 Teams" -> {
+				loader = new FXMLLoader(getClass().getResource("display-game.fxml"));
+				yield new _2TeamsAgainstController<>(match);
+			}
+			case "Vorlauf-Endlauf" -> {
+				if (match instanceof MatchNTeams match1Team) {
+					loader = new FXMLLoader(getClass().getResource("vorlauf-endlauf.fxml"));
+					yield new VorlaufEndlaufController(match1Team);
+				} else {
+					throw new IllegalStateException(
+							STR."Unexpected value: \{match} is not matching Matchtpe for this view");
+				}
+			}
+			case "Halbfinale" -> {
+				if (match instanceof Match1Team match1Team) {
+					loader = new FXMLLoader(getClass().getResource("semi-final.fxml"));
+					yield new SemiFinalController(match1Team);
+				} else {
+					throw new IllegalStateException(
+							STR."Unexpected value: \{match} is not matching Matchtpe for this view");
+				}
+			}
+			case "N Teams" -> null;
+			default -> throw new IllegalStateException(STR."Unexpected value: \{selectedView} is not a valid view");
+		};
+		return new ControllerAndLoader(controller, loader);
+	}
 
-
-		stage.setMaxWidth(max(selectedScreen.getBounds().getWidth() + 20, 500));
-		stage.setMaxHeight(max(selectedScreen.getBounds().getHeight(), 500));
-		stage.show();
-		if (frameless.isSelected()) {
-			stage.setFullScreen(true);
-		} else {
-			Stage finalStage = stage;
-			scene.widthProperty().addListener((observableValue, oldWidth, newWidth) -> {
-				double newHeight = round(newWidth.doubleValue() / ASPECT_RATIO);
-				finalStage.setHeight(newHeight);
-			});
+	private Stage loadDebugScene(String title, FXMLLoader fxmlLoader, GameController controller) {
+		final var stage = new Stage();
+		stage.setTitle(STR."\{title}-Debug");
+		stage.setResizable(true);
+		fxmlLoader.setController(controller);
+		Pane stackPane = new Pane();
+		stackPane.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+			if (event.isControlDown() && event.getCode().equals(KeyCode.R)) {
+				reload(stage, fxmlLoader);
+			}
+		});
+		try {
+			stackPane.getChildren().add(fxmlLoader.load());
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
 		}
-		stage.setAlwaysOnTop(onTop.isSelected());
+		var scene = new Scene(stackPane);
+		stage.setScene(scene);
+		stage.show();
+		return stage;
+	}
+
+	private void reload(Stage stage, FXMLLoader fxmlLoader) {
+		var oldScene = stage.getScene();
+		try {
+			var newPane = new Pane(fxmlLoader.load());
+			newPane.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+				if (event.isControlDown() && event.getCode().equals(KeyCode.R)) {
+					reload(stage, fxmlLoader);
+				}
+			});
+			var newScene = new Scene(newPane);
+			newScene.getStylesheets().addAll(oldScene.getStylesheets());
+			stage.setScene(newScene);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**
@@ -277,5 +370,8 @@ public class SelectGameController implements Initializable {
 		}
 		cssFile.setValue(cssFiles[0].getName());
 
+	}
+
+	private record ControllerAndLoader(GameController controller, FXMLLoader loader) {
 	}
 }
