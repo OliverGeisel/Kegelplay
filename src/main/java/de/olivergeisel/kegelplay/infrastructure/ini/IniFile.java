@@ -73,6 +73,9 @@ public class IniFile {
 		IniRegion currentRegion = new IniRegion("", new String[0]);
 		for (var line : lines) {
 			var trimmedLine = line.trim();
+			if (trimmedLine.isBlank()) {
+				continue;
+			}
 			if (trimmedLine.startsWith("[") && trimmedLine.endsWith("]")) { // new region
 				currentRegion.setLines(regionLines.toArray(String[]::new)); // finish old region
 				// add new region to regions
@@ -82,7 +85,7 @@ public class IniFile {
 				this.regions.add(currentRegion);
 			} else {
 				if (!trimmedLine.contains("=")) {
-					LOGGER.log(System.Logger.Level.INFO, "invalid pair {line} in ini file");
+					LOGGER.log(System.Logger.Level.INFO, STR."invalid pair '\{line}' in ini file");
 					continue;
 				}
 				var keyValue = trimmedLine.split("=");
