@@ -111,7 +111,7 @@ public class IniFile extends KeyValueRegionCollection<String, String, IniRegion>
 				regionName = trimmedLine.substring(1, trimmedLine.length() - 1);
 				regionLines = new java.util.ArrayList<>();
 				currentRegion = new IniRegion(regionName, regionLines.toArray(String[]::new));
-				getRegions().add(currentRegion);
+				regions.add(currentRegion);
 			} else {
 				if (!trimmedLine.contains("=")) {
 					LOGGER.log(System.Logger.Level.INFO, "invalid pair {line} in ini file");
@@ -144,7 +144,7 @@ public class IniFile extends KeyValueRegionCollection<String, String, IniRegion>
 			}
 			map.put(keyValue[0].trim(), keyValue[1].trim());
 		}
-		getRegions().add(new IniRegion("", lines, map));
+		regions.add(new IniRegion("", lines, map));
 	}
 
 }

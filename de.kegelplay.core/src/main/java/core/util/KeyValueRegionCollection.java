@@ -5,7 +5,7 @@ import java.util.List;
 
 public class KeyValueRegionCollection<K, V, R extends KeyValueRegion<K, V>> {
 
-	private final List<R> regions;
+	protected final List<R> regions;
 	private       String  name;
 
 	public KeyValueRegionCollection(String name, List<R> regions) {

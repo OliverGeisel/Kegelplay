@@ -95,7 +95,7 @@ public class Wurfbild {
 	//region setter/getter
 
 	/**
-	 * Get the number of fallen pins.
+	 * Get the number of fallen pins in this Bild. Must not be identical to the score of a {@link Wurf}.
 	 * @return number of fallen pins
 	 */
 	public int getWert() {
@@ -106,6 +106,25 @@ public class Wurfbild {
 			}
 		}
 		return sum;
+	}
+
+	/**
+	 * Get the encoded version of the bild.
+	 * @return integer value of the bild
+	 */
+	public int getBildEncoded() {
+		int value = 0;
+		if (one) value += 1;
+		if (two) value += 2;
+		if (three) value += 4;
+		if (four) value += 8;
+		if (five) value += 16;
+		if (six) value += 32;
+		if (seven) value += 64;
+		if (eight) value += 128;
+		if (nine) value += 256;
+		return value;
+
 	}
 //endregion
 
