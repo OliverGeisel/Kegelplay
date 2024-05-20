@@ -244,8 +244,8 @@ public abstract class Game {
 
 	@Override
 	public int hashCode() {
-		int result = substitution1.hashCode();
-		result = 31 * result + substitution2.hashCode();
+		int result = Objects.hashCode(substitution1);
+		result = 31 * result + Objects.hashCode(substitution2);
 		result = 31 * result + Objects.hashCode(player);
 		result = 31 * result + Objects.hashCode(date);
 		result = 31 * result + Objects.hashCode(state);
