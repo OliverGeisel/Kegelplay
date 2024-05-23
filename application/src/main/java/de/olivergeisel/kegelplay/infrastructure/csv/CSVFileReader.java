@@ -8,7 +8,12 @@ import java.nio.file.Path;
 import java.util.List;
 
 /**
+ * Reads a CSV file and stores the data in a list of String arrays.
+ * There is the assumption that the first row of the CSV file is the header.
  *
+ * @version 1.0.0
+ * @since 1.0.0
+ * @author Oliver Geisel
  */
 public class CSVFileReader {
 
