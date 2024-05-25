@@ -180,7 +180,7 @@ public class SelectGameController implements Initializable {
 				yield new _2TeamsAgainstController<>(match);
 			}
 			case "Vorlauf-Endlauf" -> {
-				if (match instanceof MatchNTeams match1Team) {
+				if (match instanceof Match match1Team) {
 					fxmlLoader = new FXMLLoader(getClass().getResource("vorlauf-endlauf.fxml"));
 					yield new VorlaufEndlaufController(match1Team);
 				} else {
@@ -230,8 +230,8 @@ public class SelectGameController implements Initializable {
 		stage.setY(bounds.getMinY() + (bounds.getHeight() - 300) / 2); // 300 ist die Höhe des neuen Fensters
 
 
-		stage.setMaxWidth(max(selectedScreen.getBounds().getWidth() + 20, 500));
-		stage.setMaxHeight(max(selectedScreen.getBounds().getHeight(), 500));
+		stage.setMaxWidth(max(selectedScreen.getBounds().getWidth() + 20, 20+1920));
+		stage.setMaxHeight(max(selectedScreen.getBounds().getHeight(), 1080+20));
 		stage.show();
 		if (frameless.isSelected()) {
 			stage.setFullScreen(true);

@@ -44,6 +44,14 @@ public class GameCSVFileReader<G extends Game> extends CSVFileReader implements 
 		var throwsPerDurchgang = volleCount + abraeumenCount;
 		var header = getHeader();
 		var lines = getData();
+		var game = switch (gameKind) {
+			case GAME_100, GAME_200, GAME_40, GAME_40_2 -> null;
+			case GAME_120 -> (G) new Game120(null);
+		};
+		if (lines.size() == 0){
+			fillWithEmptySets(game);
+			return game;
+		}
 		int i = 0;
 		var sets = new LinkedList<GameSet>();
 		GameSet gameSet = null;
@@ -72,10 +80,6 @@ public class GameCSVFileReader<G extends Game> extends CSVFileReader implements 
 			var time = Double.parseDouble(line[13]);
 			gameSet.set(throwInGameSet, new Wurf(value, bild, fehlwurf, false), time);
 		}
-		var game = switch (gameKind) {
-			case GAME_100, GAME_200, GAME_40, GAME_40_2 -> null;
-			case GAME_120 -> (G) new Game120(null);
-		};
 		game.setDurchgaenge(sets);
 		return game;
 	}
@@ -104,6 +108,15 @@ public class GameCSVFileReader<G extends Game> extends CSVFileReader implements 
 			back.add(new Wurf(value, bild, fehlwurf, false));
 		}
 		return back;
+	}
+
+	private void fillWithEmptySets(Game game){
+		var list = new LinkedList<GameSet>();
+		var gameInfo = game.getGameInfo();
+		for (int i=0; i< gameInfo.gameSets();i++){
+			list.add(new GameSet(gameInfo.getThrowsPerGameSet(), gameInfo.vollePerGameSet(), gameInfo.abrauemenPerGameSet(), i));
+		}
+		game.setDurchgaenge(list);
 	}
 
 	/**

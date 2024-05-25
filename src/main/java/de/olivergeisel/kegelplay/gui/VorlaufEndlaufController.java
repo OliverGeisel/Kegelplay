@@ -66,7 +66,11 @@ public class VorlaufEndlaufController implements Initializable, GameController<G
 			@Override
 			public void run() {
 				Platform.runLater(() -> {
+					var loadTime = LocalDateTime.now();
 					matchUpdater.updateMatch();
+					var endTime = LocalDateTime.now();
+					var difference = Duration.between(loadTime, endTime);
+					LOGGER.log(System.Logger.Level.INFO, STR."Update reading complete: Duration: \{difference.toMillis()} ms");
 					update();
 				});
 			}
