@@ -88,6 +88,7 @@ public class KeglerheimGeneralReader extends GeneralReader {
 		return switch (kind) {
 			case GAME_100 -> new Game100Builder();
 			case GAME_120 -> new Game120Builder();
+			case GAME_40 -> new Game40Builder();
 			default -> null;
 		};
 	}

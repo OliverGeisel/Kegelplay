@@ -3,6 +3,7 @@ package de.olivergeisel.kegelplay.infrastructure.update;
 
 import core.game.Game;
 import core.game.Game120;
+import core.game.Game40;
 import core.game.GameKind;
 import core.match.Match;
 import core.match.MatchStatusInfo;
@@ -64,6 +65,7 @@ public class MatchUpdater<G extends Game> {
 			try {
 				updateTeam(team);
 			} catch (RuntimeException e) {
+				LOGGER.log(System.Logger.Level.ERROR, STR."Could not update team: \{team.getName()}");
 				// ignored
 			}
 		}
@@ -140,6 +142,7 @@ public class MatchUpdater<G extends Game> {
 			var playerName = playerFolder.getName();
 			var kind = switch (team.getPlayers()[0].getGame()) {
 				case Game120 ig -> GameKind.GAME_120;
+				case Game40 ignored -> GameKind.GAME_40;
 				case Game ig -> GameKind.GAME_100;
 			};
 			var game = new GameCSVFileReader<G>(path, kind).readGame();

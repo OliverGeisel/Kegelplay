@@ -30,5 +30,8 @@ public abstract class GameBuilder<G extends Game> {
 	 */
 	public abstract G buildEmptyGame();
 
+//region setter/getter
+	public abstract GameKind getGameKind();
+//endregion
 
 }

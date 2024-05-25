@@ -1,15 +1,14 @@
 package core.game;
 
-
 import java.util.LinkedList;
 
-public class Game120Builder extends GameBuilder<Game120> {
+public class Game40Builder extends GameBuilder<Game40> {
 
 
 	@Override
-	public Game120 buildGame(GameSource source) {
+	public Game40 buildGame(GameSource source) {
 		var gameThrows = source.get();
-		final var throwsPerDurchgang = 30;
+		final var throwsPerDurchgang = 20;
 		GameSet gameSet = null;
 		int i = 0;
 		var sets = new LinkedList<GameSet>();
@@ -18,30 +17,30 @@ public class Game120Builder extends GameBuilder<Game120> {
 			var throwNumber = i++;
 			var throwInGameSet = throwNumber % throwsPerDurchgang;
 			if (throwInGameSet == 0) {
-				gameSet = new GameSet(30, 15, 15, setNumber++);
+				gameSet = new GameSet(20, 10, 10, setNumber++);
 				sets.add(gameSet);
 			}
-			gameSet.set(throwInGameSet, wurf, 12);
+			gameSet.set(throwInGameSet, wurf, 8);
 		}
-		if (sets.size() < 4) { // fill up with empty sets
-			for (int j = sets.size(); j < 4; j++) {
-				sets.add(new GameSet(30, 15, 15, j));
+		if (sets.size() < 2) { // fill up with empty sets
+			for (int j = sets.size(); j < 2; j++) {
+				sets.add(new GameSet(20, 10, 10, j));
 			}
 		}
-		var game = new Game120(null);
+		var game = new Game40(null);
 		game.setDurchgaenge(sets);
 		return game;
 	}
 
 	@Override
-	public Game120 buildEmptyGame() {
-		return new Game120(null);
+	public Game40 buildEmptyGame() {
+		return new Game40(null);
 	}
 
 //region setter/getter
 	@Override
 	public GameKind getGameKind() {
-		return GameKind.GAME_120;
+		return GameKind.GAME_40;
 	}
 //endregion
 }
