@@ -23,11 +23,6 @@ public class GameCSVFileReader<G extends Game> extends CSVFileReader implements 
 		this.gameKind = gameKind;
 	}
 
-	public GameCSVFileReader(Path file) {
-		this(file, null);
-	}
-
-
 	/**
 	 * Read the game data from the file.
 	 * The player will be <b>null</b>
@@ -49,6 +44,7 @@ public class GameCSVFileReader<G extends Game> extends CSVFileReader implements 
 		var sets = new LinkedList<GameSet>();
 		GameSet gameSet = null;
 		var setsNumber = 0;
+		var prevCode = 0;
 		for (String[] line : lines) {
 			var throwNumber = i++;
 			var throwInGameSet = throwNumber % throwsPerDurchgang;
@@ -62,19 +58,26 @@ public class GameCSVFileReader<G extends Game> extends CSVFileReader implements 
 			}
 			var picRaw = line[3];
 			if (picRaw == null || picRaw.isBlank() || picRaw.equals("-1")) {
+				prevCode = 0;
 				continue;
 			}
 			var value = Integer.parseInt(line[2]);
 			if (value == -1) {
+				prevCode = 0;
 				continue;
 			}
-			var bild = new Wurfbild(Integer.parseInt(picRaw));
+			var picEncoded = Integer.parseInt(picRaw);
+			var bild = new Wurfbild(picEncoded);
 			var fehlwurf = line[4].equals("1");
 			var time = Double.parseDouble(line[13]);
-			gameSet.set(throwInGameSet, new Wurf(value, bild, fehlwurf, false), time);
+			var isVolle = throwInGameSet < volleCount;
+			var isAnspiel = isVolle || prevCode == 511;
+			gameSet.set(throwInGameSet, new Wurf(value, bild, fehlwurf, false, isVolle, isAnspiel), time);
+			prevCode = picEncoded;
 		}
 		var game = switch (gameKind) {
-			case GAME_100, GAME_200, GAME_40, GAME_40_2 -> null;
+			case GAME_100, GAME_200, GAME_40_2 -> null;
+			case GAME_40 -> (G) new Game40(null);
 			case GAME_120 -> (G) new Game120(null);
 		};
 		game.setDurchgaenge(sets);
@@ -87,22 +90,34 @@ public class GameCSVFileReader<G extends Game> extends CSVFileReader implements 
 		var back = new LinkedList<Wurf>();
 		var i = 0;
 		var data = getData();
+		var volleCount = gameKind.getNumberOfVolle();
+		var abraeumenCount = gameKind.getNumberOfAbraeumen();
+		var timePerDurchgang = gameKind.getTimePerDurchgang();
+		var throwsPerDurchgang = volleCount + abraeumenCount;
+		var prevCode = 0;
 		for (String[] line : data) {
+			++i;
 			if (line.length != 14) {
 				LOGGER.log(System.Logger.Level.ERROR, STR."Line has not 14 columns: \{line}");
 				continue;
 			}
 			var picRaw = line[3];
 			if (picRaw == null || picRaw.isBlank() || picRaw.equals("-1")) {
+				prevCode = 0;
 				continue;
 			}
 			var value = Integer.parseInt(line[2]);
 			if (value == -1) {
+				prevCode = 0;
 				continue;
 			}
-			var bild = new Wurfbild(Integer.parseInt(picRaw));
+			var code = Integer.parseInt(picRaw);
+			var bild = new Wurfbild(code);
 			var fehlwurf = line[4].equals("1");
-			back.add(new Wurf(value, bild, fehlwurf, false));
+			var isVolle = ((i - 1) % throwsPerDurchgang) < volleCount;
+			var isAbraeumen = !isVolle || prevCode == 511;
+			back.add(new Wurf(value, bild, fehlwurf, false, isVolle, isAbraeumen));
+			prevCode = code;
 		}
 		return back;
 	}

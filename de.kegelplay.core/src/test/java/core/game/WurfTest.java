@@ -19,7 +19,7 @@ class WurfTest {
 
 	@BeforeEach
 	void setUp() {
-		wurf = new Wurf(0, wurfbild, false, false);
+		wurf = new Wurf(0, wurfbild, false, false, false, false);
 	}
 
 	@Test
@@ -31,17 +31,17 @@ class WurfTest {
 
 	@Test
 	void constructor_test_10() {
-		assertThrows(IllegalArgumentException.class, () -> new Wurf(10, wurfbild, false, false));
+		assertThrows(IllegalArgumentException.class, () -> new Wurf(10, wurfbild, false, false, false, false));
 	}
 
 	@Test
 	void constructor_test_minus_1() {
-		assertThrows(IllegalArgumentException.class, () -> new Wurf(-1, wurfbild, false, false));
+		assertThrows(IllegalArgumentException.class, () -> new Wurf(-1, wurfbild, false, false, false, false));
 	}
 
 	@Test
 	void constructor_test_wurfbild_null() {
-		assertThrows(IllegalArgumentException.class, () -> new Wurf(0, null, false, false));
+		assertThrows(IllegalArgumentException.class, () -> new Wurf(0, null, false, false, false, false));
 	}
 
 	@Test
@@ -51,22 +51,22 @@ class WurfTest {
 
 	@Test
 	void getScore_9() {
-		wurf = new Wurf(9, wurfbild, false, false);
+		wurf = new Wurf(9, wurfbild, false, false, false, false);
 		assertEquals(9, wurf.getScore());
 	}
 
 	@Test
 	void getScore_9_dontMatch() {
-		wurf = new Wurf(9, wurfbild, false, false);
+		wurf = new Wurf(9, wurfbild, false, false, false, false);
 		fail("Not implemented yet");
 		wurfbild = new Wurfbild(2);
-		assertThrows(IllegalArgumentException.class, () -> new Wurf(9, wurfbild, false, false));
+		assertThrows(IllegalArgumentException.class, () -> new Wurf(9, wurfbild, false, false, false, false));
 	}
 
 	@Test
 	void getScore_2_other_wurfbild() {
 		var wurfBild = new Wurfbild(501);
-		wurf = new Wurf(2, wurfBild, false, false);
+		wurf = new Wurf(2, wurfBild, false, false, false, false);
 		assertEquals(2, wurf.getScore());
 		assertNotEquals(2, wurf.bild().getWert());
 	}
@@ -88,7 +88,7 @@ class WurfTest {
 
 	@Test
 	void foulTrue() {
-		wurf = new Wurf(0, wurfbild, true, false);
+		wurf = new Wurf(0, wurfbild, true, false, false, false);
 		assertTrue(wurf.foul());
 	}
 
@@ -99,7 +99,29 @@ class WurfTest {
 
 	@Test
 	void redCardTrue() {
-		wurf = new Wurf(0, wurfbild, false, true);
+		wurf = new Wurf(0, wurfbild, false, true, false, false);
 		assertTrue(wurf.redCard());
+	}
+
+	@Test
+	void volleFalse() {
+		assertFalse(wurf.volle());
+	}
+
+	@Test
+	void volleTrue() {
+		wurf = new Wurf(0, wurfbild, false, false, true, false);
+		assertTrue(wurf.volle());
+	}
+
+	@Test
+	void anschubFalse() {
+		assertFalse(wurf.anschub());
+	}
+
+	@Test
+	void anschubTrue() {
+		wurf = new Wurf(0, wurfbild, false, false, false, true);
+		assertTrue(wurf.anschub());
 	}
 }

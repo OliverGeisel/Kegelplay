@@ -203,7 +203,7 @@ public abstract class Game {
 	public Wurf getLastWurf() {
 		var back = getCurrentSet().getLastWurf();
 		if (back == null) {
-			back = new Wurf(0, new Wurfbild(0), false, false);
+			back = new Wurf(0, new Wurfbild(0), false, false, false, false);
 		}
 		return back;
 	}

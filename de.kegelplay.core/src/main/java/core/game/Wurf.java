@@ -13,7 +13,7 @@ package core.game;
  * @see Wurfbild
  * @author Oliver Geisel
  */
-public record Wurf(int value, Wurfbild bild, boolean foul, boolean redCard) {
+public record Wurf(int value, Wurfbild bild, boolean foul, boolean redCard, boolean volle, boolean anschub) {
 
 	/**
 	 * Returns the {@link Wurfbild} of the Wurf.

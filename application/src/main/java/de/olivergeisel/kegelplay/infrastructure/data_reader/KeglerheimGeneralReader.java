@@ -217,7 +217,8 @@ public class KeglerheimGeneralReader extends GeneralReader {
 		for (var playerFolder : Objects.requireNonNull(baseDir.resolve(team.getName()).toFile().listFiles())) {
 			var path = playerFolder.toPath().resolve("werte.csv");
 			var playerName = playerFolder.getName();
-			var gameSource = new GameCSVFileReader<>(path);
+			var kind = builder.getGameKind();
+			var gameSource = new GameCSVFileReader<>(path, kind);
 			var game = builder.buildGame(gameSource);
 			var player =
 					Arrays.stream(team.getPlayers()).filter(p -> p.getCompleteNameWithCommata().equals(playerName))
@@ -252,37 +253,6 @@ public class KeglerheimGeneralReader extends GeneralReader {
 	@Override
 	public MatchConfig readConfig() {
 		return null;
-	}
-
-
-	public void updateMatch(Match match) {
-		for (var team : match.getTeams()) {
-			updateTeams(team);
-		}
-
-	}
-
-	private void updateTeams(Team team) {
-		for (var player : team.getPlayers()) {
-			updatePlayers(player);
-		}
-	}
-
-	private void updatePlayers(Player player) {
-		updateGames(player.getGame());
-	}
-
-	private void updateGames(Game match) {
-		for (var durchgang : match.getSets()) {
-			updateDurchgang(durchgang);
-		}
-
-	}
-
-	private void updateDurchgang(GameSet gameSet) {
-		var i = 1;
-		var wurf = new Wurf(2, new Wurfbild(12), false, false);
-		gameSet.set(i, wurf);
 	}
 
 }
