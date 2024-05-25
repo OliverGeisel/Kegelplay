@@ -45,6 +45,15 @@ public class GameCSVFileReader<G extends Game> extends CSVFileReader implements 
 		GameSet gameSet = null;
 		var setsNumber = 0;
 		var prevCode = 0;
+		var game = switch (gameKind) {
+			case GAME_100, GAME_200, GAME_40_2 -> null;
+			case GAME_40 -> (G) new Game40(null);
+			case GAME_120 -> (G) new Game120(null);
+		};
+		if (lines.isEmpty()) {
+			fillWithEmpty(game);
+			return game;
+		}
 		for (String[] line : lines) {
 			var throwNumber = i++;
 			var throwInGameSet = throwNumber % throwsPerDurchgang;
@@ -75,13 +84,18 @@ public class GameCSVFileReader<G extends Game> extends CSVFileReader implements 
 			gameSet.set(throwInGameSet, new Wurf(value, bild, fehlwurf, false, isVolle, isAnspiel), time);
 			prevCode = picEncoded;
 		}
-		var game = switch (gameKind) {
-			case GAME_100, GAME_200, GAME_40_2 -> null;
-			case GAME_40 -> (G) new Game40(null);
-			case GAME_120 -> (G) new Game120(null);
-		};
+
 		game.setDurchgaenge(sets);
 		return game;
+	}
+
+	private void fillWithEmpty(G game) {
+		var sets = new LinkedList<GameSet>();
+		var throwsPerDurchgang = gameKind.getNumberOfVolle() + gameKind.getNumberOfAbraeumen();
+		for (int i = 0; i < gameKind.getNumberOfDurchgaenge(); i++) {
+			sets.add(new GameSet(throwsPerDurchgang, gameKind.getNumberOfVolle(), gameKind.getNumberOfAbraeumen(), i));
+		}
+		game.setDurchgaenge(sets);
 	}
 
 
