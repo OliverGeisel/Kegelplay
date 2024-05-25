@@ -14,10 +14,12 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 /**
  * Updates the match state and the teams.
+ * 
  * @param <G>
  */
 public class MatchUpdater<G extends Game> {
@@ -57,11 +59,12 @@ public class MatchUpdater<G extends Game> {
 	}
 
 	private void updateTeam(Team<G> team) {
-		// TODO read the players again. This is necessary because the players could have changed in the meantime
-		//  (e.g. a player was substituted)
+		// TODO read the players again. This is necessary because the players could have
+		// changed in the meantime
+		// (e.g. a player was substituted)
 		var dir = match.getBaseDir().resolve(STR."\{team.getName()}.ini");
 		try {
-			var teamIniFile = new IniFile(dir);
+				var teamIniFile = new IniFile(dir);
 			var players = teamIniFile.getRegions().stream().filter(r -> r.getName().startsWith("Spieler")).toList();
 			for (var region : players) {
 				var name = region.getValue("Name");
@@ -72,7 +75,7 @@ public class MatchUpdater<G extends Game> {
 					var club = region.getValue("Verein");
 					LocalDate birthdate;
 					try {
-						birthdate = LocalDate.parse(region.getValue("Geburtstag"));
+						birthdate = LocalDate.parse(region.getValue("Geb.-Jahr"));
 					} catch (DateTimeParseException e) {
 						birthdate = null;
 					}
@@ -80,7 +83,7 @@ public class MatchUpdater<G extends Game> {
 					var newPlayer = new Player<G>(vorname, name, club, teamName, birthdate);
 					var game = player.getGame();
 					game.setPlayer(newPlayer);
-					team.setPlayer(number - 1, newPlayer);
+					team.setPlayer(number, newPlayer);
 				}
 			}
 		} catch (IOException e) {
@@ -95,10 +98,15 @@ public class MatchUpdater<G extends Game> {
 			var path = playerFolder.toPath().resolve("werte.csv");
 			var playerName = playerFolder.getName(); // Todo reuse old Reader if not changed
 			var game = new GameCSVFileReader<Game120>(path, GameKind.GAME_120).readGame(); // Todo allow other games
-			var player = Arrays.stream(team.getPlayers())
+			try {
+				var player = Arrays.stream(team.getPlayers())
 							   .filter(p -> p.getCompleteNameWithCommata().equals(playerName))
 							   .findFirst().orElseThrow();
-			game.setPlayer(player);
+				game.setPlayer(player);
+			}catch (NoSuchElementException ne){
+				// ignore
+				LOGGER.log(System.Logger.Level.DEBUG, STR."player (folder) \{playerName} not found in team");
+			}
 		}
 	}
 
