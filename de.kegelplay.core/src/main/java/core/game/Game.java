@@ -213,12 +213,18 @@ public abstract class Game {
 	 * @return Current {@link GameSet}
 	 */
 	public GameSet getCurrentSet() {
-		for (var set : getSets()) {
-			if (set.isRunning()) {
+		var sets = getSets();
+		if (Arrays.stream(sets).allMatch(GameSet::isNotStarted))
+			return sets[0];
+		if (Arrays.stream(sets).allMatch(GameSet::isCompleted))
+			return sets[sets.length - 1];
+		for (int i = sets.length - 1; i >= 0; i--) {
+			var set = sets[i];
+			if (set.isRunning() || set.isCompleted()) {
 				return set;
 			}
 		}
-		return getDurchgang(getSets().length - 1);
+		return getDurchgang(sets.length - 1);
 	}
 
 	public void setSubstitution1(Player player) {

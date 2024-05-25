@@ -4,6 +4,7 @@ import core.match.Match;
 import core.team_and_player.Player;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -83,15 +84,7 @@ public class Game120 extends Game {
 
 	@Override
 	public int getNumberOfWurf() {
-		var back = 0;
-		for (GameSet set : sets) {
-			if (set.getState() == SetState.FINISHED) {
-				back += set.getThrowCount();
-			} else {
-				back += set.getAnzahlGespielteWuerfe();
-			}
-		}
-		return back;
+		return Arrays.stream(sets).mapToInt(GameSet::getAnzahlGespielteWuerfe).sum();
 	}
 
 	@Override

@@ -13,6 +13,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @Tag("unit")
 @ExtendWith(MockitoExtension.class)
@@ -26,12 +28,16 @@ class GameTest {
 	void setUp() {
 		game = new Game(player, LocalDateTime.of(2024, 1, 1, 12, 0)) {
 
+			private final GameSet[] sets = new GameSet[4];
+
+
+
 			@Override
 			public void start() {}
 
 			@Override
 			public GameSet getDurchgang(int durchgang) {
-				return null;
+				return sets[durchgang];
 			}
 
 			//region setter/getter
@@ -77,12 +83,17 @@ class GameTest {
 
 			@Override
 			public GameSet[] getSets() {
-				return new GameSet[0];
+				return sets;
 			}
 
 			@Override
 			public void setDurchgaenge(List<GameSet> durgaenge) {
-
+				if (durgaenge.size() != 4) {
+					throw new IllegalArgumentException("4 Durchgaenge erwartet");
+				}
+				for (int i = 0; i < durgaenge.size(); i++) {
+					sets[i] = durgaenge.get(i);
+				}
 			}
 //endregion
 		};
@@ -186,8 +197,75 @@ class GameTest {
 	}
 
 	@Test
-	void getCurrentSet() {
+	void getCurrentSet_not_started() {
+		var set1 = mock(GameSet.class);
+		var set2 = mock(GameSet.class);
+		var set3 = mock(GameSet.class);
+		var set4 = mock(GameSet.class);
+		when(set1.isNotStarted()).thenReturn(true);
+		when(set2.isNotStarted()).thenReturn(true);
+		when(set3.isNotStarted()).thenReturn(true);
+		when(set4.isNotStarted()).thenReturn(true);
+
+		game.setDurchgaenge(List.of(set1, set2, set3, set4));
+		assertEquals(set1, game.getCurrentSet());
 	}
+
+	@Test
+	void getCurrentSet_first_started() {
+		var set1 = mock(GameSet.class);
+		var set2 = mock(GameSet.class);
+		var set3 = mock(GameSet.class);
+		var set4 = mock(GameSet.class);
+		when(set1.isRunning()).thenReturn(true);
+
+		game.setDurchgaenge(List.of(set1, set2, set3, set4));
+		assertEquals(set1, game.getCurrentSet());
+	}
+
+	@Test
+	void getCurrentSet_last_started() {
+		var set1 = mock(GameSet.class);
+		var set2 = mock(GameSet.class);
+		var set3 = mock(GameSet.class);
+		var set4 = mock(GameSet.class);
+		when(set1.isCompleted()).thenReturn(true);
+		when(set2.isCompleted()).thenReturn(true);
+		when(set3.isCompleted()).thenReturn(true);
+		when(set4.isRunning()).thenReturn(true);
+
+		game.setDurchgaenge(List.of(set1, set2, set3, set4));
+		assertEquals(set4, game.getCurrentSet());
+	}
+
+	@Test
+	void getCurrentSet_last_completed() {
+		var set1 = mock(GameSet.class);
+		var set2 = mock(GameSet.class);
+		var set3 = mock(GameSet.class);
+		var set4 = mock(GameSet.class);
+		when(set1.isCompleted()).thenReturn(true);
+		when(set2.isCompleted()).thenReturn(true);
+		when(set3.isCompleted()).thenReturn(true);
+		when(set4.isCompleted()).thenReturn(true);
+
+		game.setDurchgaenge(List.of(set1, set2, set3, set4));
+		assertEquals(set4, game.getCurrentSet());
+	}
+
+	@Test
+	void getCurrentSet_second_while_First_still_running() {
+		var set1 = mock(GameSet.class);
+		var set2 = mock(GameSet.class);
+		var set3 = mock(GameSet.class);
+		var set4 = mock(GameSet.class);
+		when(set2.isRunning()).thenReturn(true);
+
+
+		game.setDurchgaenge(List.of(set1, set2, set3, set4));
+		assertEquals(set2, game.getCurrentSet());
+	}
+
 
 	@Test
 	void setSubstitution1() {
