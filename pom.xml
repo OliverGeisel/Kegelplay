@@ -161,6 +161,7 @@
         <module>de.kegelplay.core</module>
         <module>application</module>
         <module>point-system</module>
+        <module>infrastructure</module>
     </modules>
 
 </project>

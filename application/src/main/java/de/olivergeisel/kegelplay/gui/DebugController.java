@@ -1,8 +1,8 @@
 package de.olivergeisel.kegelplay.gui;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.olivergeisel.kegelplay.infrastructure.data_reader.KeglerheimGeneralReader;
-import de.olivergeisel.kegelplay.infrastructure.data_reader.UnsupportedMatchSchema;
+import de.kegelplay.infrastructure.data_reader.KeglerheimGeneralReader;
+import de.kegelplay.infrastructure.data_reader.UnsupportedMatchSchema;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;

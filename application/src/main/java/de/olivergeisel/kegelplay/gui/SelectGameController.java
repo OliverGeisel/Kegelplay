@@ -8,8 +8,8 @@ import core.match.Match1Team;
 import core.point_system.AllAgainstAll120_4PlayerPointSystem;
 import core.point_system.PointSystem;
 import core.point_system._2Teams120PointSystem;
-import de.olivergeisel.kegelplay.infrastructure.data_reader.KeglerheimGeneralReader;
-import de.olivergeisel.kegelplay.infrastructure.data_reader.UnsupportedMatchSchema;
+import de.kegelplay.infrastructure.data_reader.KeglerheimGeneralReader;
+import de.kegelplay.infrastructure.data_reader.UnsupportedMatchSchema;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,10 +31,7 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static java.lang.Math.round;
 
