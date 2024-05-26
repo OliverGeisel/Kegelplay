@@ -1,6 +1,7 @@
 package de.olivergeisel.kegelplay.core.point_system;
 
 import de.olivergeisel.kegelplay.core.game.Game;
+import de.olivergeisel.kegelplay.core.game.*;
 import de.olivergeisel.kegelplay.core.team_and_player.Player;
 
 import java.util.*;
@@ -12,10 +13,6 @@ public class GamePointsCollection {
 
 	private final Map<Player, List<GameSetPointsCollection>> scores;
 
-	@SafeVarargs
-	public GamePointsCollection(Player... players) {
-		this(Arrays.asList(players));
-	}
 
 	public GamePointsCollection(Collection<Player> players) {
 		scores = new HashMap<>();

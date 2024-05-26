@@ -8,8 +8,8 @@ import java.util.Map;
 
 public class PairMatchPoints<G extends Game> extends MatchPoints<Player<G>> {
 
-	private final Player<G>           player1;
-	private final Player<G>           player2;
+	private final Player<G> player1;
+	private final Player<G> player2;
 	private final GamePointsPlayer<G> gamePointsPlayer1;
 	private final GamePointsPlayer<G> gamePointsPlayer2;
 
@@ -61,7 +61,7 @@ public class PairMatchPoints<G extends Game> extends MatchPoints<Player<G>> {
 		throw new IllegalArgumentException("Player not found");
 	}
 
-//region setter/getter
+	// region setter/getter
 
 	/**
 	 * Return the winner of the match.
@@ -71,16 +71,17 @@ public class PairMatchPoints<G extends Game> extends MatchPoints<Player<G>> {
 	 */
 	@Override
 	public Player<G> getWinner() throws IllegalStateException {
-		if (!player1.getGame().isFinished()
-			|| !player2.getGame().isFinished()) {
-			throw new IllegalStateException("Match is not finished");
-		}
 		if (gamePointsPlayer1.getPoints() > gamePointsPlayer2.getPoints()) {
 			return player1;
 		} else if (gamePointsPlayer1.getPoints() < gamePointsPlayer2.getPoints()) {
 			return player2;
 		}
-		throw new IllegalStateException("Match has no single winner. Each pair has one winner.");
+		var score1 = gamePointsPlayer1.getPlayer().getGame().getTotalScore();
+		var score2 = gamePointsPlayer2.getPlayer().getGame().getTotalScore();
+		if (score1 == score2) {
+			throw new IllegalStateException("Match is a draw");
+		}
+		return score1 > score2 ? player1 : player2;
 	}
 
 	/**
@@ -100,7 +101,9 @@ public class PairMatchPoints<G extends Game> extends MatchPoints<Player<G>> {
 	 */
 	@Override
 	public boolean isDraw() {
-		return gamePointsPlayer1.getPoints() == gamePointsPlayer2.getPoints();
+		var score1 = gamePointsPlayer1.getPlayer().getGame().getTotalScore();
+		var score2 = gamePointsPlayer2.getPlayer().getGame().getTotalScore();
+		return gamePointsPlayer1.getPoints() == gamePointsPlayer2.getPoints() && score1 == score2;
 	}
-//endregion
+	// endregion
 }

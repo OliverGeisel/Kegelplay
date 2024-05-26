@@ -14,16 +14,23 @@ public class FinalistListController implements Initializable {
 
 	@FXML
 	private VBox finalistList;
+	@FXML
+	private VBox root;
+
+
+	public void clearFinalist(){
+		finalistList.getChildren().clear();
+	}
 
 	public void addFinalist(String fornname, String surname, int score) {
 		var displayString = STR."\{fornname} \{surname} - \{score}";
 		if (finalistList.getChildren().stream().noneMatch(node -> {
-			if (node instanceof HBox) {
-				var children = ((HBox) node).getChildren();
+			if (node instanceof HBox box) {
+				var children = box.getChildren();
 				if (!children.isEmpty()) {
 					var firstChild = children.getFirst();
-					if (firstChild instanceof Label) {
-						return ((Label) firstChild).getText().equals(displayString);
+					if (firstChild instanceof Label label) {
+						return label.getText().equals(displayString);
 					}
 				}
 			}
@@ -32,7 +39,7 @@ public class FinalistListController implements Initializable {
 			HBox playerLine = new HBox();
 			var children = playerLine.getChildren();
 			children.add(new Label(STR."\{fornname} \{surname}"));
-			playerLine.getChildren().add(playerLine);
+			finalistList.getChildren().add(playerLine);
 		}
 	}
 
@@ -48,6 +55,7 @@ public class FinalistListController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		root.getProperties().put(FXMLLoader.CONTROLLER_KEYWORD, this);
 		finalistList.getProperties().put(FXMLLoader.CONTROLLER_KEYWORD, this);
 	}
 }

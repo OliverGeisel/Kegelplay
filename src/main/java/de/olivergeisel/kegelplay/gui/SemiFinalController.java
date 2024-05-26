@@ -100,19 +100,20 @@ public class SemiFinalController implements GameController<Game120>, Initializab
 		List<Winner> winners = match.getPointSystem().getWinner(match);
 		// add all winners to the list
 		var controller = (FinalistListController) semiFinalList.getProperties().get(FXMLLoader.CONTROLLER_KEYWORD);
+		controller.clearFinalist();
 		for (var winner : winners) {
-			var nameSplit = winner.getName().split(" ");
+			var nameSplit = winner.getName().split("_"); // Fix to " "
 			controller.addFinalist(nameSplit[0], nameSplit[1], winner.getScore());
 		}
 	}
 
 	private void updateGameSchedule(Match match) {
 		// update game schedule
-		var gameSet = (match.getCurrentSet()) / 4;
-		if (gameSet == currentGameSet) {
+		var gameSet = (match.getCurrentSet()-1) / 4;
+		/*if (gameSet == currentGameSet) {
 			return;
 		}
-		currentGameSet = gameSet;
+		currentGameSet = gameSet;*/
 		var controller = (GameScheduleController) gameSchedule.getProperties().get(FXMLLoader.CONTROLLER_KEYWORD);
 		controller.update(match, gameSet);
 	}

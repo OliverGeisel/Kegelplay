@@ -29,7 +29,11 @@ public class AllAgainstAll120_4PlayerPointSystem extends PointSystem<Game120> {
 			throw new IllegalArgumentException("Match must have exactly one team");
 		}
 		var team = match.getTeams()[0];
-		var players = team.getPlayers();
+		List<Player> players = new LinkedList<>();
+		var temp =  match.getCurrentPlayers();
+		for (var x : temp){
+			players.add(x);
+		}
 		var gamePoints = getGamePoints(players);
 		return new AllAgainstMatchScore<>(gamePoints);
 	}
@@ -51,14 +55,11 @@ public class AllAgainstAll120_4PlayerPointSystem extends PointSystem<Game120> {
 						Winner.WinnerType.PLAYER));
 	}
 
-	private GamePointsCollection getGamePoints(Player<Game120>... players) {
-		if (players.length != 4) {
-			throw new IllegalArgumentException("there must be exactly 4 players");
-		}
+	private GamePointsCollection getGamePoints(List<Player> players) {
 		var points = new GamePointsCollection(players);
 		for (int i = 0; i < 4; i++) {
 			try {
-				var setPoints = getSetPoints(i, players);
+				var setPoints = getSetPointsL(i, players);
 				for (var player : players) {
 					points.addGameSetPoints(player, setPoints);
 				}
@@ -68,6 +69,9 @@ public class AllAgainstAll120_4PlayerPointSystem extends PointSystem<Game120> {
 		}
 		return points;
 	}
+
+
+
 
 
 	/**
@@ -80,11 +84,8 @@ public class AllAgainstAll120_4PlayerPointSystem extends PointSystem<Game120> {
 	 * @throws IllegalArgumentException if the number of players is not 4 or the setNumber is not between 0 and 3
 	 * @throws IllegalStateException    if the set is not started yet
 	 */
-	private GameSetPointsCollection getSetPoints(int setNumber, Player<Game120>... players)
+	private GameSetPointsCollection getSetPoints(int setNumber, Player... players)
 			throws IllegalArgumentException, IllegalStateException {
-		if (players.length != 4) {
-			throw new IllegalArgumentException("there must be exactly 4 players");
-		}
 		if (setNumber < 0 || setNumber > 3) {
 			throw new IllegalArgumentException("setNumber must be between 0 and 3");
 		}
@@ -96,6 +97,30 @@ public class AllAgainstAll120_4PlayerPointSystem extends PointSystem<Game120> {
 		var player2 = players[1];
 		var player3 = players[2];
 		var player4 = players[3];
+		var player1Set = player1.getGame().getDurchgang(setNumber);
+		var player2Set = player2.getGame().getDurchgang(setNumber);
+		var player3Set = player3.getGame().getDurchgang(setNumber);
+		var player4Set = player4.getGame().getDurchgang(setNumber);
+		var pair1 = new GameSetPlayer(player1, player1Set);
+		var pair2 = new GameSetPlayer(player2, player2Set);
+		var pair3 = new GameSetPlayer(player3, player3Set);
+		var pair4 = new GameSetPlayer(player4, player4Set);
+		return evalSetScores(pair1, pair2, pair3, pair4);
+	}
+	
+	private GameSetPointsCollection getSetPointsL(int setNumber, List<Player> players)
+			throws IllegalArgumentException, IllegalStateException {
+		if (setNumber < 0 || setNumber > 3) {
+			throw new IllegalArgumentException("setNumber must be between 0 and 3");
+		}
+	/*	if (Arrays.stream(players).map(player -> player.getGame().getDurchgang(setNumber))
+				  .anyMatch(GameSet::isNotStarted)) {
+			throw new IllegalStateException("set not started");
+		}*/
+		var player1 = players.get(0);
+		var player2 = players.get(1);
+		var player3 = players.get(2);
+		var player4 = players.get(3);
 		var player1Set = player1.getGame().getDurchgang(setNumber);
 		var player2Set = player2.getGame().getDurchgang(setNumber);
 		var player3Set = player3.getGame().getDurchgang(setNumber);

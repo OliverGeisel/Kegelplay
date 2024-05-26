@@ -168,7 +168,7 @@ public class SelectGameController implements Initializable {
 		match.setPointSystem(pointSystem);
 		GameController<? extends Game> controller = switch (selectedView) {
 			case "4 gegeneinander" -> {
-				if (match instanceof Match1Team<?> match1Team) {
+				if (match instanceof Match match1Team) {
 					fxmlLoader = new FXMLLoader(getClass().getResource("display-game.fxml"));
 					yield new _4PlayersAllAgainstController<>(match1Team);
 				} else {

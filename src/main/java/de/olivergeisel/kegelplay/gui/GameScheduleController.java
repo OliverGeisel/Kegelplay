@@ -56,10 +56,11 @@ public class GameScheduleController implements Initializable {
 		for (int i = gameSet; i < times.size(); i++) {
 			// create new line
 			var line = new HBox();
-			var time = times.get(i);
+			var time = times.get(i+1);
 			var children = line.getChildren();
 			var timeLabel = new Label(STR."\{time} Uhr");
 			timeLabel.paddingProperty().setValue(new Insets(0, 10, 0, 10));
+			timeLabel.minWidthProperty().setValue(100);
 			children.add(timeLabel);
 			// get next 4 players
 			for (int k = 0; k < playerPerGameSet; k++) {
@@ -67,6 +68,7 @@ public class GameScheduleController implements Initializable {
 					var player = remainingPlayers.get(k + i * playerPerGameSet);
 					var playerLabel = new Label(STR."\{player.getVorname()} \{player.getNachname()}");
 					playerLabel.paddingProperty().setValue(new Insets(0, 10, 0, 10));
+					playerLabel.minWidthProperty().setValue(150);
 					children.add(playerLabel);
 				} catch (IndexOutOfBoundsException e) {
 					break outer;
