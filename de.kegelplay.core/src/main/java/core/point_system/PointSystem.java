@@ -36,11 +36,20 @@ public abstract class PointSystem<G extends Game> {
 
 	public abstract MatchPoints getMatchPoints(Match<G> match);
 
-	//region setter/getter
+	/**
+	 * Get the winner of a match.
+	 * This can have multiple winners, if the match is a draw or the Pointssystem allows multiple winners (like
+	 * Qualifiers for a next round).
+	 *
+	 * @param match The match to get the winner from.
+	 * @return A list of Winners.
+	 */
+	public abstract List<Winner> getWinner(Match<G> match);
 	public String getDescription() {
 		return description;
 	}
-//endregion
+
+	//region setter/getter
 
 	public static Map<Player, Integer> getPlayerPoints(int durchgang, Player... players) {
 		if (players.length != 4) {

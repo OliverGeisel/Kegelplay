@@ -54,7 +54,7 @@ public class Game120 extends Game {
 
 	/**
 	 * {@inheritDoc}
-	 * @param durchgang the number of the {@link GameSet} to get (0 <= durchgang < 4)
+	 * @param durchgang the number of the {@link GameSet} to get (0 &lt;= durchgang &lt; 4)
 	 * @return the {@link GameSet} at the given number
 	 * @throws IllegalArgumentException if the number is out of bounds
 	 */

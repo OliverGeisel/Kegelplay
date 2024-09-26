@@ -26,7 +26,18 @@ public class KeyValueRegion<K, V> {
 		this.keyValuePairs = keyValues;
 	}
 
-	public V getValue(K key) {
+	/**
+	 * Returns the value for the given key.
+	 *
+	 * @param key the key
+	 * @return the value for the given key or null if the key is not present
+	 *
+	 * @throws IllegalArgumentException if the key is null
+	 */
+	public V getValue(K key) throws IllegalArgumentException {
+		if (key == null) {
+			throw new IllegalArgumentException("key must not be null");
+		}
 		return keyValuePairs.get(key);
 	}
 

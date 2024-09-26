@@ -19,8 +19,19 @@ public abstract class MatchPoints<W> {
 	 */
 	public abstract double winnerPoints();
 
-	public abstract double getGameSetPointsFor(String player, int gameSetNumber);
+	/**
+	 * Return the points of a player for a specific game set.
+	 *
+	 * @param player        the player to get the points for
+	 * @param gameSetNumber the game set to get the points for
+	 * @return the points of the player for the game set
+	 *
+	 * @throws IllegalArgumentException if the player is not found or the game set number is not valid
+	 */
+	public abstract double getGameSetPointsFor(String player, int gameSetNumber) throws IllegalArgumentException;
 
+
+//region setter/getter
 	/**
 	 * Return the winner of the match.
 	 *
@@ -42,8 +53,6 @@ public abstract class MatchPoints<W> {
 	 * @return true if the match is a draw
 	 */
 	public abstract boolean isDraw();
-
-//region setter/getter
 //endregion
 
 }

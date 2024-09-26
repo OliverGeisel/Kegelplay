@@ -14,7 +14,7 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <description>Kegelplay is eco-system to handle 9Pin Bowling games and matches.
+    <description>Kegelplay is an ecosystem to handle 9Pin Bowling games and matches.
         It is written in Java. The core module is the base for all other modules.
         In this module are the classes to handle players, teams, games and matches.
     </description>
@@ -26,5 +26,41 @@
         <javafx-version>21.0.1</javafx-version>
     </properties>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <additionalJOptions>
+                        <arg>--enable-preview</arg>
+                    </additionalJOptions>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.1</version>
+
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
