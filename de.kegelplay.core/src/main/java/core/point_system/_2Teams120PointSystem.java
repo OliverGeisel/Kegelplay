@@ -106,6 +106,26 @@ public class _2Teams120PointSystem extends PointSystem<Game120> {
 				results.getValue(), 2.0);
 	}
 
+	@Override
+	public List<Winner> getWinner(Match<Game120> match) {
+		// Todo implement
+		var matchPoints = getMatchPoints(match);
+		var winner = matchPoints.getWinner();
+		if (winner == null) {
+			return List.of();
+		}
+		final var type = Winner.WinnerType.TEAM;
+		var team1 = match.getTeams()[0];
+		var team2 = match.getTeams()[1];
+		if (winner.equals(team1)) {
+			return List.of(new Winner(team1.getName(), 2, type));
+		} else if (winner.equals(team2)) {
+			return List.of(new Winner(team2.getName(), 2, type));
+		}
+		return List.of(new Winner(team1.getName(), 1, type),
+				new Winner(team2.getName(), 1, type));
+	}
+
 	private Pair<Double, Double> evalTeamScores(Team<Game120> team1, Team<Game120> team2) {
 		var team1Score = team1.getTeamScore();
 		var team2Score = team2.getTeamScore();

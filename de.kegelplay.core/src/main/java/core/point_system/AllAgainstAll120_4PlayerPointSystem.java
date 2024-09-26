@@ -34,6 +34,12 @@ public class AllAgainstAll120_4PlayerPointSystem extends PointSystem<Game120> {
 		return new AllAgainstMatchScore<>(gamePoints);
 	}
 
+	@Override
+	public List<Winner> getWinner(Match<Game120> match) {
+		// Todo implement
+		return List.of();
+	}
+
 	private GamePointsCollection getGamePoints(Player<Game120>... players) {
 		if (players.length != 4) {
 			throw new IllegalArgumentException("there must be exactly 4 players");
