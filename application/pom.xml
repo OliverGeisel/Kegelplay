@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>de.kegelplay</groupId>
+        <artifactId>project</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>application</artifactId>
+    <name>Kegelplay Application</name>
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>de.kegelplay</groupId>
+            <artifactId>infrastructure</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>de.kegelplay/de.olivergeisel.kegelplay.KegelplayApplication</mainClass>
+                </configuration>
+            </plugin>
+            <!-- <plugin>
+                 <groupId>org.openjfx</groupId>
+                 <artifactId>javafx-maven-plugin</artifactId>
+                 <version>0.0.8</version>
+                 <executions>
+                     <execution>
+                         <!- Default configuration for running with: mvn clean javafx:run ->
+                         <id>default-cli</id>
+                         <configuration>
+                             <compilerArgs>
+                                 <arg>-module-path</arg>
+                                 <arg>${project.build.directory}/modules</arg>
+                             </compilerArgs>
+                             <mainClass>
+                                 de.kegelplay.application/de.olivergeisel.kegelplay.KegelplayApplication
+                             </mainClass>
+                             <launcher>app</launcher>
+                             <jlinkZipName>app</jlinkZipName>
+                             <jlinkImageName>app</jlinkImageName>
+                             <noManPages>true</noManPages>
+                             <stripDebug>true</stripDebug>
+                             <noHeaderFiles>true</noHeaderFiles>
+                             <options>
+                                 <option>-enable-preview</option>
+                             </options>
+                         </configuration>
+                     </execution>
+                 </executions>
+             </plugin> -->
+        </plugins>
+    </build>
+</project>
