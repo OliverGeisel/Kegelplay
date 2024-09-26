@@ -1,6 +1,7 @@
 package core.point_system;
 
 import core.game.Game;
+import core.match.Match;
 import core.team_and_player.Player;
 import core.team_and_player.Team;
 import core.util.Pair;

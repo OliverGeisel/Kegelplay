@@ -10,15 +10,13 @@ import java.util.Map;
  * The match score for a match where all players play against each other.
  * There is only one winner in this match.
  *
+ * @param <G> the type of the game that is played in the match
+ * @author Oliver Geisel
+ * @version 1.0.0
  * @see PointSystemCriteria#PLAYER
  * @see MatchPoints
  * @see Match
- *
- * @param <G> the type of the game that is played in the match
- *
- * @version 1.0.0
  * @since 1.0.0
- * @author Oliver Geisel
  */
 public class AllAgainstMatchScore<G extends Game> extends MatchPoints<Player<G>> {
 
@@ -76,12 +74,14 @@ public class AllAgainstMatchScore<G extends Game> extends MatchPoints<Player<G>>
 	@Override
 	public Player<G> getWinner() {
 		Player<G> winner = null;
-		for (Player<G> player : gamePointsCollection.getPlayers()) {
-			if (winner == null) {
-				winner = player;
-			}
-			if (gamePointsCollection.getScore(player) > gamePointsCollection.getScore(winner)) {
-				winner = player;
+		for (Object object : gamePointsCollection.getPlayers()) {
+			if (object instanceof Player player) {
+				if (winner == null) {
+					winner = player;
+				}
+				if (gamePointsCollection.getScore(player) > gamePointsCollection.getScore(winner)) {
+					winner = player;
+				}
 			}
 		}
 		return winner;

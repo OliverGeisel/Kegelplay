@@ -8,12 +8,12 @@ import java.util.*;
 /**
  * The points of a game for each player.
  */
-public class GamePointsCollection {
+public class GamePointsCollection<G extends Game> {
 
-	private final Map<Player, List<GameSetPointsCollection>> scores;
+	private final Map<Player<G>, List<GameSetPointsCollection>> scores;
 
 
-	public GamePointsCollection(Collection<Player> players) {
+	public GamePointsCollection(Collection<Player<G>> players) {
 		scores = new HashMap<>();
 		for (Player player : players) {
 			scores.put(player, new LinkedList<>());
@@ -48,7 +48,7 @@ public class GamePointsCollection {
 	}
 
 	//region setter/getter
-	public List<Player> getPlayers() {
+	public List<Player<G>> getPlayers() {
 		return new ArrayList<>(scores.keySet());
 	}
 
