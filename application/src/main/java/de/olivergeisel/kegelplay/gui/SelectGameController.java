@@ -35,11 +35,32 @@ import java.util.*;
 
 import static java.lang.Math.round;
 
+/**
+ * Controller for selecting a match to display.
+ * <p>
+ * Select the match to display and the view to display it.
+ * The default Aspect ratio is 16:9 for all Match-views.
+ * </p>
+ *
+ * @author Oliver Geisel
+ * @version 1.0.0
+ * @since 1.0.0
+ */
 public class SelectGameController implements Initializable {
 
-	private static final double        ASPECT_RATIO = 16.0 / 9; // Gewünschtes Seitenverhältnis (z. B. 16:9)
-	private static final System.Logger LOGGER       = System.getLogger(SelectGameController.class.getName());
+	private static final double        ASPECT_RATIO  = 16.0 / 9; // Gewünschtes Seitenverhältnis (z. B. 16:9)
+	private static final System.Logger LOGGER        = System.getLogger(SelectGameController.class.getName());
+	private static final List<String>  VIEWS         = List.of("4 gegeneinander", "2 Teams", "N Teams");
+	private static final List<String>  POINT_SYSTEMS =
+			List.of("4 Spieler gegeneinander", "2 Teams paarweise", "Teams summe", "Paarweise gegeneinander");
 
+	private static final Map<String, String> VIEW_INFO = Map.of(
+			"4 gegeneinander", "4 Spieler in einem Team, die alle gegeneinander spielen",
+			"2 Teams", "2 Teams spielen gegeneinander in Paaren",
+			"N Teams", "N Teams spielen gegeneinander. Die Punkte werden hier maßgeblich durch das Punktesystem "
+					   + "bestimmt",
+			"Halbfinale", "Hier spielen die Spieler aus einer Mannschaft paarweise gegeneinander"
+	);
 
 	private Path datePath;
 
@@ -96,9 +117,14 @@ public class SelectGameController implements Initializable {
 		System.out.println("loaded");
 	}
 
+	/**
+	 * Loads the games for today.
+	 *
+	 * @param event the event (Button etc.) that triggered the action
+	 * @throws IOException if the games could not be loaded
+	 */
 	@FXML
 	public void loadToday(ActionEvent event) throws IOException {
-		System.out.println("loadGame");
 		LocalDate today = LocalDate.now();
 		Path path = Path.of("./configs/settings.json");
 		try {
@@ -118,13 +144,18 @@ public class SelectGameController implements Initializable {
 		}
 	}
 
+	/**
+	 * Load the selected game. This starts the concrete view of the {@link Match}.
+	 *
+	 * @param event the event (Button etc.) that triggered the action
+	 */
 	@FXML
 	public void loadSelectedGame(ActionEvent event) {
 		var button = (Button) event.getSource();
 		var selectedGame = button.getText();
 		var oldScene = button.getScene();
 		var stage = (Stage) oldScene.getWindow();
-		//stage.close();
+		// stage.close();
 		stage = new Stage();
 		var fxmlLoader = new FXMLLoader(getClass().getResource("display-game.fxml"));
 		var datePath = this.datePath;
@@ -226,12 +257,9 @@ public class SelectGameController implements Initializable {
 		gameKind.getItems().addAll(GameKind.values());
 		gameKind.setValue(GameKind.GAME_120);
 		// view
-		var views = List.of("4 gegeneinander", "2 Teams", "N Teams");
-		view.getItems().addAll(views);
+		view.getItems().addAll(VIEWS);
 		// pointSystem
-		var pointSystems =
-				List.of("4 Spieler gegeneinander", "2 Teams paarweise", "Teams summe", "Paarweise gegeneinander");
-		pointSystemField.getItems().addAll(pointSystems);
+		pointSystemField.getItems().addAll(POINT_SYSTEMS);
 		var screens = Screen.getScreens();
 		for (int i = 0; i < screens.size(); i++) {
 			screenSelect.getItems().add(STR."Screen \{i + 1}");

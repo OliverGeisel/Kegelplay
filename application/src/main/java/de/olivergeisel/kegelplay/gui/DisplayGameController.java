@@ -26,6 +26,23 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * An abstract class for displaying the {@link Match}. Every implementation of this class should be able to display a
+ * complete {@link Match} and all its subparts.
+ *
+ * <p>
+ * The {@link DisplayGameController} is responsible for updating the {@link Match} and displaying it in a GUI.
+ * The default refresh rate is 10 seconds, but can be changed in the settings.json with "refreshRate" set in milliseconds.
+ * file.
+ * </p>
+ *
+ * @param <G> the type of the {@link Game} that is played in the match
+ * @author Oliver Geisel
+ * @version 1.0.0
+ * @see Match
+ * @see Game
+ * @since 1.0.0
+ */
 public abstract class DisplayGameController<G extends Game> implements Initializable {
 
 	private static final long          REFRESH_INTERVAL;
@@ -110,6 +127,12 @@ public abstract class DisplayGameController<G extends Game> implements Initializ
 	}
 
 
+	/**
+	 * Set the players for the lanes. The players must be in the correct order.
+	 *
+	 * @param player the players to set
+	 * @param lane   the lane to set the players to
+	 */
 	private void setLane(Player<G> player, VBox lane) {
 		var lanes = match.getConfig().getLaneNames();
 		var parent = (Pane) lane.getParent();
@@ -140,6 +163,12 @@ public abstract class DisplayGameController<G extends Game> implements Initializ
 	@FXML
 	public void onAbout(ActionEvent actionEvent) {}
 
+	/**
+	 * Set the players for the lanes. The players must be in the correct order.
+	 * The first player is for lane 1, the second for lane 2, and so on.
+	 * This can be overridden in the subclass to change the order or the number of players
+	 * @param players
+	 */
 	//region setter/getter
 	public void setPlayers(List<Player<G>> players) {
 		if (players.size() != 4) {

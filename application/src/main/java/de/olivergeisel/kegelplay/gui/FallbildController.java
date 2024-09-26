@@ -15,6 +15,10 @@ import javafx.scene.shape.Rectangle;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+
+/**
+ * Controller for displaying the fall image(Fallbild) of a throw in the 9-Pin bowling game.
+ */
 public class FallbildController implements InvalidationListener, Initializable {
 
 	private static final double PIN_WIDTH_RATIO = 8.5 / 100.;

@@ -12,6 +12,13 @@ import java.io.IOException;
 
 import static java.lang.Math.round;
 
+/**
+ * Controller for the start screen.
+ *
+ * @author Oliver Geisel
+ * @version 1.0.0
+ * @since 1.0.0
+ */
 public class HelloController {
 	private static final double ASPECT_RATIO = 16.0 / 9; // Gewünschtes Seitenverhältnis (z. B. 16:9)
 
