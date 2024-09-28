@@ -34,7 +34,25 @@ public abstract class PointSystem<G extends Game> {
 	protected PointSystem() {
 	}
 
-	public abstract MatchPoints getMatchPoints(Match<G> match);
+	/**
+	 * Get the Points for a {@link GameSet}.
+	 * So these points are added at the end of the set.
+	 *
+	 * @param set The set to get the points from.
+	 * @return The points for the set.
+	 */
+	public static Map<Player, Integer> getPlayerPoints(int durchgang, Player... players) {
+		if (players.length != 4) {
+			throw new IllegalArgumentException("Es müssen genau 4 Spieler übergeben werden");
+		}
+		var playerPoints = new ArrayList<PlayerScore>(4);
+		var scores = Arrays.stream(players).mapToInt(player -> player.getGame().getDurchgang(durchgang)
+																	 .getScore()).toArray();
+		for (int i = 0; i < players.length; i++) {
+			playerPoints.add(new PlayerScore(players[i], scores[i]));
+		}
+		return evalScores(playerPoints);
+	}
 
 	/**
 	 * Get the winner of a match.
@@ -49,18 +67,11 @@ public abstract class PointSystem<G extends Game> {
 		return description;
 	}
 
-	public static Map<Player, Integer> getPlayerPoints(int durchgang, Player... players) {
-		if (players.length != 4) {
-			throw new IllegalArgumentException("Es müssen genau 4 Spieler übergeben werden");
-		}
-		var playerPoints = new ArrayList<PlayerScore>(4);
-		var scores = Arrays.stream(players).mapToInt(player -> player.getGame().getDurchgang(durchgang)
-																	 .getScore()).toArray();
-		for (int i = 0; i < players.length; i++) {
-			playerPoints.add(new PlayerScore(players[i], scores[i]));
-		}
-		return evalScores(playerPoints);
-	}
+	/**
+	 * Get the Points for the complete {@link Match}.
+	 * So these points are added at the end in the leauge table.
+	 */
+	public abstract MatchPoints getMatchPoints(Match<G> match);
 
 	private static Map<Player, Integer> evalScores(List<PlayerScore> scores) {
 		int pointPos = 0;
@@ -82,6 +93,9 @@ public abstract class PointSystem<G extends Game> {
 		return back;
 	}
 
+	/**
+	 * Helper class to store a Player and his Points.
+	 */
 	private static class PlayerAndPoint {
 		private Player player;
 		private int    points;

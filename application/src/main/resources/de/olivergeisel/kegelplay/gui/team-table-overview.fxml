@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="root" maxHeight="1.7976931348623157E308"
+      maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/21"
+      fx:controller="de.olivergeisel.kegelplay.gui.TeamTableOverview">
+    <children>
+        <HBox VBox.vgrow="ALWAYS">
+            <children>
+                <Label fx:id="team1Name" alignment="CENTER" maxHeight="1.7976931348623157E308"
+                       maxWidth="1.7976931348623157E308" text="Team 1" wrapText="true" HBox.hgrow="ALWAYS">
+                    <font>
+                        <Font name="System Bold" size="24.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="team2Name" alignment="CENTER" maxHeight="1.7976931348623157E308"
+                       maxWidth="1.7976931348623157E308" text="Team 2" wrapText="true" HBox.hgrow="ALWAYS">
+                    <font>
+                        <Font name="System Bold" size="24.0"/>
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+        <HBox VBox.vgrow="ALWAYS">
+            <children>
+                <fx:include fx:id="team1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            source="team-table-team-overview.fxml" HBox.hgrow="ALWAYS"/>
+                <fx:include fx:id="team2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            source="team-table-team-overview-reversed.fxml" HBox.hgrow="ALWAYS"/>
+            </children>
+        </HBox>
+        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+            <children>
+                <Label fx:id="sum1" alignment="CENTER_RIGHT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308"
+                       text="Label" HBox.hgrow="ALWAYS">
+                    <font>
+                        <Font name="System Bold" size="24.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="diff" alignment="CENTER" maxWidth="80.0" text="Label" HBox.hgrow="ALWAYS">
+                    <font>
+                        <Font name="System Bold" size="24.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="sum2" maxWidth="1.7976931348623157E308" text="Label" HBox.hgrow="ALWAYS">
+                    <font>
+                        <Font name="System Bold" size="24.0"/>
+                    </font>
+                </Label>
+            </children>
+            <VBox.margin>
+                <Insets/>
+            </VBox.margin>
+            <padding>
+                <Insets left="5.0" top="6.0"/>
+            </padding>
+            <opaqueInsets>
+                <Insets/>
+            </opaqueInsets>
+        </HBox>
+    </children>
+</VBox>

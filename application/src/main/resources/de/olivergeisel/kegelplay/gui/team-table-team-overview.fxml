@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="root" maxHeight="1.7976931348623157E308"
+      maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/21"
+      fx:controller="de.olivergeisel.kegelplay.gui.TeamTableTeamOverview">
+    <children>
+        <VBox fx:id="players" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+            <children>
+
+                <fx:include maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            source="team-table-player-overview.fxml"/>
+                <fx:include maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            source="team-table-player-overview.fxml"/>
+                <fx:include maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            source="team-table-player-overview.fxml"/>
+                <fx:include maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            source="team-table-player-overview.fxml"/>
+                <fx:include maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            source="team-table-player-overview.fxml"/>
+                <fx:include maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            source="team-table-player-overview.fxml"/>
+            </children>
+        </VBox>
+        <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+            <children>
+                <Label fx:id="teamThrowCount" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                       text="Label">
+                    <font>
+                        <Font name="System Bold" size="18.0"/>
+                    </font>
+                    <padding>
+                        <Insets left="3.0" right="3.0"/>
+                    </padding>
+                </Label>
+                <Label fx:id="teamMissThrowCount" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                       text="Label">
+                    <font>
+                        <Font name="System Bold" size="18.0"/>
+                    </font>
+                    <padding>
+                        <Insets left="3.0" right="3.0"/>
+                    </padding>
+                </Label>
+                <Label fx:id="teamScore" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                       text="Label">
+                    <font>
+                        <Font name="System Bold" size="18.0"/>
+                    </font>
+                    <padding>
+                        <Insets left="3.0" right="3.0"/>
+                    </padding>
+                </Label>
+                <Label fx:id="teamPointSum" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                       text="Label">
+                    <font>
+                        <Font name="System Bold" size="18.0"/>
+                    </font>
+                    <padding>
+                        <Insets left="3.0" right="3.0"/>
+                    </padding>
+                </Label>
+                <Label fx:id="teamPoints" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                       text="Label">
+                    <font>
+                        <Font name="System Bold" size="18.0"/>
+                    </font>
+                    <padding>
+                        <Insets left="3.0" right="3.0"/>
+                    </padding>
+                </Label>
+            </children>
+            <VBox.margin>
+                <Insets top="10.0"/>
+            </VBox.margin>
+        </HBox>
+    </children>
+    <padding>
+        <Insets right="10.0"/>
+    </padding>
+</VBox>

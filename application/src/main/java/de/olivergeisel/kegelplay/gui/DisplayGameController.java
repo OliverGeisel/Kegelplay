@@ -45,8 +45,8 @@ import java.util.TimerTask;
  */
 public abstract class DisplayGameController<G extends Game> implements GameController<G>, Initializable {
 
-	private static final long          REFRESH_INTERVAL;
-	private static final System.Logger LOGGER = System.getLogger(DisplayGameController.class.getName());
+	protected static final long          REFRESH_INTERVAL;
+	private static final   System.Logger LOGGER = System.getLogger(DisplayGameController.class.getName());
 
 	static {
 		var mapper = new ObjectMapper();
@@ -64,18 +64,21 @@ public abstract class DisplayGameController<G extends Game> implements GameContr
 	private final Match<G>        match;
 	private final Timer           timer;
 	private       KeglerheimGeneralReader dataReader;
-
-
 	@FXML private Label showLabel;
 	@FXML private VBox  lane1;
 	@FXML private VBox  lane2;
 	@FXML private VBox  lane3;
 	@FXML private VBox  lane4;
 
+
 	public DisplayGameController(Match<G> match) {
 		this.match = match;
 		matchUpdater = new MatchUpdater<>(match);
 		timer = new Timer();
+	}
+
+	public static Object getControllerFromPane(Pane pane) {
+		return pane.getProperties().get(FXMLLoader.CONTROLLER_KEYWORD);
 	}
 
 	/**
@@ -89,7 +92,6 @@ public abstract class DisplayGameController<G extends Game> implements GameContr
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		int i = 1;
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
@@ -106,6 +108,7 @@ public abstract class DisplayGameController<G extends Game> implements GameContr
 				});
 			}
 		}, 0, REFRESH_INTERVAL);
+		int i = 1;
 		for (var lane : List.of(lane1, lane2, lane3, lane4)) {
 			final Label bahnLabel = (Label) lane.getChildren().getFirst();
 			bahnLabel.setText(STR."Bahn \{i++}");
@@ -126,7 +129,6 @@ public abstract class DisplayGameController<G extends Game> implements GameContr
 		timer.cancel();
 	}
 
-
 	/**
 	 * Set the players for the lanes. The players must be in the correct order.
 	 *
@@ -141,15 +143,15 @@ public abstract class DisplayGameController<G extends Game> implements GameContr
 		bahn.setText(lanes.get(index));
 		bahn.setText(lanes.get(index));
 		var header = (GridPane) lane.getChildren().get(1);
-		var headerController = (HeaderController) header.getProperties().get(FXMLLoader.CONTROLLER_KEYWORD);
+		var headerController = (HeaderController) getControllerFromPane(header);
 		if (!player.equals(headerController.getPlayer())) {
 			headerController.setPlayer(player);
 		}
 		var tabelle = lane.getChildren().get(2);
-		var tabellenController = (TableController) tabelle.getProperties().get(FXMLLoader.CONTROLLER_KEYWORD);
+		var tabellenController = (TableController) getControllerFromPane((Pane) tabelle);
 		tabellenController.setGame(player.getGame(), match);
 		var fallbild = lane.getChildren().get(3);
-		var fallbildController = (FallbildController) fallbild.getProperties().get(FXMLLoader.CONTROLLER_KEYWORD);
+		var fallbildController = (FallbildController) getControllerFromPane((Pane) fallbild);
 		fallbildController.setWurfbild(player.getGame().getLastWurf().bild());
 	}
 
@@ -163,13 +165,30 @@ public abstract class DisplayGameController<G extends Game> implements GameContr
 	@FXML
 	public void onAbout(ActionEvent actionEvent) {}
 
+	//region setter/getter
+	protected MatchUpdater<G> getMatchUpdater() {
+		return matchUpdater;
+	}
+
+	protected Match<G> getMatch() {
+		return match;
+	}
+
+	protected Timer getTimer() {
+		return timer;
+	}
+
+	protected KeglerheimGeneralReader getDataReader() {
+		return dataReader;
+	}
+
 	/**
 	 * Set the players for the lanes. The players must be in the correct order.
 	 * The first player is for lane 1, the second for lane 2, and so on.
 	 * This can be overridden in the subclass to change the order or the number of players
-	 * @param players
+	 *
+	 * @param players the current players on the lanes
 	 */
-	//region setter/getter
 	public void setPlayers(List<Player<G>> players) {
 		if (players.size() != 4) {
 			throw new IllegalArgumentException("Es müssen 4 Spieler übergeben werden");

@@ -52,7 +52,8 @@ public class SelectGameController implements Initializable {
 
 	private static final double        ASPECT_RATIO  = 16.0 / 9; // Gewünschtes Seitenverhältnis (z. B. 16:9)
 	private static final System.Logger LOGGER        = System.getLogger(SelectGameController.class.getName());
-	private static final List<String>  VIEWS         = List.of("4 gegeneinander", "2 Teams", "N Teams");
+	private static final List<String> VIEWS =
+			List.of("4 gegeneinander", "2 Teams", "N Teams", "Vorlauf-Endlauf", "Halbfinale");
 	private static final List<String>  POINT_SYSTEMS =
 			List.of("4 Spieler gegeneinander", "2 Teams paarweise", "Teams summe", "Paarweise gegeneinander");
 
@@ -203,7 +204,7 @@ public class SelectGameController implements Initializable {
 				}
 			}
 			case "2 Teams" -> {
-				fxmlLoader = new FXMLLoader(getClass().getResource("display-game.fxml"));
+				fxmlLoader = new FXMLLoader(getClass().getResource("2Teams6Players.fxml"));
 				yield new _2TeamsAgainstController<>(match);
 			}
 			case "Vorlauf-Endlauf" -> {

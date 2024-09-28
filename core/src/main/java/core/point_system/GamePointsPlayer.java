@@ -5,7 +5,19 @@ import core.team_and_player.Player;
 
 import java.util.List;
 
+/**
+ * The GamePointsPlayer represents the points of a player in a game.
+ * It contains the points per {@link core.game.GameSet} in the {@link Game}.
+ * Also, it contains the points for the team (1, 0.5 or 0).
+ *
+ * @param <G> The type of the game
+ */
 public class GamePointsPlayer<G extends Game> extends GamePoints<G> {
+
+	/**
+	 * The points for the team. Can be 1, 0.5 or 0.
+	 */
+	private double teamPoints;
 
 
 	protected GamePointsPlayer(Player<G> player) {
@@ -17,6 +29,14 @@ public class GamePointsPlayer<G extends Game> extends GamePoints<G> {
 	}
 
 	//region setter/getter
+	public double getTeamPoints() {
+		return teamPoints;
+	}
+
+	public void setTeamPoints(double teamPoints) {
+		this.teamPoints = teamPoints;
+	}
+
 	@Override
 	public double getPoints() {
 		return getSumGameSetPoints();

@@ -72,6 +72,17 @@ public class _2Teams120PointSystem extends PointSystem<Game120> {
 		}
 	}
 
+	/**
+	 * Get the match points for a match.
+	 * The match points are calculated by the points of the players.
+	 * The winner of a match gets 2 points, the loser 0 points.
+	 * If the match is a draw, both teams get 1 point.
+	 *
+	 * @param match The match to get the points from.
+	 * @return The match points.
+	 *
+	 * @throws IllegalArgumentException if the match is null or has not exactly two teams.
+	 */
 	@Override
 	public MatchPoints<Team<Game120>> getMatchPoints(Match<Game120> match) throws IllegalArgumentException {
 		if (match == null) {
@@ -131,6 +142,15 @@ public class _2Teams120PointSystem extends PointSystem<Game120> {
 		}
 	}
 
+	/**
+	 * Get the TeamPoints for the score of the teams.
+	 * The team with the most score gets 2 points, the other 0 points.
+	 * If the score is equal, both teams get 1 point.
+	 *
+	 * @param team1 The first team
+	 * @param team2 The second team
+	 * @return The points for the teams. The first value is the points for the first team, the second for the second team.
+	 */
 	private Pair<Double, Double> evalTeamScores(Team<Game120> team1, Team<Game120> team2) {
 		var team1Score = team1.getTeamScore();
 		var team2Score = team2.getTeamScore();

@@ -36,6 +36,13 @@ public abstract class GamePoints<G extends Game> {
 		this.gameSetPoints = gameSetPoints;
 	}
 
+	/**
+	 * Adds the points of a {@link GameSet} to the player.
+	 * Will only add the points if the player is the player of the {@link GameSet}.
+	 *
+	 * @param player    the player
+	 * @param setPoints the points of the {@link GameSet}
+	 */
 	public void addGameSetPoints(Player<G> player, GameSetPoints setPoints) {
 		if (this.player.equals(player)) {
 			gameSetPoints.add(setPoints);
@@ -79,6 +86,10 @@ public abstract class GamePoints<G extends Game> {
 		return Collections.unmodifiableList(gameSetPoints);
 	}
 
+	/**
+	 * Returns the sum of all {@link GameSetPoints} of the player.
+	 * @return the sum of all {@link GameSetPoints} of the player
+	 */
 	public double getSumGameSetPoints() {
 		return gameSetPoints.stream().mapToDouble(GameSetPoints::getPoints).sum();
 	}

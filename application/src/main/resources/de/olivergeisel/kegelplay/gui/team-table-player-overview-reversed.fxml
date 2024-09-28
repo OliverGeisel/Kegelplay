@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+      minHeight="30.0" xmlns="http://javafx.com/javafx/21"
+      fx:controller="de.olivergeisel.kegelplay.gui.TeamTablePlayerOverview">
+    <children>
+        <Label fx:id="name" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+               minHeight="30.0" text="Label" VBox.vgrow="ALWAYS">
+            <font>
+                <Font name="System Bold" size="18.0"/>
+            </font>
+        </Label>
+        <HBox prefWidth="200.0">
+            <children>
+                <Label fx:id="teamPoints" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                       minWidth="40.0" text="Label" HBox.hgrow="ALWAYS">
+                    <font>
+                        <Font name="System Bold" size="20.0"/>
+                    </font>
+                </Label>
+                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label fx:id="score" minWidth="40.0" text="Label">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
+                        </Label>
+                        <Label fx:id="pointSum" text="Label">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+                <VBox>
+                    <children>
+                        <Label fx:id="set4Score" minWidth="40.0" text="Label">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
+                        </Label>
+                        <Label fx:id="set4Points" minWidth="40.0" text="Label">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+                <VBox>
+                    <children>
+                        <Label fx:id="set3Score" minWidth="40.0" text="Label">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
+                        </Label>
+                        <Label fx:id="set3Points" text="Label">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+                <VBox>
+                    <children>
+                        <Label fx:id="set2Score" minWidth="40.0" text="Label">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
+                        </Label>
+                        <Label fx:id="set2Points" text="Label">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+                <VBox>
+                    <children>
+                        <Label fx:id="set1Score" minWidth="40.0" text="Label">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
+                        </Label>
+                        <Label fx:id="set1Points" text="Label">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+                <Label fx:id="missThrowCount" maxHeight="1.7976931348623157E308" minWidth="40.0" text="Label">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="throwCount" maxHeight="1.7976931348623157E308" minWidth="40.0" text="Label"
+                       HBox.hgrow="ALWAYS">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+    </children>
+    <padding>
+        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0"/>
+    </padding>
+</VBox>

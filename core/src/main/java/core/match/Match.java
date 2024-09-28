@@ -7,6 +7,7 @@ import core.team_and_player.Team;
 import core.util.Pair;
 
 import java.nio.file.Path;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -83,6 +84,11 @@ public abstract class Match<G extends Game> {
 	}
 
 	//region setter/getter
+	public String getName() {
+		return STR."Match: \{getTeamVs()} am \{getStatusInfo().getStartTime()
+															  .format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))}";
+	}
+
 	public PointSystem<G> getPointSystem() {
 		return pointSystem;
 	}
@@ -145,12 +151,12 @@ public abstract class Match<G extends Game> {
 		return back;*/
 	}
 
-	public Map<Player<G>, String> getCurrentPlayerBahnMapping(){
+	public Map<Player<G>, String> getCurrentPlayerBahnMapping() {
 		var bahnNames = config.getLaneNames();
-		var players =  getCurrentPlayers();
+		var players = getCurrentPlayers();
 		var back = new HashMap<Player<G>, String>();
-		int i= 0;
-		for (var player: players){
+		int i = 0;
+		for (var player : players) {
 			back.put(player, bahnNames.get(i++));
 		}
 		return back;
@@ -186,6 +192,22 @@ public abstract class Match<G extends Game> {
 	}
 
 	public abstract Team<G>[] getTeams();
+
+	/**
+	 * Returns a string with the names of the teams that are playing against each other.
+	 *
+	 * @return String with the names of the teams
+	 */
+	protected String getTeamVs() {
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < getTeams().length; i++) {
+			builder.append(getTeams()[i].getName());
+			if (i < getTeams().length - 1) {
+				builder.append(" vs ");
+			}
+		}
+		return builder.toString();
+	}
 
 	private String getState() {
 		return state.name;

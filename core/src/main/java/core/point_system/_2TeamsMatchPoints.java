@@ -35,6 +35,16 @@ public class _2TeamsMatchPoints<G extends Game> extends MatchPoints<Team<G>> {
 	private final List<GamePointsTeam<G>> gamePointsTeam2;
 	private final double                  winnerPoints;
 
+	/**
+	 * @param pairs            The pairs of players that played against each other
+	 * @param team1            The first team
+	 * @param team2            The second team
+	 * @param gamePointsTeam1  The points of the first team
+	 * @param gamePointsTeam2  The points of the second team
+	 * @param scorePointsTeam1 The score of the first team
+	 * @param scorePointsTeam2 The score of the second team
+	 * @param winnerPoints     The points of the winner (2 points for the winner for example)
+	 */
 	public _2TeamsMatchPoints(List<Pair<Player<G>, Player<G>>> pairs,
 			Team<G> team1, Team<G> team2,
 			List<GamePointsTeam<G>> gamePointsTeam1, List<GamePointsTeam<G>> gamePointsTeam2,
@@ -60,12 +70,68 @@ public class _2TeamsMatchPoints<G extends Game> extends MatchPoints<Team<G>> {
 		return winnerPoints;
 	}
 
-	public double totalPointsTeam1() {
+	/**
+	 * Return the points of the first team. Is the sum of the points of the players of the first team.
+	 *
+	 * @return the points of the first team
+	 */
+	public double totalPointsTeam1Players() {
 		return gamePointsTeam1.stream().mapToDouble(GamePoints::getPoints).sum();
 	}
 
+	/**
+	 * Return the points of the first team. Is the sum of the points of the players of the first team and the score points.
+	 *
+	 * @return the points of the first team
+	 */
+	public double totalPointsTeam1() {
+		return scorePointsTeam1 + totalPointsTeam1Players();
+	}
+
+	/**
+	 * Return the points of the second team. Is the sum of the points of the players of the second team and the score points.
+	 *
+	 * @return the points of the second team
+	 */
 	public double totalPointsTeam2() {
+		return scorePointsTeam2 + totalPointsTeam2Players();
+	}
+
+	/**
+	 * Return the points of the second team. Is the sum of the points of the players of the second team.
+	 * @return the points of the second team
+	 */
+	public double totalPointsTeam2Players() {
 		return gamePointsTeam2.stream().mapToDouble(GamePoints::getPoints).sum();
+	}
+
+//region setter/getter
+	public List<Pair<Player<G>, Player<G>>> getPairs() {
+		return pairs;
+	}
+
+	public Team<G> getTeam1() {
+		return team1;
+	}
+
+	public Team<G> getTeam2() {
+		return team2;
+	}
+
+	public double getScorePointsTeam1() {
+		return scorePointsTeam1;
+	}
+
+	public double getScorePointsTeam2() {
+		return scorePointsTeam2;
+	}
+
+	public List<GamePointsTeam<G>> getGamePointsTeam1() {
+		return gamePointsTeam1;
+	}
+
+	public List<GamePointsTeam<G>> getGamePointsTeam2() {
+		return gamePointsTeam2;
 	}
 
 	@Override
@@ -97,7 +163,9 @@ public class _2TeamsMatchPoints<G extends Game> extends MatchPoints<Team<G>> {
 		throw new IllegalArgumentException("Player not found");
 	}
 
-//region setter/getter
+	public double getWinnerPoints() {
+		return winnerPoints;
+	}
 	/**
 	 * Return the winner of the match.
 	 *
@@ -126,7 +194,7 @@ public class _2TeamsMatchPoints<G extends Game> extends MatchPoints<Team<G>> {
 		if (isDraw()) {
 			return Map.of(team1, 1.0, team2, 1.0);
 		}
-		return totalPointsTeam1() > totalPointsTeam2() ?
+		return totalPointsTeam1Players() > totalPointsTeam2Players() ?
 				Map.of(team1, winnerPoints, team2, 0.) : Map.of(team1, 0., team2, winnerPoints);
 	}
 
@@ -137,7 +205,7 @@ public class _2TeamsMatchPoints<G extends Game> extends MatchPoints<Team<G>> {
 	 */
 	@Override
 	public boolean isDraw() {
-		return totalPointsTeam1() == totalPointsTeam2();
+		return totalPointsTeam1Players() == totalPointsTeam2Players();
 	}
 //endregion
 }

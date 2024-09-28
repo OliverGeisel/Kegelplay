@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import java.lang.*?>
-<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="grid" minHeight="100.0"
-          styleClass="primary-container" vgap="2.0" xmlns="http://javafx.com/javafx/11.0.14-internal"
-          fx:controller="de.olivergeisel.kegelplay.gui.HeaderController">
+<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="grid" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+          minHeight="100.0" minWidth="100.0" styleClass="primary-container" vgap="2.0"
+          xmlns="http://javafx.com/javafx/21" fx:controller="de.olivergeisel.kegelplay.gui.HeaderController">
     <columnConstraints>
         <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="40.0"/>
         <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="60.0"/>
@@ -17,13 +17,13 @@
         <RowConstraints minHeight="10.0" vgrow="ALWAYS"/>
     </rowConstraints>
     <children>
-        <ImageView fx:id="image" styleClass="border-image" pickOnBounds="true" preserveRatio="true"
+        <ImageView fx:id="image" pickOnBounds="true" preserveRatio="true" styleClass="border-image"
                    GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER"
                    GridPane.vgrow="ALWAYS">
         </ImageView>
         <VBox alignment="CENTER" focusTraversable="true" maxWidth="1.7976931348623157E308"
-              nodeOrientation="LEFT_TO_RIGHT" prefHeight="91.0" prefWidth="226.0" GridPane.columnIndex="1"
-              GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+              nodeOrientation="LEFT_TO_RIGHT" GridPane.columnIndex="1" GridPane.halignment="CENTER"
+              GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
             <children>
                 <VBox prefHeight="82.0" prefWidth="226.0">
                     <children>

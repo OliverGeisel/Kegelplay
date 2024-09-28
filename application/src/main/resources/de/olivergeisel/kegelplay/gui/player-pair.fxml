@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<HBox xmlns:fx="http://javafx.com/fxml/1" fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+      minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/21"
+      fx:controller="de.olivergeisel.kegelplay.gui.PlayerPairController">
+    <children>
+        <VBox fx:id="lane1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                       maxWidth="1.7976931348623157E308" text="BAHN X" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+                    <font>
+                        <Font name="Arial Bold" size="30.0"/>
+                    </font>
+                </Label>
+                <fx:include fx:id="header1" source="header.fxml"/>
+                <fx:include fx:id="table1" source="tabelle.fxml"/>
+            </children>
+            <HBox.margin>
+                <Insets right="5.0"/>
+            </HBox.margin>
+        </VBox>
+        <VBox fx:id="lane2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                       maxWidth="1.7976931348623157E308" text="BAHN X" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+                    <font>
+                        <Font name="Arial Bold" size="30.0"/>
+                    </font>
+                </Label>
+                <fx:include fx:id="header2" source="header.fxml"/>
+                <fx:include fx:id="table2" source="tabelle.fxml"/>
+            </children>
+            <HBox.margin>
+                <Insets left="5.0"/>
+            </HBox.margin>
+        </VBox>
+    </children>
+    <padding>
+        <Insets bottom="5.0" left="5.0" top="5.0"/>
+    </padding>
+</HBox>
