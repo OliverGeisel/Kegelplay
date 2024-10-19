@@ -38,7 +38,8 @@ public abstract class PointSystem<G extends Game> {
 	 * Get the Points for a {@link GameSet}.
 	 * So these points are added at the end of the set.
 	 *
-	 * @param set The set to get the points from.
+	 * @param durchgang number of the gameSet (starting by 0)
+	 * @param players the array of players to set the points for
 	 * @return The points for the set.
 	 */
 	public static Map<Player, Integer> getPlayerPoints(int durchgang, Player... players) {

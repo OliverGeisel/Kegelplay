@@ -25,6 +25,8 @@ public class TeamTableTeamOverview implements Initializable {
 	@FXML
 	private Label teamPoints;
 	@FXML
+	private Label gameSetPoints;
+	@FXML
 	private Label teamThrowCount;
 	@FXML
 	private Label teamMissThrowCount;
@@ -42,6 +44,8 @@ public class TeamTableTeamOverview implements Initializable {
 			controller.update(team.getPlayer(i), gamePoints.get(i));
 			i++;
 		}
+		var gameSetpointsValue = gamePoints.stream().mapToDouble(it->it.getPoints()).sum();
+		gameSetPoints.setText(String.valueOf(gameSetpointsValue));
 		teamScore.setText(String.valueOf(team.getTeamScore()));
 		this.teamPoints.setText(String.valueOf(teamPoints));
 		this.teamThrowCount.setText(String.valueOf(team.getTeamTotalThrows()));

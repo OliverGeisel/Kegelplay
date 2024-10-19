@@ -36,7 +36,7 @@ public class PlayerPairController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		root.getProperties().put(FXMLLoader.CONTROLLER_KEYWORD, this);
 		root.heightProperty().addListener((observableValue, oldHeight, newHeight) -> {
-			double subFrameHeight = newHeight.doubleValue() * .3;
+			double subFrameHeight = newHeight.doubleValue() * .4;
 			header1.setPrefHeight(subFrameHeight);
 			header2.setPrefHeight(subFrameHeight);
 			table1.setPrefHeight(newHeight.doubleValue() * .4);

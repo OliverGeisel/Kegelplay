@@ -254,8 +254,8 @@ public class SelectGameController implements Initializable {
 		Rectangle2D bounds = selectedScreen.getBounds();
 
 		// Setzen der Position und Größe des neuen Fensters basierend auf dem zweiten Bildschirm
-		stage.setX(bounds.getMinX() + (bounds.getWidth() - 400) / 2); // 400 ist die Breite des neuen Fensters
-		stage.setY(bounds.getMinY() + (bounds.getHeight() - 300) / 2); // 300 ist die Höhe des neuen Fensters
+		stage.setX(bounds.getMinX() + (bounds.getWidth() - 1000) / 2); // 400 ist die Breite des neuen Fensters
+		stage.setY(bounds.getMinY() + (bounds.getHeight() - 500) / 2); // 300 ist die Höhe des neuen Fensters
 
 
 		stage.setMaxWidth(max(selectedScreen.getBounds().getWidth() + 20, 20+1920));
