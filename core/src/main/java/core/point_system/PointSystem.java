@@ -70,7 +70,7 @@ public abstract class PointSystem<G extends Game> {
 
 	/**
 	 * Get the Points for the complete {@link Match}.
-	 * So these points are added at the end in the leauge table.
+	 * So these points are added at the end in the league table.
 	 */
 	public abstract MatchPoints getMatchPoints(Match<G> match);
 

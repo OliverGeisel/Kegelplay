@@ -1,14 +1,20 @@
 package core.point_system;
 
+import core.match.Match;
+
 import java.util.Map;
 
 /**
- * Class to store the result of a match.
+ * Class to store the result of a {@link Match}. These points will get the winner of the match.
  * <p>
  * There is one method to get the winner of the match.
  *
  * @param <W> the type of what is returned when the winner is asked.
  *            This can be a team or a player
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Oliver Geisel
  */
 public abstract class MatchPoints<W> {
 

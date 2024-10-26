@@ -7,6 +7,13 @@ import java.util.*;
 
 /**
  * The points of a game for each player.
+ *
+ * @param <G> the type of the game
+ * @since 1.0.0
+ * @version 1.0.0
+ * @see Game
+ *
+ * @author Oliver Geisel
  */
 public class GamePointsCollection<G extends Game> {
 

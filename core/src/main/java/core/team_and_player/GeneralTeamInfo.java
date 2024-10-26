@@ -42,7 +42,7 @@ public class GeneralTeamInfo {
 		observer = region.getValue("Betreuer 1");
 		clubNumber = region.getValue("Vereins-Nr");
 		numberOfPlayers = Integer.parseInt(region.getValue("Anzahl Spieler"));
-		numberOfSubstitutes = Integer.parseInt(region.getValue("Anzahl Ersatzspieler"));
+		numberOfSubstitutes = Integer.parseInt(region.getValueOrDefault("Anzahl Ersatzspieler", "0"));
 	}
 
 	public GeneralTeamInfo(String name, String gameClass, String league, String district, String leader,

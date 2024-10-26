@@ -151,6 +151,11 @@ public abstract class Match<G extends Game> {
 		return back;*/
 	}
 
+	/**
+	 * Returns the mapping of the current players to the lanes.
+	 *
+	 * @return Mapping of the players to the lanes
+	 */
 	public Map<Player<G>, String> getCurrentPlayerBahnMapping() {
 		var bahnNames = config.getLaneNames();
 		var players = getCurrentPlayers();
@@ -174,6 +179,10 @@ public abstract class Match<G extends Game> {
 		return generalMatchInfo;
 	}
 
+	/**
+	 * Returns all games that are in the match.
+	 * @return List of games in the match
+	 */
 	public List<G> getGames() {
 		var back = new LinkedList<G>();
 		for (var team : getTeams()) {

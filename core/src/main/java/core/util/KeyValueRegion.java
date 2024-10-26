@@ -41,6 +41,10 @@ public class KeyValueRegion<K, V> {
 		return keyValuePairs.get(key);
 	}
 
+	public V getValueOrDefault(K key, V defaultValue) {
+		return keyValuePairs.getOrDefault(key, defaultValue);
+	}
+
 	public boolean containsKey(K key) {
 		return keyValuePairs.containsKey(key);
 	}

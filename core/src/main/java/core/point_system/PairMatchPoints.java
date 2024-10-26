@@ -2,13 +2,14 @@ package core.point_system;
 
 
 import core.game.Game;
+import core.match.Match;
 import core.team_and_player.Player;
 
 import java.util.LinkedList;
 import java.util.Map;
 
 /**
- * The points of a pair that played a match. Each Pair has two {@link Player}s.
+ * The points of a pair that played a {@link Match}. Each Pair has two {@link Player}s.
  *
  * @param <G> the type of the game
  */

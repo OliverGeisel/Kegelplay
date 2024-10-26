@@ -16,13 +16,14 @@ public record GeneralMatchInfo(String name, String location, String facility, St
 				region.getValue("Spielleitung 2"),
 				region.getValue("Bezeichnung"),
 				region.getValue("WKS"),
-				region.getValue("Spieltag").isBlank() ? 0 : Integer.parseInt(region.getValue("Spieltag")),
-				region.getValue("Spieljahr"),
-				region.getValue("Spielnummer"),
-				region.getValue("Spielklasse"),
-				region.getValue("Liga"),
-				region.getValue("SRNR"),
-				region.getValue("SRName"),
+				// Old versions don't have this
+				region.getValueOrDefault("Spieltag", "").isBlank() ? 0 : Integer.parseInt(region.getValue("Spieltag")),
+				region.getValueOrDefault("Spieljahr", ""),
+				region.getValueOrDefault("Spielnummer", ""),
+				region.getValueOrDefault("Spielklasse", ""),
+				region.getValueOrDefault("Liga", ""),
+				region.getValueOrDefault("SRNR", ""),
+				region.getValueOrDefault("SRName", ""),
 				region.getValue("Probewürfe Anzahl").isBlank() ? 0 :
 						Integer.parseInt(region.getValue("Probewürfe Anzahl")),
 				region.getValue("Probewürfe Zeit").isBlank() ? 0 :

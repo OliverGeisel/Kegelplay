@@ -20,12 +20,11 @@ import java.util.*;
 /**
  * Reader for a {@link Match} for the program used in the Keglerheim.
  *
+ * @author Oliver Geisel
+ * @version 1.0.0
  * @see Match
  * @see GeneralReader
- *
- * @version 1.0.0
  * @since 1.0.0
- * @author Oliver Geisel
  */
 public class KeglerheimGeneralReader extends GeneralReader {
 
@@ -118,7 +117,7 @@ public class KeglerheimGeneralReader extends GeneralReader {
 	public <G extends Game> Match<G> initNewMatch() throws UnsupportedMatchSchema {
 		var backupDir = baseDir.resolve("Backup-Daten");
 		if (!backupDir.toFile().exists()) {
-			throw new RuntimeException("backup dir does not exist");
+			LOGGER.log(System.Logger.Level.WARNING, STR."Backup dir does not exist: \{backupDir}");
 		}
 		MatchConfig config;
 		GeneralMatchInfo general;
@@ -129,9 +128,15 @@ public class KeglerheimGeneralReader extends GeneralReader {
 			// read state of match
 			var status = new KeglerheimSatusReader(baseDir.resolve("status.ini"));
 			teamNames = status.getTeamNames();
-			KeyValueRegionCollection statusIniFile = new IniFile(baseDir.resolve("status.ini"));
-			var backupIniFile = new IniFile(backupDir.resolve("wk_eig_backup.ini"));
-			var durchgang = Integer.parseInt(backupIniFile.getRegion("Allgemein").getValue("Durchgang"));
+			KeyValueRegionCollection statusIniFile =
+					new IniFile(baseDir.resolve("status.ini"));
+			int durchgang;
+			if (!backupDir.toFile().exists()) {
+				durchgang = Integer.parseInt(statusIniFile.getRegion("Anzahl").getValue("Durchgang").toString());
+			} else {
+				var backupIniFile = new IniFile(backupDir.resolve("wk_eig_backup.ini"));
+				durchgang = Integer.parseInt(backupIniFile.getRegion("Allgemein").getValue("Durchgang"));
+			}
 			stateInfo = new MatchStatusInfo(statusIniFile, durchgang);
 			// read general match info
 			var generalMatchInfoFile = new IniFile(baseDir.resolve("wettkampf.ini"));
@@ -184,6 +189,12 @@ public class KeglerheimGeneralReader extends GeneralReader {
 
 	private List<String> readCorrectLaneNamed(Path baseDir) {
 		var back = new LinkedList<String>();
+		if (!baseDir.resolve("Backup-Daten").toFile().exists()) {
+			LOGGER.log(System.Logger.Level.INFO, STR."Backup dir does not exist! Lanes have Default Names");
+			int numberOfLanes = 4;
+			oldVersionLaneNames(back, baseDir);
+			return back;
+		}
 		try {
 			var iniFile = new IniFile(baseDir.resolve("Backup-Daten/start.ini"));
 			var bahnRegion = iniFile.getRegion("Bahnen");
@@ -206,6 +217,18 @@ public class KeglerheimGeneralReader extends GeneralReader {
 		return back;
 	}
 
+	private void oldVersionLaneNames(List<String> laneNames, Path baseDir) {
+		try {
+			var wks = new IniFile(baseDir.resolve("wks.ini"));
+			var region = wks.getRegion("Allgemein");
+			var number = Integer.parseInt(region.getValue("Anzahl Bahnen"));
+			for (int i = 1; i <= number; i++) {
+				laneNames.add(STR."Bahn \{i}");
+			}
+		} catch (IOException e) {
+			LOGGER.log(System.Logger.Level.ERROR, STR."Could not read wks.ini for match: \{baseDir}");
+		}
+	}
 
 	/**
 	 * Load the games of a team

@@ -47,8 +47,15 @@ public class MatchStatusInfo {
 		// übersetze Verletzung ins englische
 		warnings = region.getValue("Verwarnung").equals("1");
 		protests = region.getValue("Protest").equals("1");
-		refereeHome = region.getValue("SchiriHeim").equals("1");
-		refereeHome = region.getValue("SchiriGast").equals("1");
+		// Older Versions don't have this
+		var schiriHeim = region.getValue("SchiriHeim");
+		if (schiriHeim != null) {
+			refereeHome = schiriHeim.equals("1");
+			refereeGuest = region.getValue("SchiriGast").equals("1");
+		} else {
+			refereeHome = true;
+			refereeGuest = true;
+		}
 		//
 		currentSet = durchgang;
 

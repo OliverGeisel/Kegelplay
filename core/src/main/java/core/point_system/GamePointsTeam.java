@@ -3,6 +3,11 @@ package core.point_system;
 import core.game.Game;
 import core.team_and_player.Player;
 
+/**
+ * The points of a game for a team.
+ *
+ * @param <G>
+ */
 public class GamePointsTeam<G extends Game> extends GamePoints<G> {
 
 	private double points;

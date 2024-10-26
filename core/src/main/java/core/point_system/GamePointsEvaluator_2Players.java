@@ -6,9 +6,13 @@ import core.team_and_player.Player;
 import core.util.Pair;
 
 /**
- * The GamePointsEvaluator evaluates 2 players and decides who wins the game.
+ * The GamePointsEvaluator evaluates 2 players and decides who wins the partie against each other.
+ *
+ * @author Oliver Geisel
+ * @version 1.0.0
+ * @since 1.0.0
  */
-public class GamePointsEvaluator_2Teams {
+public class GamePointsEvaluator_2Players {
 
 	/**
 	 * Evaluates the two games and returns the points for each game.
