@@ -8,7 +8,7 @@
 <?import java.lang.*?>
 <GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="grid" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
           minHeight="100.0" minWidth="100.0" styleClass="primary-container" vgap="2.0"
-          xmlns="http://javafx.com/javafx/21" fx:controller="de.olivergeisel.kegelplay.gui.HeaderController">
+          xmlns="http://javafx.com/javafx/11.0.14-internal" fx:controller="de.olivergeisel.kegelplay.gui.HeaderController">
     <columnConstraints>
         <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="40.0"/>
         <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="60.0"/>
@@ -25,14 +25,14 @@
               nodeOrientation="LEFT_TO_RIGHT" GridPane.columnIndex="1" GridPane.halignment="CENTER"
               GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
             <children>
-                <VBox prefHeight="82.0" prefWidth="226.0">
+                <VBox>
                     <children>
                         <Label fx:id="name" alignment="CENTER" contentDisplay="CENTER" depthTest="ENABLE"
                                maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="30.0"
                                minWidth="60.0" prefHeight="38.0" prefWidth="226.0" style="-fx-pref-width: 95%;"
                                text="Name" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS">
                             <font>
-                                <Font size="18.0"/>
+                                <Font name="Arial Black" size="18.0"/>
                             </font>
                             <styleClass>
                                 <String fx:value="centering"/>
@@ -44,7 +44,7 @@
                                minWidth="150.0" style="-fx-pref-width: 95%;" text="Vorname" textAlignment="CENTER"
                                textOverrun="CLIP" VBox.vgrow="ALWAYS">
                             <font>
-                                <Font name="Arial" size="18.0"/>
+                                <Font name="Arial Black" size="18.0"/>
                             </font>
                             <styleClass>
                                 <String fx:value="centering"/>
@@ -53,14 +53,14 @@
                         </Label>
                     </children>
                 </VBox>
-                <VBox prefHeight="65.0" prefWidth="226.0" VBox.vgrow="ALWAYS">
+                <VBox VBox.vgrow="ALWAYS">
                     <children>
                         <Label fx:id="verein" alignment="CENTER" contentDisplay="CENTER"
                                maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="30.0"
                                minWidth="150.0" prefHeight="73.0" prefWidth="226.0" style="-fx-pref-width: 95%;"
                                text="Verein" textAlignment="CENTER">
                             <font>
-                                <Font size="18.0"/>
+                                <Font name="Arial Black" size="18.0"/>
                             </font>
                             <styleClass>
                                 <String fx:value="centering"/>

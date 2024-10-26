@@ -124,6 +124,17 @@ public abstract class DisplayGameController<G extends Game> implements GameContr
 		}
 	}
 
+	/**
+	 * Method to be called, after a scene was loaded and displayed. Should be called only once.
+	 *
+	 * @throws IllegalStateException         if the scene or other factors are not there and so the view cannot be updated.
+	 *                                       be updated
+	 * @throws UnsupportedOperationException Method is not supported by the Controller.
+	 */
+	public void updateViewAfterLoad() throws IllegalStateException, UnsupportedOperationException {
+		throw new UnsupportedOperationException("Not implemented/Supportet");
+	}
+
 	@FXML
 	private void onClose() {
 		timer.cancel();

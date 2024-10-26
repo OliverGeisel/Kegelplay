@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class VorlaufEndlaufController implements Initializable, GameController<Game120> {
+public class VorlaufEndlaufController extends DisplayGameController<Game120> implements Initializable {
 
 	private static final long          REFRESH_INTERVAL;
 	private static final System.Logger LOGGER = System.getLogger(DisplayGameController.class.getName());
@@ -58,7 +58,8 @@ public class VorlaufEndlaufController implements Initializable, GameController<G
 	@FXML private VBox  lane3;
 	@FXML private VBox  lane4;
 
-	public VorlaufEndlaufController(Match match) {
+	public VorlaufEndlaufController(Match<Game120> match) {
+		super(match);
 		this.match = match;
 		matchUpdater = new MatchUpdater<>(match);
 		timer = new Timer();

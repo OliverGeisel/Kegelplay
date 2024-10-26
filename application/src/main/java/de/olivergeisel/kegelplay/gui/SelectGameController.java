@@ -53,7 +53,7 @@ public class SelectGameController implements Initializable {
 	private static final double        ASPECT_RATIO  = 16.0 / 9; // Gewünschtes Seitenverhältnis (z. B. 16:9)
 	private static final System.Logger LOGGER        = System.getLogger(SelectGameController.class.getName());
 	private static final List<String> VIEWS =
-			List.of("4 gegeneinander", "2 Teams", "N Teams", "Vorlauf-Endlauf", "Halbfinale");
+			List.of("4 gegeneinander", "2 Teams", "2 Teams-A2", "N Teams", "Vorlauf-Endlauf", "Halbfinale");
 	private static final List<String>  POINT_SYSTEMS =
 			List.of("4 Spieler gegeneinander", "2 Teams paarweise", "Teams summe", "Paarweise gegeneinander");
 
@@ -103,7 +103,6 @@ public class SelectGameController implements Initializable {
 	}
 
 	private void loadGames(Path path, LocalDate date) throws FileNotFoundException, IOException {
-		System.out.println("loadDay");
 		var parser = new ObjectMapper();
 		var parsed = parser.readTree(path.toFile());
 		var folder = parsed.get("dataFolder").asText();
@@ -117,7 +116,6 @@ public class SelectGameController implements Initializable {
 		}
 		var matches = Arrays.stream(Objects.requireNonNull(file.listFiles())).map(File::getName).toArray(String[]::new);
 		showGames(matches);
-		System.out.println("loaded");
 	}
 
 	/**
@@ -194,7 +192,7 @@ public class SelectGameController implements Initializable {
 			default -> throw new IllegalStateException(STR."Unexpected value: \{systemSelect}");
 		};
 		match.setPointSystem(pointSystem);
-		GameController<? extends Game> controller = switch (selectedView) {
+		DisplayGameController<? extends Game> controller = switch (selectedView) {
 			case "4 gegeneinander" -> {
 				if (match instanceof Match1Team match1Team) {
 					fxmlLoader = new FXMLLoader(getClass().getResource("display-game.fxml"));
@@ -202,6 +200,10 @@ public class SelectGameController implements Initializable {
 				} else {
 					throw new IllegalStateException(STR."Unexpected value: \{match}");
 				}
+			}
+			case "2 Teams-A2" -> {
+				fxmlLoader = new FXMLLoader(getClass().getResource("2Teams6Players-A2.fxml"));
+				yield new _2TeamsAgainstA2Controller<>(match);
 			}
 			case "2 Teams" -> {
 				fxmlLoader = new FXMLLoader(getClass().getResource("2Teams6Players.fxml"));
@@ -256,8 +258,6 @@ public class SelectGameController implements Initializable {
 		// Setzen der Position und Größe des neuen Fensters basierend auf dem zweiten Bildschirm
 		stage.setX(bounds.getMinX() + (bounds.getWidth() - 1000) / 2); // 400 ist die Breite des neuen Fensters
 		stage.setY(bounds.getMinY() + (bounds.getHeight() - 500) / 2); // 300 ist die Höhe des neuen Fensters
-
-
 		stage.setMaxWidth(max(selectedScreen.getBounds().getWidth() + 20, 20+1920));
 		stage.setMaxHeight(max(selectedScreen.getBounds().getHeight(), 1080+20));
 		stage.show();
@@ -301,6 +301,10 @@ public class SelectGameController implements Initializable {
 			cssFile.getItems().add(css.getName());
 		}
 		cssFile.setValue(cssFiles[0].getName());
-
+		try {
+			loadToday(null);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.*?>
+<HBox xmlns:fx="http://javafx.com/fxml/1" fx:id="root" alignment="CENTER" maxHeight="1.7976931348623157E308"
+      maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/11.0.14-internal"
+      fx:controller="de.olivergeisel.kegelplay.gui.PairOverviewController">
+    <children>
+        <Pane HBox.hgrow="ALWAYS">
+            <children>
+                <fx:include fx:id="homePlayer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            source="team-table-player-overview.fxml" HBox.hgrow="ALWAYS"/>
+            </children>
+            <HBox.margin>
+                <Insets right="2.0"/>
+            </HBox.margin>
+        </Pane>
+        <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+            <children>
+                <fx:include fx:id="guestPlayer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            source="team-table-player-overview-reversed.fxml" HBox.hgrow="ALWAYS"/>
+            </children>
+            <HBox.margin>
+                <Insets left="2.0"/>
+            </HBox.margin>
+        </Pane>
+    </children>
+</HBox>

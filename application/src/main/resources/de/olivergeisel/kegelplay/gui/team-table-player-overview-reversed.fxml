@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-
-<VBox fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="30.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.olivergeisel.kegelplay.gui.TeamTablePlayerOverview">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+      minHeight="30.0" xmlns="http://javafx.com/javafx/11.0.14-internal"
+      fx:controller="de.olivergeisel.kegelplay.gui.TeamTablePlayerOverview">
     <children>
         <Label fx:id="name" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="30.0" text="Label" VBox.vgrow="ALWAYS">
             <font>
@@ -17,87 +17,103 @@
             <children>
                 <Label fx:id="teamPoints" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="40.0" text="Label" HBox.hgrow="ALWAYS">
                     <font>
-                        <Font name="System Bold" size="20.0" />
+                        <Font name="System Bold" size="24.0"/>
                     </font>
                 </Label>
                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="set-group" HBox.hgrow="ALWAYS">
                     <children>
                         <Label fx:id="score" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="40.0" styleClass="set-score" text="Label">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="23.0"/>
                             </font>
                         </Label>
                         <Label fx:id="pointSum" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="set-points" text="Label">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="23.0"/>
                             </font>
                         </Label>
                     </children>
                 </VBox>
                 <VBox styleClass="set-group">
                     <children>
-                        <Label fx:id="set4Score" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="40.0" styleClass="set-score" text="Label">
+                        <Label fx:id="set4Score" alignment="CENTER" contentDisplay="CENTER"
+                               maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="40.0"
+                               styleClass="set-score" text="Label" VBox.vgrow="ALWAYS">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="22.0"/>
                             </font>
                         </Label>
-                        <Label fx:id="set4Points" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="40.0" styleClass="set-points" text="Label">
+                        <Label fx:id="set4Points" alignment="CENTER" contentDisplay="CENTER"
+                               maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="40.0"
+                               styleClass="set-points" text="Label" VBox.vgrow="ALWAYS">
                             <font>
-                                <Font size="18.0" />
-                            </font>
-                        </Label>
-                    </children>
-                </VBox>
-                <VBox styleClass="set-group">
-                    <children>
-                        <Label fx:id="set3Score" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="40.0" styleClass="set-score" text="Label">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                        </Label>
-                        <Label fx:id="set3Points" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="set-points" text="Label">
-                            <font>
-                                <Font size="18.0" />
+                                <Font size="22.0"/>
                             </font>
                         </Label>
                     </children>
                 </VBox>
                 <VBox styleClass="set-group">
                     <children>
-                        <Label fx:id="set2Score" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="40.0" styleClass="set-score" text="Label">
+                        <Label fx:id="set3Score" alignment="CENTER" contentDisplay="CENTER"
+                               maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="40.0"
+                               styleClass="set-score" text="Label" VBox.vgrow="ALWAYS">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="22.0"/>
                             </font>
                         </Label>
-                        <Label fx:id="set2Points" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="set-points" text="Label">
+                        <Label fx:id="set3Points" alignment="CENTER" contentDisplay="CENTER"
+                               maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                               styleClass="set-points" text="Label" VBox.vgrow="ALWAYS">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="22.0"/>
                             </font>
                         </Label>
                     </children>
                 </VBox>
                 <VBox styleClass="set-group">
                     <children>
-                        <Label fx:id="set1Score" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="40.0" styleClass="set-score" text="Label">
+                        <Label fx:id="set2Score" alignment="CENTER" contentDisplay="CENTER"
+                               maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="40.0"
+                               styleClass="set-score" text="Label" VBox.vgrow="ALWAYS">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="22.0"/>
                             </font>
                         </Label>
-                        <Label fx:id="set1Points" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="set-points" text="Label">
+                        <Label fx:id="set2Points" alignment="CENTER" contentDisplay="CENTER"
+                               maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                               styleClass="set-points" text="Label" VBox.vgrow="ALWAYS">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="22.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+                <VBox styleClass="set-group">
+                    <children>
+                        <Label fx:id="set1Score" alignment="CENTER" contentDisplay="CENTER"
+                               maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="40.0"
+                               styleClass="set-score" text="Label" VBox.vgrow="ALWAYS">
+                            <font>
+                                <Font size="22.0"/>
+                            </font>
+                        </Label>
+                        <Label fx:id="set1Points" alignment="CENTER" contentDisplay="CENTER"
+                               maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                               styleClass="set-points" text="Label" VBox.vgrow="ALWAYS">
+                            <font>
+                                <Font size="22.0"/>
                             </font>
                         </Label>
                     </children>
                 </VBox>
                 <Label fx:id="missThrowCount" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="40.0" text="Label">
                     <font>
-                        <Font size="18.0" />
+                        <Font size="22.0"/>
                     </font>
                 </Label>
                 <Label fx:id="throwCount" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="40.0" text="Label" HBox.hgrow="ALWAYS">
                     <font>
-                        <Font size="18.0" />
+                        <Font size="22.0"/>
                     </font>
                 </Label>
             </children>

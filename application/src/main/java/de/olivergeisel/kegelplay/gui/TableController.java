@@ -13,8 +13,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class TableController implements Initializable {
@@ -35,6 +37,19 @@ public class TableController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		grid.sceneProperty().addListener((observable, oldScene, newScene) -> {
+			if (newScene != null) {
+				Stage stage = (Stage) newScene.getWindow();
+				stage.widthProperty().addListener((obs, oldWidth, newWidth) -> {
+					double fontSize = stage.getWidth() / 30; //
+					for (var lane : grid.getChildren()) {
+						if (lane instanceof Label label) {
+							label.setStyle(STR."-fx-font-size: \{fontSize}px;");
+						}
+					}
+				});
+			}
+		});
 		for (var lane : grid.getChildren()) {
 			if (lane instanceof Label label) {
 				if (GridPane.getRowIndex(label) == 0) {
@@ -67,12 +82,6 @@ public class TableController implements Initializable {
 						case 4 -> label.setText(Integer.toString(game.getTotalFehlwurf()));
 						case 5 -> {
 							var player = game.getPlayer();
-							/*if (points instanceof _2TeamsMatchPoints<?> teamPoints) {
-								var gamePoints =
-										teamPoints.getGamePointsForPlayer(player.getCompleteNameWithUnderscore())
-												  .getPoints();
-								label.setText(Double.toString(gamePoints));
-							}*/
 							if (pointsystem instanceof PairPlayerAgainstPointSystem pairSystem) {
 								var matchPoints = pairSystem.getMatchPoints(match);
 								double playerPoints = (double) matchPoints.getMatchPoints().get(player);
@@ -82,6 +91,14 @@ public class TableController implements Initializable {
 								var matchPoints = allAgainst.getMatchPoints(match);
 								double playerPoints = (double) matchPoints.getMatchPoints().get(player);
 								label.setText(Double.toString(playerPoints));
+							} else { // TODO replace with better solution
+								final var setNumbers = List.of(0, 1, 2, 3);
+								var sum = 0.0;
+								for (var setNumber : setNumbers) {
+									sum += points.getGameSetPointsFor(player.getCompleteNameWithUnderscore(),
+											setNumber);
+								}
+								label.setText(Double.toString(sum));
 							}
 						}
 						default -> throw new IllegalStateException(STR."Unexpected value: \{col}");

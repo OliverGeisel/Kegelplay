@@ -36,7 +36,7 @@ import java.util.TimerTask;
  * @see GameController
  * @since 1.0.0
  */
-public class SemiFinalController implements GameController<Game120>, Initializable {
+public class SemiFinalController extends DisplayGameController<Game120> implements Initializable {
 
 
 	private static final System.Logger LOGGER           = System.getLogger(SemiFinalController.class.getName());
@@ -62,6 +62,7 @@ public class SemiFinalController implements GameController<Game120>, Initializab
 
 
 	public SemiFinalController(Match1Team<Game120> match) {
+		super(match);
 		this.match = match;
 		matchUpdater = new MatchUpdater<>(match);
 	}

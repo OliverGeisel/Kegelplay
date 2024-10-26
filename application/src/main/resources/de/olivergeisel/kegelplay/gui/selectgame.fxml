@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" minHeight="50" minWidth="50" prefHeight="400.0"
-            prefWidth="550.0" xmlns="http://javafx.com/javafx/11.0.14-internal"
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="500.0"
+            prefHeight="416.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/11.0.14-internal"
             fx:controller="de.olivergeisel.kegelplay.gui.SelectGameController">
     <children>
-        <Button layoutX="260.0" layoutY="14.0" mnemonicParsing="false" onAction="#loadToday" text="Heute Laden"/>
+        <Button layoutX="250.0" layoutY="15.0" mnemonicParsing="false" onAction="#loadToday" text="Heute Laden"
+                AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="15.0"/>
         <ScrollPane fitToHeight="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                    minHeight="-Infinity" minViewportHeight="200.0" minViewportWidth="150.0" minWidth="-Infinity"
-                    prefHeight="400.0" prefViewportHeight="400.0" prefViewportWidth="200.0" prefWidth="215.0">
+                    minViewportHeight="200.0" minViewportWidth="150.0" prefViewportHeight="400.0"
+                    prefViewportWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                    AnchorPane.topAnchor="0.0">
             <content>
                 <VBox fx:id="vBox" minHeight="-Infinity" minWidth="-Infinity"/>
             </content>
         </ScrollPane>
-        <DatePicker fx:id="datePicker" layoutX="363.0" layoutY="14.0" onAction="#loadDay"/>
+        <DatePicker fx:id="datePicker" layoutX="440.0" layoutY="15.0" maxWidth="150.0" onAction="#loadDay"
+                    AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="15.0"/>
         <ChoiceBox fx:id="gameKind" layoutX="260.0" layoutY="97.0" prefWidth="150.0"/>
         <ChoiceBox fx:id="pointSystemField" layoutX="260.0" layoutY="139.0" prefWidth="150.0"/>
         <ChoiceBox fx:id="view" layoutX="260.0" layoutY="187.0" prefWidth="150.0"/>
@@ -25,9 +28,12 @@
         <CheckBox fx:id="frameless" layoutX="260.0" layoutY="231.0" mnemonicParsing="false" prefHeight="25.0"
                   prefWidth="83.0" text="Rahmenlos"/>
         <CheckBox fx:id="onTop" layoutX="260.0" layoutY="260.0" mnemonicParsing="false" text="Immer im Vordergrund"/>
-        <ChoiceBox fx:id="screenSelect" layoutX="257.0" layoutY="298.0" prefWidth="150.0"/>
+        <ChoiceBox fx:id="screenSelect" layoutX="260.0" layoutY="298.0" prefWidth="150.0"/>
         <Label layoutX="261.0" layoutY="277.0" text="Bildschirm"/>
-        <ChoiceBox fx:id="cssFile" layoutX="257.0" layoutY="342.0" prefWidth="150.0"/>
+        <ChoiceBox fx:id="cssFile" layoutX="260.0" layoutY="342.0" prefWidth="150.0"/>
         <Label layoutX="261.0" layoutY="323.0" text="CSS-Datei"/>
     </children>
+    <padding>
+        <Insets right="10.0"/>
+    </padding>
 </AnchorPane>

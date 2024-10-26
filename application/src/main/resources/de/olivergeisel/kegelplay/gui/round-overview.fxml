@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.*?>
+<HBox xmlns:fx="http://javafx.com/fxml/1" fx:id="root" maxHeight="1.7976931348623157E308"
+      maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/11.0.14-internal"
+      fx:controller="de.olivergeisel.kegelplay.gui.RoundController">
+    <children>
+        <Pane>
+            <children>
+                <fx:include fx:id="pair1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            source="pair-overview.fxml"/>
+            </children>
+            <HBox.margin>
+                <Insets right="10.0"/>
+            </HBox.margin>
+        </Pane>
+        <Pane>
+            <children>
+                <fx:include fx:id="pair2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            source="pair-overview.fxml"/>
+            </children>
+            <HBox.margin>
+                <Insets left="10.0"/>
+            </HBox.margin>
+        </Pane>
+
+    </children>
+</HBox>

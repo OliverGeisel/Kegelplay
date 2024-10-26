@@ -2,6 +2,7 @@ package de.olivergeisel.kegelplay.gui;
 
 import core.game.Game120;
 import core.match.Match2Teams;
+import core.point_system.GamePointsEvaluator_2Players;
 import core.point_system.GamePointsPlayer;
 import core.point_system._2Teams120PointSystem;
 import core.point_system._2TeamsMatchPoints;
@@ -76,7 +77,7 @@ public class TeamTableOverview implements Initializable {
 		var homePoints = new LinkedList<GamePointsPlayer<Game120>>();
 		var guestPoints = new LinkedList<GamePointsPlayer<Game120>>();
 		for (int i = 0; i < home.getPlayers().length; i++) {
-			var pair = core.point_system.GamePointsEvaluator_2Teams.evaluate(home.getPlayers()[i],
+			var pair = GamePointsEvaluator_2Players.evaluate(home.getPlayers()[i],
 					guest.getPlayers()[i]);
 			homePoints.add(pair.getFirst());
 			guestPoints.add(pair.getSecond());
