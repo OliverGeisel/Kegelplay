@@ -207,6 +207,8 @@ public abstract class Match<G extends Game> {
 	 */
 	public abstract Map<String, Double> getPoints();
 
+	public abstract Map<String, Double> getSetPoints();
+
 	public abstract Team<G>[] getTeams();
 
 	/**

@@ -29,6 +29,12 @@ public class MatchNTeams<G extends Game> extends Match<G> {
 	public Map<String, Double> getPoints() {
 		return Map.of();
 	}
+
+	@Override
+	public Map<String, Double> getSetPoints() {
+		throw new UnsupportedOperationException("Not implemented yet");
+	}
+
 	@Override
 	public Team<G>[] getTeams() {
 		return teams.toArray(new Team[0]);

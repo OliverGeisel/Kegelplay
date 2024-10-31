@@ -2,6 +2,8 @@ package core.match;
 
 import core.game.Game;
 import core.game.Game120;
+import core.point_system.GamePointsEvaluator_2Players;
+import core.point_system.GameSetPoints;
 import core.point_system.PointSystem;
 import core.team_and_player.Player;
 import core.team_and_player.Team;
@@ -75,6 +77,30 @@ public class Match2Teams<G extends Game> extends Match<G> {
 			}
 			back.put(team.getName(), map.get(team.getName()));
 		}
+		return back;
+	}
+
+	@Override
+	public Map<String, Double> getSetPoints() {
+		Map<String, Double> back = new HashMap<>();
+		var teams = getTeams();
+		var team1Sum = 0.0;
+		var team2Sum = 0.0;
+		for (int i = 0; i < teams[0].getPlayers().length; i++) {
+			var gamePoints = GamePointsEvaluator_2Players.evaluate(teams[0].getPlayer(i), teams[1].getPlayer(i));
+			var player1 = gamePoints.getFirst();
+			var player2 = gamePoints.getSecond();
+			var sum1 = player1.getGameSetPoints().stream().map(GameSetPoints::getPoints).reduce(0.0, Double::sum);
+			var sum2 = player2.getGameSetPoints().stream().map(GameSetPoints::getPoints).reduce(0.0, Double::sum);
+			back.put(teams[0].getPlayer(i).getCompleteName(),
+					sum1);
+			back.put(teams[1].getPlayer(i).getCompleteName(),
+					sum2);
+			team1Sum += sum1;
+			team2Sum += sum2;
+		}
+		back.put(teams[0].getName(), team1Sum);
+		back.put(teams[1].getName(), team2Sum);
 		return back;
 	}
 
