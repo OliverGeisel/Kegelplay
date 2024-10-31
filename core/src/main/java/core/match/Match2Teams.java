@@ -1,12 +1,17 @@
 package core.match;
 
 import core.game.Game;
+import core.game.Game120;
 import core.point_system.PointSystem;
 import core.team_and_player.Player;
 import core.team_and_player.Team;
 import core.util.Pair;
 
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
+
+import static core.point_system.Evaluate2TeamsPair.evaluateMatchAsPoints;
 
 /**
  * Represents a match between two teams.
@@ -24,8 +29,7 @@ public class Match2Teams<G extends Game> extends Match<G> {
 
 
 	public Match2Teams(MatchConfig config, GeneralMatchInfo generalMatchInfo, MatchStatusInfo statusInfo,
-			PointSystem<G> pointSystem, Team<G> home,
-			Team<G> guest, Path path) {
+			PointSystem<G> pointSystem, Team<G> home, Team<G> guest, Path path) {
 		super(config, generalMatchInfo, statusInfo, pointSystem, path);
 		this.home = home;
 		this.guest = guest;
@@ -58,6 +62,20 @@ public class Match2Teams<G extends Game> extends Match<G> {
 
 	public Team<G> getHome() {
 		return home;
+	}
+
+	@Override
+	public Map<String, Double> getPoints() {
+		var back = new HashMap<String, Double>();
+		getPointSystem().getMatchPoints(this);
+		var map = evaluateMatchAsPoints((Match2Teams<Game120>) this);
+		for (var team : getTeams()) {
+			for (var player : team.getPlayers()) {
+				back.put(player.getCompleteName(), map.get(player.getCompleteName()));
+			}
+			back.put(team.getName(), map.get(team.getName()));
+		}
+		return back;
 	}
 
 	@Override

@@ -11,6 +11,7 @@ import core.team_and_player.Team;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 
 public class MatchNTeams<G extends Game> extends Match<G> {
 	private final List<Team<G>> teams;
@@ -23,7 +24,11 @@ public class MatchNTeams<G extends Game> extends Match<G> {
 		this.teams = teams;
 	}
 
-//region setter/getter
+	//region setter/getter
+	@Override
+	public Map<String, Double> getPoints() {
+		return Map.of();
+	}
 	@Override
 	public Team<G>[] getTeams() {
 		return teams.toArray(new Team[0]);

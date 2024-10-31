@@ -5,10 +5,7 @@ import core.game.Game;
 import core.game.Game120;
 import core.match.Match;
 import core.match.Match2Teams;
-import core.point_system.GamePointsEvaluator_2Players;
-import core.point_system.GamePointsPlayer;
-import core.team_and_player.Team;
-import core.util.Pair;
+import core.point_system.ScoreEvaluator;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -19,10 +16,11 @@ import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.TimerTask;
+
+import static core.point_system.Evaluate2TeamsPair.evaluateMatch;
 
 public class _2TeamsAgainstA2Controller<G extends Game> extends DisplayGameController<G> {
 
@@ -94,21 +92,6 @@ public class _2TeamsAgainstA2Controller<G extends Game> extends DisplayGameContr
 		while (numPlayers < rounds.getChildren().size() * 2) {
 			rounds.getChildren().removeLast();
 		}
-	}
-
-	private Pair<List<GamePointsPlayer<Game120>>, List<GamePointsPlayer<Game120>>> evaluateMatch(
-			Match2Teams<Game120> match) {
-		var home = match.getHome();
-		var guest = match.getGuest();
-		var homePoints = new LinkedList<GamePointsPlayer<Game120>>();
-		var guestPoints = new LinkedList<GamePointsPlayer<Game120>>();
-		for (int i = 0; i < home.getPlayers().length; i++) {
-			var pair = GamePointsEvaluator_2Players.evaluate(home.getPlayers()[i],
-					guest.getPlayers()[i]);
-			homePoints.add(pair.getFirst());
-			guestPoints.add(pair.getSecond());
-		}
-		return new Pair<>(homePoints, guestPoints);
 	}
 
 //region setter/getter
@@ -184,25 +167,5 @@ public class _2TeamsAgainstA2Controller<G extends Game> extends DisplayGameContr
 		}
 	}
 	//endregion
-	private static class ScoreEvaluator {
-		public static Pair<Double, Double> evaluate(Match2Teams<Game120> match) {
-			var home = match.getHome();
-			var guest = match.getGuest();
-			return evaluate(home, guest);
-		}
 
-		public static Pair<Double, Double> evaluate(Team<Game120> home, Team<Game120> guest) {
-			return evaluate(home.getTeamScore(), guest.getTeamScore());
-		}
-
-		public static Pair<Double, Double> evaluate(int homeScore, int guestScore) {
-			if (homeScore > guestScore) {
-				return new Pair<>(2.0, 0.0);
-			} else if (homeScore < guestScore) {
-				return new Pair<>(0.0, 2.0);
-			} else {
-				return new Pair<>(1., 1.);
-			}
-		}
-	}
 }

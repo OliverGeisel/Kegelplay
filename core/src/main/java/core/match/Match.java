@@ -200,6 +200,13 @@ public abstract class Match<G extends Game> {
 		return config;
 	}
 
+	/**
+	 * Get the TeamPoints per player or team.
+	 *
+	 * @return Map of player/team with TeamPoints
+	 */
+	public abstract Map<String, Double> getPoints();
+
 	public abstract Team<G>[] getTeams();
 
 	/**
