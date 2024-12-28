@@ -36,6 +36,7 @@
                     <additionalJOptions>
                         <arg>--enable-preview</arg>
                     </additionalJOptions>
+                    <show>protected</show>
                 </configuration>
                 <executions>
                     <execution>
