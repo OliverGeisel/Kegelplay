@@ -196,6 +196,53 @@ public abstract class Match<G extends Game> {
 		return back;
 	}
 
+	/**
+	 * Get the {@link Game}s ordered by the Position in the Team.
+	 * The first game ist the {@link Player} who start at track 1, second on track 2 etc.
+	 *
+	 * @return
+	 */
+	public List<G> getGamesByPlayerPos() {
+		var back = new LinkedList<G>();
+		var numberPlayers = getConfig().getPlayersPerTeam() * getConfig().getSchema().getCycles();
+		for (var pos = 0; pos < numberPlayers; ++pos) {
+			for (var team : getTeams()) {
+				var player = team.getPlayers()[pos];
+				var game = player.getGame();
+				if (game != null) {
+					back.add(game);
+				}
+			}
+		}
+		return back;
+	}
+
+	/**
+	 * Returns the games in the match grouped by the rounds.
+	 * A round is a set of games that are played at the same time.
+	 *
+	 * @return List of rounds with the games in it
+	 */
+	public List<List<G>> getGameRounds() {
+		var back = new LinkedList<List<G>>();
+		var laneCount = config.getLaneCount();
+		var games = getGamesByPlayerPos();
+		for (var i = 0; i < games.size(); i += laneCount) {
+			var round = new LinkedList<G>();
+			for (var j = 0; j < laneCount; ++j) {
+				round.add(games.get(i + j));
+			}
+			back.add(round);
+		}
+		return back;
+	}
+
+	/**
+	 * Returns the current game round.
+	 * A round is a set of games that are played at the same time.
+	 *
+	 * @return List of games in the current round
+	 */
 	public MatchConfig getConfig() {
 		return config;
 	}

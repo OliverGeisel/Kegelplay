@@ -82,7 +82,7 @@ class GameTest {
 			}
 
 			@Override
-			public GameSet[] getSets() {
+			public GameSet[] getGameSets() {
 				return sets;
 			}
 
@@ -180,7 +180,8 @@ class GameTest {
 	}
 
 	@Test
-	void getSets() {
+	void getGameSets() {
+		fail();
 	}
 
 	@Test

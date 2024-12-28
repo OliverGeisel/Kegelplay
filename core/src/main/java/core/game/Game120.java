@@ -4,7 +4,6 @@ import core.match.Match;
 import core.team_and_player.Player;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -27,14 +26,21 @@ public class Game120 extends Game {
 
 	private final GameSet[] sets = new GameSet[ANZAHL_DURCHGAENGE];
 
+	/**
+	 * Creates a new game with 100 throws.
+	 *
+	 * @param player The player who plays the game.
+	 */
 	public Game120(Player player) {
 		this(player, LocalDateTime.now());
 	}
 
-	public Game120(Player player, Player substitution1, Player substitution2, LocalDateTime date) {
-		super(player, substitution1, substitution2, date);
-	}
-
+	/**
+	 * Creates a new game with 100 throws.
+	 *
+	 * @param player The player who plays the game.
+	 * @param date The date of the game. (start)
+	 */
 	protected Game120(Player player, LocalDateTime date) {
 		super(player, date);
 		for (int i = 0; i < ANZAHL_DURCHGAENGE; i++) {
@@ -42,14 +48,16 @@ public class Game120 extends Game {
 		}
 	}
 
-	/* Todo move
-	public static Game120 createGameFromCSV(Player player, LocalDateTime date, CSVFileReader csvFileReader) {
-		return new Game120(player, date);
-	}*/
-
-	@Override
-	public void start() {
-
+	/**
+	 * Creates a new game with 120 throws.
+	 *
+	 * @param player        The player who plays the game.
+	 * @param substitution1 The first substitution player.
+	 * @param substitution2 The second substitution player.
+	 * @param date          The date of the game. (start)
+	 */
+	public Game120(Player player, Player substitution1, Player substitution2, LocalDateTime date) {
+		super(player, substitution1, substitution2, date);
 	}
 
 	/**
@@ -63,10 +71,24 @@ public class Game120 extends Game {
 		if (durchgang < 0 || durchgang >= ANZAHL_DURCHGAENGE) {
 			throw new IllegalArgumentException(STR."Index out of bounds: \{durchgang}. Game120 has only 4 Durchgänge.");
 		}
-		return sets[durchgang];
+		return getGameSets()[durchgang];
+	}
+
+	/* Todo move
+	public static Game120 createGameFromCSV(Player player, LocalDateTime date, CSVFileReader csvFileReader) {
+		return new Game120(player, date);
+	}*/
+
+	@Override
+	public void start() {
+
 	}
 
 	//region setter/getter
+	@Override
+	public GameSet[] getGameSets() {
+		return sets;
+	}
 	@Override
 	public GameInfo getGameInfo() {
 		return new GameInfo(4, 15, 15, 12, true);
@@ -80,52 +102,6 @@ public class Game120 extends Game {
 	@Override
 	public int getNumberOfDurchgaenge() {
 		return ANZAHL_DURCHGAENGE;
-	}
-
-	@Override
-	public int getNumberOfWurf() {
-		return Arrays.stream(sets).mapToInt(GameSet::getAnzahlGespielteWuerfe).sum();
-	}
-
-	@Override
-	public int getTotalFehlwurf() {
-		var back = 0;
-		for (GameSet set : sets) {
-			back += set.getAnzahlFehler();
-		}
-		return back;
-	}
-
-	@Override
-	public int getTotalScore() {
-		var back = 0;
-		for (GameSet set : sets) {
-			back += set.getScore();
-		}
-		return back;
-	}
-
-	@Override
-	public int getTotalVolle() {
-		var back = 0;
-		for (GameSet set : sets) {
-			back += set.getVolleScore();
-		}
-		return back;
-	}
-
-	@Override
-	public int getTotalAbraeumen() {
-		var back = 0;
-		for (GameSet set : sets) {
-			back += set.getAbraeumenScore();
-		}
-		return back;
-	}
-
-	@Override
-	public GameSet[] getSets() {
-		return sets;
 	}
 
 	@Override

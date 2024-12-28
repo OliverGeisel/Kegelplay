@@ -72,9 +72,7 @@ public class MatchSchema {
 			}
 		}
 		var symmetric = volleSet.size() == 1 && abrauemerSet.size() == 1 && timeSet.size() == 1;
-		if (!symmetric) {
-			throw new IllegalArgumentException("Player does not play symmetric");
-		}
+
 		var volle = volleSet.iterator().next();
 		var abraeumen = abrauemerSet.iterator().next();
 		var time = timeSet.iterator().next();

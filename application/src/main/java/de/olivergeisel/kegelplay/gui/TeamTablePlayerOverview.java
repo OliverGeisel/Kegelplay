@@ -60,10 +60,10 @@ public class TeamTablePlayerOverview implements Initializable {
 		throwCount.setText(String.valueOf(game.getNumberOfWurf()));
 		missThrowCount.setText(String.valueOf(game.getTotalFehlwurf()));
 		score.setText(String.valueOf(game.getTotalScore()));
-		set1Score.setText(String.valueOf(game.getSets()[0].getScore()));
-		set2Score.setText(String.valueOf(game.getSets()[1].getScore()));
-		set3Score.setText(String.valueOf(game.getSets()[2].getScore()));
-		set4Score.setText(String.valueOf(game.getSets()[3].getScore()));
+		set1Score.setText(String.valueOf(game.getGameSets()[0].getScore()));
+		set2Score.setText(String.valueOf(game.getGameSets()[1].getScore()));
+		set3Score.setText(String.valueOf(game.getGameSets()[2].getScore()));
+		set4Score.setText(String.valueOf(game.getGameSets()[3].getScore()));
 
 		var points = gamePoints.getGameSetPoints();
 		set1Points.setText(String.valueOf(points.get(0).getPoints()));

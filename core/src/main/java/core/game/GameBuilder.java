@@ -15,6 +15,8 @@ package core.game;
  */
 public abstract class GameBuilder<G extends Game> {
 
+	private Player<G> player;
+
 	/**
 	 * Build a game from a source. But can only build a game with its throws. any other information must be set manually.
 	 *

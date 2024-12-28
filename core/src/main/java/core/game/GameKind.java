@@ -53,8 +53,13 @@ public enum GameKind {
 			   && gameInfo.gameSets() == numberOfDurchgaenge && gameInfo.minutesPerGameSet() == timePerDurchgang;
 	}
 
-	public GameInfo toGameInfo() {
-		return new GameInfo(numberOfDurchgaenge, numberOfVolle, numberOfAbraeumen, timePerDurchgang, true);
+	/**
+	 * Convert the {@link GameKind} to a {@link GameInfo}
+	 *
+	 * @return The {@link GameInfo} of the {@link GameKind}
+	 */
+	public GameInfo toGameInfo(boolean symmetric) {
+		return new GameInfo(numberOfDurchgaenge, numberOfVolle, numberOfAbraeumen, timePerDurchgang, symmetric);
 	}
 
 	//region setter/getter

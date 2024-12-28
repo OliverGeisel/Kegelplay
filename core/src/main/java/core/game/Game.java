@@ -17,24 +17,23 @@ import java.util.Objects;
  * <br>
  * A game can be in different states.
  * <p>
- *     A game is in the state {@link NotStartedState} if it has not yet started.
- *     A game is in the state {@link RunningState} if it is currently being played.
- *     A game is in the state {@link PausedState} if it is currently paused.
- *     A game is in the state {@link FinishedState} if it is finished.
+ * A game is in the state {@link NotStartedState} if it has not yet started.
+ * A game is in the state {@link RunningState} if it is currently being played.
+ * A game is in the state {@link PausedState} if it is currently paused.
+ * A game is in the state {@link FinishedState} if it is finished.
  * </p>
  * <p>
- * 		A game is played by one {@link Player} at a time. Each game can substitute the original player with maximum
- * 	two other players. The {@link #getCurrentPlayer()} method returns the current player. This can be the original
- * 	player or one of the two substitutions.
+ * A game is played by one {@link Player} at a time. Each game can substitute the original player with maximum
+ * two other players. The {@link #getCurrentPlayer()} method returns the current player. This can be the original
+ * player or one of the two substitutions.
  * </p>
  *
+ * @author Oliver Geisel
+ * @version 1.0.0
  * @see GameSet
  * @see Player
  * @see Match
- *
- * @version 1.0.0
  * @since 1.0.0
- * @author Oliver Geisel
  */
 public abstract class Game {
 
@@ -46,10 +45,20 @@ public abstract class Game {
 	private GameState     state;
 
 
+	/**
+	 * Creates a new game with the given player.
+	 *
+	 * @param player The player who plays the game.
+	 */
 	protected Game(Player player) {
 		this(player, LocalDateTime.now());
 	}
 
+	/**
+	 * Creates a new game with the given player and date.
+	 * @param player The player who plays the game.
+	 * @param date The date of the game. (start)
+	 */
 	protected Game(Player player, LocalDateTime date) {
 		this.player = player;
 		if (player != null) {
@@ -59,6 +68,13 @@ public abstract class Game {
 		state = new NotStartedState();
 	}
 
+	/**
+	 * Creates a new game with the given player and substitutions.
+	 * @param player The player who plays the game.
+	 * @param substitution1 The first substitution player.
+	 * @param substitution2 The second substitution player.
+	 * @param date The date of the game. (start)
+	 */
 	protected Game(Player player, Player substitution1, Player substitution2, LocalDateTime date) {
 		this(player, date);
 		this.substitution1 = substitution1;
@@ -72,7 +88,7 @@ public abstract class Game {
 		if (isFinished()) {
 			return;
 		}
-		var list = Arrays.stream(getSets()).toList();
+		var list = Arrays.stream(getGameSets()).toList();
 		if (list.stream().allMatch(GameSet::isCompleted)) {
 			state = new FinishedState();
 			return;
@@ -87,6 +103,9 @@ public abstract class Game {
 		}
 	}
 
+	/**
+	 * Start the game. (State changes to {@link RunningState})
+	 */
 	public abstract void start();
 
 	/**
@@ -94,15 +113,24 @@ public abstract class Game {
 	 *
 	 * @param durchgang Number of the {@link GameSet}
 	 * @return {@link GameSet} at the given number
+	 *
 	 * @throws IllegalArgumentException if the number is out of bounds
 	 */
 	public abstract GameSet getDurchgang(int durchgang) throws IllegalArgumentException;
 
 	//region setter/getter
+	/**
+	 * Returns the {@link GameSet}s of the game.
+	 * The order of the {@link GameSet}s is important and cannot be changed.
+	 *
+	 * @return {@link GameSet}s of the game
+	 */
+	public abstract GameSet[] getGameSets();
 
 	/**
 	 * Returns the player that is currently play the game. This can be the original player or one of the two
 	 * substitutions. If sub1 is not null then he will be returned except sub2 isn`t.
+	 *
 	 * @return Player that is currently play
 	 */
 	public Player getCurrentPlayer() {
@@ -117,6 +145,7 @@ public abstract class Game {
 
 	/**
 	 * Returns the {@link GameInfo} of the game.
+	 *
 	 * @return {@link GameInfo} of the game
 	 */
 	public abstract GameInfo getGameInfo();
@@ -124,59 +153,153 @@ public abstract class Game {
 	/**
 	 * Game is currently played.
 	 * A game is currently played if it is in the state {@link RunningState} or {@link PausedState}.
+	 *
 	 * @return true if game is currently played
 	 */
 	public boolean isOn() {
 		return state instanceof RunningState || state instanceof PausedState;
 	}
 
+	/**
+	 * Game is finished.
+	 * A game is finished if it is in the state {@link FinishedState}.
+	 *
+	 * @return true if game is finished
+	 */
 	public boolean isFinished() {
 		return state instanceof FinishedState;
 	}
 
+	/**
+	 * Game is not started.
+	 * A game is not started if it is in the state {@link NotStartedState}.
+	 *
+	 * @return true if game is not started
+	 */
 	public boolean isNotStarted() {
 		return state instanceof NotStartedState;
 	}
 
+	/**
+	 * Game is paused.
+	 * A game is paused if it is in the state {@link PausedState}.
+	 *
+	 * @return true if game is paused
+	 */
 	public boolean isPaused() {
 		return state instanceof PausedState;
 	}
 
+	/**
+	 * Game is running.
+	 * A game is running if it is in the state {@link RunningState}.
+	 *
+	 * @return true if game is running
+	 */
 	public boolean isRunning() {
 		return state instanceof RunningState;
 	}
 
+	/**
+	 * Returns the kind of the game.
+	 *
+	 * @return Kind of the game
+	 */
 	public abstract GameKind getGameKind();
 
+	/**
+	 * Returns the date of the game.
+	 *
+	 * @return Date of the game
+	 */
 	public LocalDateTime getDate() {
 		return date;
 	}
 
+	/**
+	 * Sets the date of the game.
+	 *
+	 * @param date Date of the game
+	 */
 	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 
+	/**
+	 * Returns the number of Durchgänge of the game.
+	 *
+	 * @return Number of Durchgänge
+	 */
 	public abstract int getNumberOfDurchgaenge();
 
-	public abstract int getNumberOfWurf();
-
-	public abstract int getTotalFehlwurf();
-
-	public abstract int getTotalScore();
-
-	public abstract int getTotalVolle();
-
-	public abstract int getTotalAbraeumen();
+	/**
+	 * Returns the number of played Würfe (throws) of the game.
+	 *
+	 * @return Number of Volle
+	 */
+	public int getNumberOfWurf() {
+		return Arrays.stream(getGameSets()).mapToInt(GameSet::getAnzahlGespielteWuerfe).sum();
+	}
 
 	/**
-	 * Returns the {@link GameSet}s of the game.
-	 * @return Array of {@link GameSet}s
+	 * total number of Fehlwürfe (miss throws) of the game.
+	 *
+	 * @return Sum of all {@link GameSet#getAnzahlFehler()} of the game
 	 */
-	public abstract GameSet[] getSets();
+	public int getTotalFehlwurf() {
+		var back = 0;
+		for (GameSet set : getGameSets()) {
+			back += set.getAnzahlFehler();
+		}
+		return back;
+	}
+
+	/**
+	 * Get the total score of the game.
+	 * Sum of all {@link GameSet#getScore()} of the game.
+	 *
+	 * @return Total score of the game
+	 */
+	public int getTotalScore() {
+		var back = 0;
+		for (GameSet set : getGameSets()) {
+			back += set.getScore();
+		}
+		return back;
+
+	}
+
+	/**
+	 * Get the total number of Volle of the game.
+	 * Sum of all {@link GameSet#getVolleScore()} of the game.
+	 *
+	 * @return Total number of Volle of the game
+	 */
+	public int getTotalVolle() {
+		var back = 0;
+		for (GameSet set : getGameSets()) {
+			back += set.getVolleScore();
+		}
+		return back;
+	}
+
+	/**
+	 * Get the total number of Abraeumen of the game.
+	 * Sum of all {@link GameSet#getAbraeumenScore()} of the game.
+	 * @return Total number of Abraeumen of the game
+	 */
+	public int getTotalAbraeumen() {
+		var back = 0;
+		for (GameSet set : getGameSets()) {
+			back += set.getAbraeumenScore();
+		}
+		return back;
+	}
 
 	/**
 	 * Returns the current {@link Player} for the game.
 	 * Change if the player is substituted.
+	 *
 	 * @return Current player
 	 */
 	public Player getPlayer() {
@@ -185,6 +308,7 @@ public abstract class Game {
 
 	/**
 	 * Set the current player for the game.
+	 *
 	 * @param player Current player
 	 * @throws IllegalArgumentException if player is not null
 	 */
@@ -198,6 +322,7 @@ public abstract class Game {
 
 	/**
 	 * Returns the last {@link Wurf} of the game that was thrown.
+	 *
 	 * @return Last {@link Wurf}
 	 */
 	public Wurf getLastWurf() {
@@ -210,10 +335,11 @@ public abstract class Game {
 
 	/**
 	 * Returns the current {@link GameSet} of the game.
+	 *
 	 * @return Current {@link GameSet}
 	 */
 	public GameSet getCurrentSet() {
-		var sets = getSets();
+		var sets = this.getGameSets();
 		if (Arrays.stream(sets).allMatch(GameSet::isNotStarted))
 			return sets[0];
 		if (Arrays.stream(sets).allMatch(GameSet::isCompleted))
@@ -227,14 +353,26 @@ public abstract class Game {
 		return getDurchgang(sets.length - 1);
 	}
 
+	/**
+	 * Set the first substitution player.
+	 * @param player First substitution player
+	 */
 	public void setSubstitution1(Player player) {
 		substitution1 = player;
 	}
 
+	/**
+	 * Set the second substitution player.
+	 * @param player Second substitution player
+	 */
 	public void setSubstitution2(Player player) {
 		substitution2 = player;
 	}
 
+	/**
+	 * Set all Durchgänge of the game.
+	 * @param durgaenge List of Durchgänge to set
+	 */
 	public abstract void setDurchgaenge(List<GameSet> durgaenge);
 //endregion
 

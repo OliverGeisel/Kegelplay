@@ -96,7 +96,7 @@ public class Game40 extends Game {
 	}
 
 	@Override
-	public GameSet[] getSets() {
+	public GameSet[] getGameSets() {
 		return sets;
 	}
 
