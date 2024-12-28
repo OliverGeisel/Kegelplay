@@ -16,7 +16,7 @@ import java.util.Map;
 import static core.point_system.Evaluate2TeamsPair.evaluateMatchAsPoints;
 
 /**
- * Represents a match between two teams.
+ * Represents a match between two {@link Team}s.
  *
  * @param <G> The type of the {@link Game} that is played in this match.
  * @author Oliver Geisel
@@ -30,6 +30,17 @@ public class Match2Teams<G extends Game> extends Match<G> {
 	private final Team<G> guest;
 
 
+	/**
+	 * Creates a new match between two teams.
+	 *
+	 * @param config           The configuration of the match.
+	 * @param generalMatchInfo The general information about the match.
+	 * @param statusInfo       The state about the match.
+	 * @param pointSystem      The point system of the match.
+	 * @param home             The home team.
+	 * @param guest            The guest team.
+	 * @param path             The path to the match in the file system.
+	 */
 	public Match2Teams(MatchConfig config, GeneralMatchInfo generalMatchInfo, MatchStatusInfo statusInfo,
 			PointSystem<G> pointSystem, Team<G> home, Team<G> guest, Path path) {
 		super(config, generalMatchInfo, statusInfo, pointSystem, path);
@@ -37,33 +48,68 @@ public class Match2Teams<G extends Game> extends Match<G> {
 		this.guest = guest;
 	}
 
+	/**
+	 * Returns the player of the home team with the given name.
+	 * @param name The name of the player.
+	 * @return The player with the given name.
+	 */
 	public Player<G> getHomePlayerByName(String name) {
 		return home.getPlayer(name);
 	}
 
+	/**
+	 * Returns the player of the guest team with the given name.
+	 * @param name The name of the player.
+	 * @return The player with the given name.
+	 */
 	public Player<G> getGuestPlayerByName(String name) {
 		return guest.getPlayer(name);
 	}
 
+	/**
+	 * Returns the player of the home team with the given position.
+	 * @param position The position of the player.
+	 * @return The player with the given position.
+	 */
 	public Player<G> getHomePlayerByPosition(int position) {
 		return home.getPlayer(position);
 	}
 
+	/**
+	 * Returns the player of the guest team with the given position.
+	 * @param position The position of the player.
+	 * @return The player with the given position.
+	 */
 	public Player<G> getGuestPlayerByPosition(int position) {
 		return guest.getPlayer(position);
 	}
 
+	/**
+	 * Returns the pair of players with the given position.
+	 * @param position The position of the players.
+	 * @return The pair of players with the given position.
+	 */
 	public Pair<Player<G>, Player<G>> getPairByPosition(int position) {
 		return new Pair<>(home.getPlayer(position), guest.getPlayer(position));
 	}
 
 	//region setter/getter
-	public Team<G> getGuest() {
-		return guest;
-	}
 
+	/**
+	 * Returns the home team.
+	 * @return the home team.
+	 */
 	public Team<G> getHome() {
 		return home;
+	}
+
+	/**
+	 * Returns the guest team.
+	 *
+	 * @return the guest team.
+	 */
+	public Team<G> getGuest() {
+		return guest;
 	}
 
 	@Override

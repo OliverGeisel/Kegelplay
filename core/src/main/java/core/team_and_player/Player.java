@@ -34,12 +34,27 @@ public class Player<G extends Game> {
 	private LocalDate birthday;
 	private PlayerID  playerID = new PlayerID("", 0);
 
+	/**
+	 * Creates a new player.
+	 *
+	 * @param vorname  The first name of the player.
+	 * @param nachname The last name of the player.
+	 */
 	public Player(String vorname, String nachname) {
 		this.vorname = vorname;
 		this.nachname = nachname;
 		this.state = new NotPlayedYet();
 	}
 
+	/**
+	 * Creates a new player.
+	 *
+	 * @param vorname The first name of the player.
+	 * @param nachname The last name of the player.
+	 * @param club The club of the player.
+	 * @param team The team(name) of the player.
+	 * @param birthday The birthday of the player.
+	 */
 	public Player(String vorname, String nachname, String club, String team, LocalDate birthday) {
 		this(vorname, nachname);
 		this.club = club;
@@ -47,6 +62,12 @@ public class Player<G extends Game> {
 		this.birthday = birthday;
 	}
 
+	/**
+	 * Get the state of the player.
+	 * @param state The state of the player.
+	 *
+	 * @return The state of the player.
+	 */
 	private PlayerState getStateFrom(PlayerStateEnum state) {
 		return switch (state) {
 			case NOT_PLAYED_YET -> new NotPlayedYet();
@@ -58,36 +79,75 @@ public class Player<G extends Game> {
 	}
 
 	//region setter/getter
+
+	/**
+	 * Returns the first name of the player.
+	 * @return The first name of the player.
+	 */
 	public String getVorname() {
 		return vorname;
 	}
 
+	/**
+	 * Returns the last name of the player.
+	 * @return The last name of the player.
+	 */
 	public String getNachname() {
 		return nachname;
 	}
 
+	/**
+	 * Returns the state of the player.
+	 * @return The state of the player.
+	 */
 	public String getClub() {
 		return club;
 	}
 
+	/**
+	 * Returns the team(name) of the player.
+	 * @return The team(name) of the player.
+	 */
 	public String getTeam() {
 		return team;
 	}
 
+	/**
+	 * Returns the birthday of the player.
+	 * @return The birthday of the player.
+	 */
 	public LocalDate getBirthday() {
 		return birthday;
 	}
 
+	/**
+	 * Returns the playerID of the player.
+	 * @return The playerID of the player.
+	 */
 	public PlayerID getPlayerID() {
 		return playerID;
 	}
 
+	/**
+	 * Get the Game of the player.
+	 * @return The Game of the player.
+	 */
 	public G getGame() {
 		return game;
 	}
 
+	/**
+	 * Set the Game of the player.
+	 * @param game The Game of the player.
+	 */
 	public void setGame(G game) {
 		this.game = game;
+		if (game != null) {
+			// Set the player of the game to this player if the player of the game is not this player.
+			if (game.getPlayer() != this) {
+				game.setPlayer(this);
+			}
+		}
 	}
 
 	/**
@@ -117,6 +177,10 @@ public class Player<G extends Game> {
 		return STR."\{nachname},\{vorname}".trim();
 	}
 
+	/**
+	 * Set the state of the player.
+	 * @param state The state of the player.
+	 */
 	public void setStateTo(PlayerStateEnum state) {
 		this.state = getStateFrom(state);
 	}
@@ -152,6 +216,14 @@ public class Player<G extends Game> {
 	}
 
 
+	/**
+	 * Enum of the states of a player.
+	 *
+	 * @since 1.0.0
+	 * @version 1.0.0
+	 * @see Player
+	 * @author Oliver Geisel
+	 */
 	public enum PlayerStateEnum {
 		NOT_PLAYED_YET,
 		PROBE,

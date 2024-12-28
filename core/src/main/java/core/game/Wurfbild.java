@@ -42,6 +42,19 @@ public class Wurfbild {
 		this.nine = ((value >> 8) & 1) != 0;
 	}
 
+	/**
+	 * Create a new instance by the values of the pins.
+	 *
+	 * @param one   true if the pin is fallen
+	 * @param two   true if the pin is fallen
+	 * @param three true if the pin is fallen
+	 * @param four  true if the pin is fallen
+	 * @param five  true if the pin is fallen
+	 * @param six   true if the pin is fallen
+	 * @param seven true if the pin is fallen
+	 * @param eight true if the pin is fallen
+	 * @param nine  true if the pin is fallen
+	 */
 	public Wurfbild(boolean one, boolean two, boolean three, boolean four, boolean five, boolean six, boolean seven,
 			boolean eight, boolean nine) {
 		super();
@@ -56,6 +69,11 @@ public class Wurfbild {
 		this.nine = nine;
 	}
 
+	/**
+	 * Create a new instance by an array of the values of the pins.
+	 * @param fields array of the values of the pins. Must have exactly 9 values.
+	 * @throws IllegalArgumentException
+	 */
 	public Wurfbild(boolean[] fields) throws IllegalArgumentException {
 		if (fields.length != 9) {
 			throw new IllegalArgumentException("Wurfbild hat genau 9 Werte");
@@ -128,6 +146,7 @@ public class Wurfbild {
 	}
 //endregion
 
+	@Override
 	public String toString() {
 		return STR."\{getWert()}: \{one ? "1" : "-"}\{two ? "2" : "-"}\{three ? "3" : "-"}\{four ? "4" : "-"}\{five ?
 				"5" : "-"}\{six ? "6" : "-"}\{seven ? "7" : "-"}\{eight ? "8" : "-"}\{nine ? "9" : "-"}";

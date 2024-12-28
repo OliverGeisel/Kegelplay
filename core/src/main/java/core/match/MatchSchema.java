@@ -10,11 +10,28 @@ import java.util.List;
 
 /**
  * Representation of the match schema. Detailed information about the order of all players when and where they play.
+ *
+ * <p>
+ *     Each {@link MatchSchema} has the following properties:
+ *     <ul>
+ *         <li>name: Name of the match</li>
+ *         <li>teams: Number of teams</li>
+ *         <li>playersPerCycle: Number of players per cycle -  A cycle is the complete wks </li>
+ *         <li>laneCount: Number of lanes</li>
+ *         <li>lanes: List of {@link LaneSchema}</li>
+ *         <li>cycles: Number of cycles - Number to repeat the cycles to do the full match</li>
+ *		</ul>
+ *
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Oliver Geisel
+ *
+ * @see Match
  */
 public class MatchSchema {
 
 	private static final System.Logger LOGGER = System.getLogger(MatchSchema.class.getName());
-
 
 	private final String           name;
 	private final int              teams;
@@ -23,13 +40,21 @@ public class MatchSchema {
 	private final List<LaneSchema> lanes;
 	private final int              cycles;
 
+	/**
+	 * Creates a new match schema.
+	 * The number of teams and players per team must be correct. so they must be checked before.
+	 *
+	 * @param wksIniFile                  The ini file of the match
+	 * @param correctNumberTeams          The correct number of teams
+	 * @param correctNumberPlayersPerTeam The correct number of players per team
+	 */
 	public MatchSchema(KeyValueRegionCollection<String, String, KeyValueRegion<String, String>> wksIniFile,
 			int correctNumberTeams, int correctNumberPlayersPerTeam) {
 		var allgemeinRegion = wksIniFile.getRegion("Allgemein");
 		name = allgemeinRegion.getValue("Name");
 		teams = Integer.parseInt(allgemeinRegion.getValue("Art")) + 1;
 		var singleTeam = false;
-		if (teams == 1){
+		if (teams == 1) {
 			LOGGER.log(System.Logger.Level.DEBUG, "Only one Team");
 			singleTeam = true;
 		}
@@ -48,7 +73,7 @@ public class MatchSchema {
 				break;
 			}
 			try {
-				lanes.add(new LaneSchema(lane, cycles, playersPerCycle,singleTeam));
+				lanes.add(new LaneSchema(lane, cycles, playersPerCycle, singleTeam));
 				count++;
 			} catch (IllegalArgumentException | UnusedLaneException e) {
 				LOGGER.log(System.Logger.Level.DEBUG, "Lane is not used");
@@ -56,6 +81,12 @@ public class MatchSchema {
 		}
 	}
 
+	/**
+	 * Get the {@link GameInfo} for a player in a team.
+	 * @param team the team number
+	 * @param player the player number
+	 * @return the {@link GameInfo} for the given player in the given team
+	 */
 	public GameInfo getGameInfoFor(int team, int player) {
 		var setCount = 0;
 		var volleSet = new HashSet<Integer>();
@@ -80,26 +111,51 @@ public class MatchSchema {
 	}
 
 	//region setter/getter
+
+	/**
+	 * Get the number of cycles.
+	 * @return the number of cycles
+	 */
 	public int getCycles() {
 		return cycles;
 	}
 
+	/**
+	 * Get the lanes.
+	 * @return the lanes
+	 */
 	public List<LaneSchema> getLanes() {
 		return lanes;
 	}
 
+	/**
+	 * Get the number of teams.
+	 * @return the number of teams
+	 */
 	public int getTeams() {
 		return teams;
 	}
 
+	/**
+	 * Get the number of players per cycle.
+	 * @return the number of players per cycle
+	 */
 	public int getPlayersPerCycle() {
 		return playersPerCycle;
 	}
 
+	/**
+	 * Get the name of the WKS.
+	 * @return the name of the wks
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Get the number of lanes that are used.
+	 * @return the number of lanes
+	 */
 	public int getLaneCount() {
 		return laneCount;
 	}

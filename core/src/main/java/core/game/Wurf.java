@@ -7,6 +7,8 @@ package core.game;
  * @param bild the {@link Wurfbild} of the Wurf. Number of pins must not be null.
  * @param foul true if the Wurf is a foul.
  * @param redCard true if the Wurf is a red card.
+ * @param volle true if the Wurf is a volle (all 9 Pins are there).
+ * @param anschub true if the Wurf is an anschub (in abräumen is the first throw after all pin were hit in abräumen).
  *
  * @version 1.0.0
  * @since 1.0.0

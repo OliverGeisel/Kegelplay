@@ -27,6 +27,14 @@ public class GameSet {
 	private       SetState state;
 	private int gameSetNumber;
 
+	/**
+	 * Create a new set with the given number of throws, number of full throws and number of throws to clear the pins.
+	 *
+	 * @param anzahlWuerfe    Number of throws
+	 * @param anzahlVolle     Number of full throws
+	 * @param anzahlAbraeumen Number of throws abraeumen
+	 * @param gameSetNumber   Number of the set in the {@link Game}
+	 */
 	public GameSet(int anzahlWuerfe, int anzahlVolle, int anzahlAbraeumen, int gameSetNumber) {
 		if (anzahlWuerfe < 1) throw new IllegalArgumentException("Number of throws must be greater than 0");
 		if (anzahlVolle + anzahlAbraeumen != anzahlWuerfe) {
@@ -66,6 +74,14 @@ public class GameSet {
 		setTime(time);
 	}
 
+	/**
+	 * Reset the throw at the given number.
+	 * The throw is set to null.
+	 *
+	 * @param index Number of the throw
+	 * @throws IllegalStateException if the throw is already null
+	 * @throws IllegalArgumentException if the number is out of bounds
+	 */
 	public void reset(int index) throws IllegalStateException, IllegalArgumentException {
 		if (index < 0 || index >= throwCount)
 			throw new IllegalArgumentException(STR."Wurf \{index} don't exist");
@@ -155,6 +171,10 @@ public class GameSet {
 		return Arrays.stream(wuerfe).filter(Objects::nonNull).mapToInt(Wurf::getScore).sum();
 	}
 
+	/**
+	 * Get the current state of the set.
+	 * @return Current state of the set
+	 */
 	public SetState getState() {
 		return state;
 	}
@@ -171,14 +191,26 @@ public class GameSet {
 		return null;
 	}
 
+	/**
+	 * Check if the set is completed. (State is {@link SetState#FINISHED})
+	 * @return true if the set is completed, false otherwise
+	 */
 	public boolean isCompleted() {
 		return state == SetState.FINISHED;
 	}
 
+	/**
+	 * Check if the set is not started yet. (State is {@link SetState#NOT_STARTED})
+	 * @return true if the set is not started yet, false otherwise
+	 */
 	public boolean isNotStarted() {
 		return state == SetState.NOT_STARTED;
 	}
 
+	/**
+	 * Check if the set is in progress. (State is {@link SetState#IN_PROGRESS})
+	 * @return true if the set is in progress, false otherwise
+	 */
 	public boolean isRunning() {
 		return state == SetState.IN_PROGRESS;
 	}

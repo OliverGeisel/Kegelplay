@@ -30,6 +30,12 @@ import java.util.Map;
  *  </ul>
  * Normally a match has a {@link PointSystem}. This decides how the points are calculated in the match.
  * A match has a {@link GeneralMatchInfo} which contains the general information about the match.
+ *
+ * @param <G> The type of the {@link Game} the match is playing.
+ * @author Oliver Geisel
+ * @version 1.0.0
+ * @see Game
+ * @since 1.0.0
  */
 public abstract class Match<G extends Game> {
 
@@ -40,6 +46,15 @@ public abstract class Match<G extends Game> {
 	private       MatchStatusInfo  statusInfo;
 	private PointSystem<G> pointSystem;
 
+	/**
+	 * Creates a new match.
+	 *
+	 * @param config           The configuration of the match.
+	 * @param generalMatchInfo The general information about the match.
+	 * @param statusInfo       The state about the match.
+	 * @param pointSystem      The point system of the match.
+	 * @param path             The path to the match in the file system.
+	 */
 	protected Match(MatchConfig config, GeneralMatchInfo generalMatchInfo, MatchStatusInfo statusInfo,
 			PointSystem<G> pointSystem, Path path) {
 		this.config = config;
@@ -50,6 +65,13 @@ public abstract class Match<G extends Game> {
 		this.pointSystem = pointSystem;
 	}
 
+	/**
+	 * Helper function to get the games for the given teams.
+	 *
+	 * @param teams The teams to get the games from.
+	 * @param <G>   The type of the game.
+	 * @return List of games from the teams.
+	 */
 	public static <G extends Game> List<G> getGames(Team<G>... teams) {
 		var games = new LinkedList<G>();
 		for (var team : teams) {
@@ -61,6 +83,12 @@ public abstract class Match<G extends Game> {
 		return games;
 	}
 
+	/**
+	 * Returns the players that are currently playing in the given set.
+	 *
+	 * @param set The set number.
+	 * @return List of players in the set.
+	 */
 	public List<Pair<Integer, Integer>> getPlayerForSet(int set) {
 		var schema = config.getSchema();
 		var back = new LinkedList<Pair<Integer, Integer>>();
@@ -84,15 +112,31 @@ public abstract class Match<G extends Game> {
 	}
 
 	//region setter/getter
+
+	/**
+	 * Returns the name of the match.
+	 *
+	 * @return Name of the match
+	 */
 	public String getName() {
 		return STR."Match: \{getTeamVs()} am \{getStatusInfo().getStartTime()
 															  .format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))}";
 	}
 
+	/**
+	 * Returns the point system of the match.
+	 *
+	 * @return Point system of the match
+	 */
 	public PointSystem<G> getPointSystem() {
 		return pointSystem;
 	}
 
+	/**
+	 * Sets the point system of the match.
+	 *
+	 * @param pointSystem The point system of the match
+	 */
 	public void setPointSystem(PointSystem<G> pointSystem) {
 		this.pointSystem = pointSystem;
 	}
@@ -107,10 +151,20 @@ public abstract class Match<G extends Game> {
 		return statusInfo.getCurrentSet();
 	}
 
+	/**
+	 * Returns the current state of the match.
+	 *
+	 * @return Current state of the match
+	 */
 	public MatchStatusInfo getStatusInfo() {
 		return statusInfo;
 	}
 
+	/**
+	 * Sets the current state of the match.
+	 *
+	 * @param statusInfo The current state of the match
+	 */
 	public void setStatusInfo(MatchStatusInfo statusInfo) {
 		this.statusInfo = statusInfo;
 	}
@@ -167,20 +221,37 @@ public abstract class Match<G extends Game> {
 		return back;
 	}
 
+	/**
+	 * Returns the players that	are currently playing in the current set.
+	 *
+	 * @return List of players in the current set
+	 */
 	public List<Pair<Integer, Integer>> getPlayerForSet() {
 		return getPlayerForSet(getCurrentSet());
 	}
 
+	/**
+	 * Returns the path to the match in the file system.
+	 *
+	 * @return Path to the match
+	 */
 	public Path getBaseDir() {
 		return path;
 	}
 
+	/**
+	 * Returns the general information about the match.
+	 *
+	 * @return General information about the match
+	 */
 	public GeneralMatchInfo getGeneralMatchInfo() {
 		return generalMatchInfo;
 	}
 
 	/**
 	 * Returns all games that are in the match.
+	 * The Order is the order of the teams and the players in the teams.
+	 *
 	 * @return List of games in the match
 	 */
 	public List<G> getGames() {
@@ -254,8 +325,18 @@ public abstract class Match<G extends Game> {
 	 */
 	public abstract Map<String, Double> getPoints();
 
+	/**
+	 * Get the SetPoints per player or team.
+	 *
+	 * @return Map of player/team with SetPoints
+	 */
 	public abstract Map<String, Double> getSetPoints();
 
+	/**
+	 * Get the teams that are playing in the match.
+	 *
+	 * @return The teams that are playing in the match
+	 */
 	public abstract Team<G>[] getTeams();
 
 	/**
@@ -274,6 +355,11 @@ public abstract class Match<G extends Game> {
 		return builder.toString();
 	}
 
+	/**
+	 * Returns the current state of the match as a string.
+	 *
+	 * @return Current state of the match
+	 */
 	private String getState() {
 		return state.name;
 	}

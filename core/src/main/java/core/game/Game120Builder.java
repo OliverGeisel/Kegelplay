@@ -3,6 +3,15 @@ package core.game;
 
 import java.util.LinkedList;
 
+/**
+ * Builder for a {@link Game120}. Build the game from a {@link GameSource}.
+ *
+ * @author Oliver Geisel
+ * @version 1.0.0
+ * @see GameBuilder
+ * @see Game120
+ * @since 1.0.0
+ */
 public class Game120Builder extends GameBuilder<Game120> {
 
 

@@ -6,7 +6,16 @@ import java.util.List;
 
 
 /**
- * The MatchSchema for a single lane
+ * The MatchSchema for a single lane. A lane is a real lane on which the players play.
+ *
+ * <p>
+ *     Each lane has a name and a list of {@link LaneSatz} which represent the sets played on the lane.
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ * @see LaneSchema.LaneSatz
+ *
+ * @author Oliver Geisel
  */
 public class LaneSchema {
 
@@ -85,20 +94,29 @@ public class LaneSchema {
 		return name;
 	}
 
+	/**
+	 * Ordered list of sets in the lane.
+	 *
+	 * @return list of sets
+	 */
 	public List<LaneSatz> getSaetze() {
 		return saetze;
 	}
 //endregion
 
 	/**
-	 * A single set/round in a lane
+	 * A single set/round in a lane of a match.
 	 *
 	 * @param player number in team
 	 * @param team number of team
 	 * @param number number of set
 	 * @param volle number of volle
 	 * @param abraeumen number of abraeumen
-	 * @param time time of set
+	 * @param time time of set to play
+	 *
+	 * @since 1.0.0
+	 * @version 1.0.0
+	 * @author Oliver Geisel
 	 */
 	public record LaneSatz(int player, int team, int number, int volle, int abraeumen, int time) {
 	}

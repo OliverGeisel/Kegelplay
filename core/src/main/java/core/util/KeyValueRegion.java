@@ -21,6 +21,12 @@ public class KeyValueRegion<K, V> {
 	private final Map<K, V> keyValuePairs;
 
 
+	/**
+	 * Creates a new key-value region with the given name and key-value pairs.
+	 *
+	 * @param name      the name of the region
+	 * @param keyValues map with key-value pairs
+	 */
 	public KeyValueRegion(String name, Map<K, V> keyValues) {
 		this.name = name;
 		this.keyValuePairs = keyValues;
@@ -41,43 +47,91 @@ public class KeyValueRegion<K, V> {
 		return keyValuePairs.get(key);
 	}
 
+	/**
+	 * Returns the value for the given key or the default value if the key is not present.
+	 * @param key the key
+	 * @param defaultValue the default value which is returned if the key is not present
+	 * @return value for the given key or the default value if the key is not present
+	 */
 	public V getValueOrDefault(K key, V defaultValue) {
 		return keyValuePairs.getOrDefault(key, defaultValue);
 	}
 
+	/**
+	 * Returns true if the region contains the given key.
+	 * @param key the key
+	 * @return true if the region contains the key
+	 */
 	public boolean containsKey(K key) {
 		return keyValuePairs.containsKey(key);
 	}
 
+	/**
+	 * Returns true if the region contains the given value.
+	 * @param value the value
+	 * @return true if the region contains the value
+	 */
 	public boolean containsValue(V value) {
 		return keyValuePairs.containsValue(value);
 	}
 
+	/**
+	 * Returns the number of key-value pairs in the region.
+	 * @return number of key-value pairs
+	 */
 	public int size() {
 		return keyValuePairs.size();
 	}
 
+	/**
+	 * Put a new key-value pair into the region.
+	 * @param key the key
+	 * @param value the value
+	 * @return true if the key-value pair was added, false if the key already exists
+	 */
 	public boolean put(K key, V value) {
 		return keyValuePairs.put(key, value) != null;
 	}
 
+	/**
+	 * Remove the key-value pair with the given key from the region.
+	 * @param key the key
+	 * @return true if the key-value pair was removed, false if the key was not present
+	 */
 	public boolean remove(K key) {
 		return keyValuePairs.remove(key) != null;
 	}
 
 	//region setter/getter
+
+	/**
+	 * Returns a copy of the key-value pairs as a map.
+	 * @return copy of the key-value pairs
+	 */
 	public Map<K, V> getKeyValuePairs() {
 		return new java.util.HashMap<>(keyValuePairs);
 	}
 
+	/**
+	 * Returns a list of all keys in the region.
+	 * @return list of all keys
+	 */
 	public List<K> getKeys() {
 		return keyValuePairs.keySet().stream().toList();
 	}
 
+	/**
+	 * Checks if the region is empty.
+	 * @return true if the region is empty
+	 */
 	public boolean isEmpty() {
 		return keyValuePairs.isEmpty();
 	}
 
+	/**
+	 * Returns the name of the region.
+	 * @return the name of the region
+	 */
 	public String getName() {
 		return name;
 	}

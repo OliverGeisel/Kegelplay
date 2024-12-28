@@ -18,5 +18,10 @@ package core.game;
  */
 public interface GameSource extends AutoCloseable, Iterable<Wurf> {
 
+	/**
+	 * Get all throws of the game as an {@link Iterable}.
+	 *
+	 * @return All throws of the game as an {@link Iterable}.
+	 */
 	Iterable<Wurf> get();
 }

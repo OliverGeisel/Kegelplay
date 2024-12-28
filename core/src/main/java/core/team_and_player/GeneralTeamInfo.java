@@ -45,6 +45,19 @@ public class GeneralTeamInfo {
 		numberOfSubstitutes = Integer.parseInt(region.getValueOrDefault("Anzahl Ersatzspieler", "0"));
 	}
 
+	/**
+	 * Creates a new GeneralTeamInfo object with all information.
+	 *
+	 * @param name                The name of the team.
+	 * @param gameClass           The game class of the team.
+	 * @param league              The league of the team.
+	 * @param district            The district of the team.
+	 * @param leader              The leader of the team.
+	 * @param observer            The observer of the team.
+	 * @param clubNumber          The club number of the team.
+	 * @param numberOfPlayers     The number of players in the team.
+	 * @param numberOfSubstitutes The number of substitutes in the team.
+	 */
 	public GeneralTeamInfo(String name, String gameClass, String league, String district, String leader,
 			String observer, String clubNumber, int numberOfPlayers, int numberOfSubstitutes) {
 		this.name = name;
@@ -58,6 +71,9 @@ public class GeneralTeamInfo {
 		this.numberOfSubstitutes = numberOfSubstitutes;
 	}
 
+	/**
+	 * Creates a new GeneralTeamInfo object with default values.
+	 */
 	protected GeneralTeamInfo() {
 		name = "";
 		gameClass = "";
@@ -71,38 +87,79 @@ public class GeneralTeamInfo {
 	}
 
 	//region setter/getter
+
+	/**
+	 * Returns the name of the team.
+	 *
+	 * @return The name of the team.
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Returns the game class of the team. The game class the level of the team in the league system.
+	 * @return The game class of the team.
+	 */
 	public String getGameClass() {
 		return gameClass;
 	}
 
+	/**
+	 * Returns the league of the team.
+	 * @return The league of the team.
+	 */
 	public String getLeague() {
 		return league;
 	}
 
+	/**
+	 * Returns the district of the team.
+	 * @return The district of the team.
+	 */
 	public String getDistrict() {
 		return district;
 	}
 
+	/**
+	 * Returns the leader of the team.
+	 * @return The leader of the team.
+	 */
 	public String getLeader() {
 		return leader;
 	}
 
+	/**
+	 * Returns the observer of the team.
+	 *
+	 * @return The observer of the team.
+	 */
 	public String getObserver() {
 		return observer;
 	}
 
+	/**
+	 * Returns the club number of the team.
+	 *
+	 * @return The club number of the team.
+	 */
 	public String getClubNumber() {
 		return clubNumber;
 	}
 
+	/**
+	 * Returns the number of players in the team.
+	 *
+	 * @return The number of players in the team.
+	 */
 	public int getNumberOfPlayers() {
 		return numberOfPlayers;
 	}
 
+	/**
+	 * Returns the number of substitutes in the team.
+	 * @return The number of substitutes in the team.
+	 */
 	public int getNumberOfSubstitutes() {
 		return numberOfSubstitutes;
 	}

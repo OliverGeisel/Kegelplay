@@ -31,6 +31,9 @@ public abstract class PointSystem<G extends Game> {
 
 	protected String description;
 
+	/**
+	 * Only for inheritance.
+	 */
 	protected PointSystem() {
 	}
 
@@ -39,7 +42,7 @@ public abstract class PointSystem<G extends Game> {
 	 * So these points are added at the end of the set.
 	 *
 	 * @param durchgang number of the gameSet (starting by 0)
-	 * @param players the array of players to set the points for
+	 * @param players   the array of players to set the points for
 	 * @return The points for the set.
 	 */
 	public static Map<Player, Integer> getPlayerPoints(int durchgang, Player... players) {
@@ -64,6 +67,7 @@ public abstract class PointSystem<G extends Game> {
 	 * @return A list of Winners.
 	 */
 	public abstract List<Winner> getWinner(Match<G> match);
+
 	public String getDescription() {
 		return description;
 	}
@@ -74,6 +78,12 @@ public abstract class PointSystem<G extends Game> {
 	 */
 	public abstract MatchPoints getMatchPoints(Match<G> match);
 
+	/**
+	 * eval the scores of the players.
+	 *
+	 * @param scores The scores of the players.
+	 * @return The points for the players as a map.
+	 */
 	private static Map<Player, Integer> evalScores(List<PlayerScore> scores) {
 		int pointPos = 0;
 		var grouping = new TreeMap<Integer, List<PlayerAndPoint>>(Comparator.reverseOrder());
@@ -110,7 +120,7 @@ public abstract class PointSystem<G extends Game> {
 			this.points = points;
 		}
 
-//region setter/getter
+		//region setter/getter
 		public Player getPlayer() {
 			return player;
 		}
@@ -131,6 +141,12 @@ public abstract class PointSystem<G extends Game> {
 
 	}
 
+	/**
+	 * Helper class to store a Player and his Score.
+	 *
+	 * @param player The player.
+	 * @param score  The score.
+	 */
 	private record PlayerScore(Player player, int score) {
 	}
 }

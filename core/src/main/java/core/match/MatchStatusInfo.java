@@ -9,6 +9,15 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * Status of a match. This will change during the match.
+ * <p>
+ *     It is important to know the status of a match. This class contains the status of a match.
+ *     At the end of the match, the status will be saved in a file.
+ * </p>
+ *
+ * @version 1.0.0
+ * @since 1.0.0
+ * @see Match
+ * @author Oliver Geisel
  */
 public class MatchStatusInfo {
 
@@ -27,6 +36,12 @@ public class MatchStatusInfo {
 	// anzahl
 	private int           currentSet;
 
+	/**
+	 * Creates a new match status info.
+	 *
+	 * @param iniFile   The ini file of the match.
+	 * @param durchgang The current set of the match.
+	 */
 	public MatchStatusInfo(KeyValueRegionCollection<String, String, KeyValueRegion<String, String>> iniFile,
 			int durchgang) {
 		var region = iniFile.getRegion("Allgemein");
@@ -62,51 +77,112 @@ public class MatchStatusInfo {
 	}
 
 	//region setter/getter
+
+	/**
+	 * Returns the start time of the match.
+	 *
+	 * @return The start time of the match.
+	 */
 	public LocalDateTime getStartTime() {
 		return startTime;
 	}
 
+	/**
+	 * Returns the end time of the match.
+	 *
+	 * @return The end time of the match.
+	 */
 	public LocalDateTime getEndTime() {
 		return endTime;
 	}
 
+	/**
+	 * Returns if the match was aborted.
+	 *
+	 * @return <b>true</b> if the match was aborted.
+	 */
 	public boolean isAborted() {
 		return aborted;
 	}
 
+	/**
+	 * Returns if the match was finished.
+	 *
+	 * @return <b>true</b> if the match was finished.
+	 */
 	public boolean isFinished() {
 		return finished;
 	}
 
+	/**
+	 * Returns if the lane is ok. Or generally the status of the lane/location.
+	 *
+	 * @return <b>true</b> if the lane is ok.
+	 */
 	public boolean isLaneOk() {
 		return laneOk;
 	}
 
+	/**
+	 * Returns if all ids are ok.
+	 *
+	 * @return <b>true</b> if all ids are ok.
+	 */
 	public boolean isPassOk() {
 		return passOk;
 	}
 
+	/**
+	 * Returns if there is an injury.
+	 *
+	 * @return <b>true</b> if there is an injury.
+	 */
 	public boolean isInjury() {
 		return injury;
 	}
 
+	/**
+	 * Returns if there are warnings.
+	 *
+	 * @return <b>true</b> if there are warnings.
+	 */
 	public boolean isWarnings() {
 		return warnings;
 	}
 
+	/**
+	 * Returns if there are protests.
+	 *
+	 * @return <b>true</b> if there are protests.
+	 */
 	public boolean isProtests() {
 		return protests;
 	}
 
+	/**
+	 * Returns if the referee from home is okay.
+	 *
+	 * @return <b>true</b> if the referee is okay.
+	 */
 	public boolean isRefereeHome() {
 		return refereeHome;
 	}
 	// teams
 
+	/**
+	 * Returns if the referee from the guest is okay.
+	 *
+	 * @return <b>true</b> if the referee is okay.
+	 */
 	public boolean isRefereeGuest() {
 		return refereeGuest;
 	}
 
+	/**
+	 * Returns the current set of the match.
+	 *
+	 * @return The current set of the match.
+	 */
 	public int getCurrentSet() {
 		return currentSet;
 	}
