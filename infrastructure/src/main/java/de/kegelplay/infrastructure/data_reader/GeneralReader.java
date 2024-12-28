@@ -5,10 +5,18 @@ import core.game.Game;
 import core.match.Match;
 import core.match.MatchConfig;
 
+import java.nio.file.Path;
+
 /**
  * Reads the current state of a match from a file dir.
  */
 public abstract class GeneralReader {
+
+	protected final Path baseDir;
+
+	protected GeneralReader(Path baseDir) {
+		this.baseDir = baseDir;
+	}
 
 	/**
 	 * Reads the current complete state of a match from a file dir.

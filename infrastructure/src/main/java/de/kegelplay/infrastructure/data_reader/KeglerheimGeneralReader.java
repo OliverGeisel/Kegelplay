@@ -31,9 +31,6 @@ public class KeglerheimGeneralReader extends GeneralReader {
 	public static final  String        TODAY_FORMAT = "dd.MM.yyyy";
 	private static final System.Logger LOGGER       = System.getLogger(KeglerheimGeneralReader.class.getName());
 
-
-	private final Path baseDir; // folder of the match
-
 	/**
 	 * Start a new match with the given baseDir.
 	 *
@@ -42,6 +39,7 @@ public class KeglerheimGeneralReader extends GeneralReader {
 	 * @throws IllegalArgumentException if baseDir is null or does not end with today's date
 	 */
 	public KeglerheimGeneralReader(Path baseDir, boolean ignoreDate) throws IllegalArgumentException {
+		super(baseDir);
 		if (baseDir == null) {
 			throw new IllegalArgumentException("baseDir must not be null");
 		}
@@ -52,12 +50,11 @@ public class KeglerheimGeneralReader extends GeneralReader {
 				throw new IllegalArgumentException("baseDir must end with today's date");
 			}
 		}
-		this.baseDir = baseDir;
 	}
 
 	/**
 	 * Create a new match based on the given information. The {@link Team}s must be initialized with their players.
-	 *
+	 * Call this method at the end
 	 * @param config    Match configuration
 	 * @param general   General match information
 	 * @param stateInfo Match status information
@@ -88,6 +85,7 @@ public class KeglerheimGeneralReader extends GeneralReader {
 			case GAME_100 -> new Game100Builder();
 			case GAME_120 -> new Game120Builder();
 			case GAME_40 -> new Game40Builder();
+			case GAME_200 -> new Game200Builder();
 			default -> null;
 		};
 	}
@@ -160,11 +158,9 @@ public class KeglerheimGeneralReader extends GeneralReader {
 			var laneNames = readCorrectLaneNamed(baseDir);
 			config.setLaneNames(laneNames);
 		} catch (IOException e) {
-			LOGGER.log(System.Logger.Level.ERROR, STR."Could not read schema file for mactch: \{baseDir}");
+			LOGGER.log(System.Logger.Level.ERROR, STR."Could not read schema file for match: \{baseDir}");
 			throw new RuntimeException("could not init new match", e);
 		}
-		var gameKind = config.getKind();
-		GameBuilder<G> builder = getGameBuilder(gameKind);
 		// teams init
 		List<Team<G>> teams = new LinkedList<>();
 		for (var teamName : teamNames) {
@@ -180,6 +176,8 @@ public class KeglerheimGeneralReader extends GeneralReader {
 			}
 		}
 		// init games
+		var gameKind = config.getKind();
+		GameBuilder<G> builder = getGameBuilder(gameKind);
 		for (var team : teams) {
 			loadTeamGames(team, builder);
 		}

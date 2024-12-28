@@ -46,9 +46,11 @@ public class GameCSVFileReader<G extends Game> extends CSVFileReader implements 
 		var setsNumber = 0;
 		var prevCode = 0;
 		var game = switch (gameKind) {
-			case GAME_100, GAME_200, GAME_40_2 -> null;
+			case GAME_100 -> (G) new Game100(null);
+			case GAME_200 -> (G) new Game200(null);
 			case GAME_40 -> (G) new Game40(null);
 			case GAME_120 -> (G) new Game120(null);
+			case GAME_40_2 -> null;
 		};
 		if (lines.isEmpty()) {
 			fillWithEmpty(game);
