@@ -83,7 +83,11 @@ public class GameCSVFileReader<G extends Game> extends CSVFileReader implements 
 			var time = Double.parseDouble(line[13]);
 			var isVolle = throwInGameSet < volleCount;
 			var isAnspiel = isVolle || prevCode == 511;
-			gameSet.set(throwInGameSet, new Wurf(value, bild, fehlwurf, false, isVolle, isAnspiel), time);
+			try {
+				gameSet.set(throwInGameSet, new Wurf(value, bild, fehlwurf, false, isVolle, isAnspiel), time);
+			} catch (IllegalArgumentException ie) {
+				throw new IllegalArgumentException("game for path:" + getPath(), ie);
+			}
 			prevCode = picEncoded;
 		}
 

@@ -67,5 +67,9 @@ public class CSVFileReader {
 	public String[] getHeader() {
 		return header;
 	}
+
+	protected Path getPath() {
+		return path;
+	}
 //endregion
 }

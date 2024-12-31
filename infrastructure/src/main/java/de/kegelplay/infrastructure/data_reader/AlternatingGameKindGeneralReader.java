@@ -117,7 +117,20 @@ public class AlternatingGameKindGeneralReader {
 			var path = playerFolder.toPath().resolve("werte.csv");
 			var playerName = playerFolder.getName();
 			var gameSource = new GameCSVFileReader<>(path, kind);
-			var game = builder.buildGame(gameSource);
+			switch (gameSource.getData().size()) {
+				case 120 -> builder = new Game120Builder();
+				case 200 -> builder = new Game200Builder();
+				case 100 -> builder = new Game100Builder();
+			}
+			Game game;
+			try {
+				game = builder.buildGame(gameSource);
+			} catch (IllegalArgumentException ie) {
+				throw new IllegalArgumentException("Game not buildable for dir:" + playerFolder);
+			}
+			if (game == null) {
+				continue;
+			}
 			var player =
 					Arrays.stream(team.getPlayers()).filter(p -> p.getCompleteNameWithCommata().equals(playerName))
 						  .findFirst().orElseThrow();

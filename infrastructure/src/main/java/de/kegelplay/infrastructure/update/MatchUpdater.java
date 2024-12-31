@@ -108,7 +108,13 @@ public class MatchUpdater<G extends Game> {
 				match.getBaseDir().resolve(team.getName()).toFile().listFiles())) {
 			var path = playerFolder.toPath().resolve("werte.csv");
 			var playerName = playerFolder.getName(); // Todo reuse old Reader if not changed
-			var game = new GameCSVFileReader<Game120>(path, GameKind.GAME_120).readGame(); // Todo allow other games
+			Game game;
+			try {
+				game = new GameCSVFileReader<Game120>(path, GameKind.GAME_120).readGame(); // Todo allow other games
+			} catch (Exception e) {
+				LOGGER.log(System.Logger.Level.ERROR, "Not able to load game in path" + path);
+				continue;
+			}
 			try {
 				var player = Arrays.stream(team.getPlayers())
 								   .filter(p -> p.getCompleteNameWithCommata().equals(playerName))

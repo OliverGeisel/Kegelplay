@@ -105,7 +105,13 @@ public class SpecialMatchUpdater extends MatchUpdater {
 				i++;
 			}
 			var gameKind = gameKinds.get(playerPos % gameKinds.size());
-			var game = new GameCSVFileReader(path, gameKind).readGame();
+			Game game;
+			try {
+				game = new GameCSVFileReader(path, gameKind).readGame();
+			} catch (Error e) {
+				LOGGER.log(System.Logger.Level.ERROR, "Not able to load game in path" + path);
+				continue;
+			}
 			try {
 				var player = Arrays.stream(team.getPlayers())
 								   .filter(p -> p.getCompleteNameWithCommata().equals(playerName))
