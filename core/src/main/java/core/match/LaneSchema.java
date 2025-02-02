@@ -9,13 +9,13 @@ import java.util.List;
  * The MatchSchema for a single lane. A lane is a real lane on which the players play.
  *
  * <p>
- *     Each lane has a name and a list of {@link LaneSatz} which represent the sets played on the lane.
- *
- * @since 1.0.0
- * @version 1.0.0
- * @see LaneSchema.LaneSatz
+ * Each lane has a name and a list of {@link LaneSatz} which represent the sets played on the lane.
+ * </p>
  *
  * @author Oliver Geisel
+ * @version 1.0.0
+ * @see LaneSchema.LaneSatz
+ * @since 1.0.0
  */
 public class LaneSchema {
 
@@ -24,12 +24,13 @@ public class LaneSchema {
 
 	/**
 	 * Constructor for LaneSchema
-	 * @param region the region of the lane
-     * @param cycles number of Cycles in the MatchSchema
-     * @param playerPerCycle number of Players per Cycle
-     * @param singleTeam has to be ture if only one team is in the match
+	 *
+	 * @param region         the region of the lane
+	 * @param cycles         number of Cycles in the MatchSchema
+	 * @param playerPerCycle number of Players per Cycle
+	 * @param singleTeam     has to be ture if only one team is in the match
 	 * @throws IllegalArgumentException if the lane schema is invalid
-	 * @throws UnusedLaneException if the lane is not played
+	 * @throws UnusedLaneException      if the lane is not played
 	 */
 	public LaneSchema(KeyValueRegion<String, String> region, int cycles, int playerPerCycle, boolean singleTeam)
 			throws IllegalArgumentException,
@@ -49,7 +50,7 @@ public class LaneSchema {
 				final var number = i - 1 + c * playerPerCycle;
 				var player = Integer.parseInt(region.getValue(STR."Spieler \{i}"));
 				var parsedTeam = Integer.parseInt(region.getValue(STR."Mannschaft \{i}"));
-				var team = singleTeam?0:parsedTeam;
+				var team = singleTeam ? 0 : parsedTeam;
 				var volle = Integer.parseInt(region.getValue(STR."Volle \{i}"));
 				var abraeumen = Integer.parseInt(region.getValue(STR."Abraeumer \{i}"));
 				var time = Integer.parseInt(region.getValue(STR."Zeit \{i}"));
@@ -58,6 +59,13 @@ public class LaneSchema {
 		}
 	}
 
+	/**
+	 * Check if the lane is used
+	 *
+	 * @param region     the region of the lane schema
+	 * @param singleTeam has to be ture if only one team is in the match
+	 * @return true if the lane is used
+	 */
 	private boolean isUsed(KeyValueRegion<String, String> region, boolean singleTeam) {
 		var playerF = region.getKeys().stream().filter(it -> it.startsWith("Spieler")).toList();
 		for (var player : playerF) {
@@ -67,7 +75,7 @@ public class LaneSchema {
 			}
 		}
 		var teamF = region.getKeys().stream().filter(it -> it.startsWith("Mannschaft")).toList();
-		if (singleTeam){
+		if (singleTeam) {
 			return true;
 		}
 		for (var team : teamF) {
@@ -105,18 +113,17 @@ public class LaneSchema {
 //endregion
 
 	/**
-	 * A single set/round in a lane of a match.
+	 * A single set/round in a lane. This is normally a single GameSet with the player and team number.
 	 *
-	 * @param player number in team
-	 * @param team number of team
-	 * @param number number of set
-	 * @param volle number of volle
-	 * @param abraeumen number of abraeumen
-	 * @param time time of set to play
-	 *
-	 * @since 1.0.0
-	 * @version 1.0.0
+	 * @param player    number in team
+	 * @param team      number of team
+	 * @param number    number of GameSet
+	 * @param volle     number of volle throws
+	 * @param abraeumen number of abraeumen throws
+	 * @param time      time of set for all throws
 	 * @author Oliver Geisel
+	 * @version 1.0.0
+	 * @since 1.0.0
 	 */
 	public record LaneSatz(int player, int team, int number, int volle, int abraeumen, int time) {
 	}

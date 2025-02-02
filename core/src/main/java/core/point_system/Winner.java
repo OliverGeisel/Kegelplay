@@ -15,7 +15,6 @@ import core.team_and_player.Team;
  * @see Team
  * @see Player
  * @since 1.0.0
- * @author Oliver Geisel
  */
 public class Winner {
 	private final String     name;
@@ -35,6 +34,12 @@ public class Winner {
 	}
 
 	//region setter/getter
+
+	/**
+	 * Get the type of the winner.
+	 *
+	 * @return The type of the winner.
+	 */
 	public WinnerType getWinnerType() {
 		return winnerType;
 	}
@@ -63,8 +68,17 @@ public class Winner {
 		return STR."Winner{name='\{name}', score=\{score}, winnerType=\{winnerType}}";
 	}
 
+	/**
+	 * The type of the winner.
+	 */
 	public enum WinnerType {
+		/**
+		 * The winner is a team.
+		 */
 		TEAM,
+		/**
+		 * The winner is a player (single person).
+		 */
 		PLAYER
 	}
 }

@@ -28,8 +28,7 @@ public class AllAgainstAll120_4PlayerPointSystem extends PointSystem<Game120> {
 		if (match.getTeams().length != 1) {
 			throw new IllegalArgumentException("Match must have exactly one team");
 		}
-		var team = match.getTeams()[0];
-		var temp =  match.getCurrentPlayers();
+		var temp = match.getCurrentPlayers();
 		List<Player<Game120>> players = new LinkedList<>(temp);
 		var gamePoints = getGamePoints(players);
 		return new AllAgainstMatchScore<>(gamePoints);
@@ -78,6 +77,7 @@ public class AllAgainstAll120_4PlayerPointSystem extends PointSystem<Game120> {
 	 * @param setNumber the number of the set
 	 * @param players   the players
 	 * @return the points for the set per player
+	 *
 	 * @throws IllegalArgumentException if the number of players is not 4 or the setNumber is not between 0 and 3
 	 * @throws IllegalStateException    if the set is not started yet
 	 */
@@ -94,10 +94,10 @@ public class AllAgainstAll120_4PlayerPointSystem extends PointSystem<Game120> {
 		var player2 = players[1];
 		var player3 = players[2];
 		var player4 = players[3];
-		var player1Set = player1.getGame().getDurchgang(setNumber);
-		var player2Set = player2.getGame().getDurchgang(setNumber);
-		var player3Set = player3.getGame().getDurchgang(setNumber);
-		var player4Set = player4.getGame().getDurchgang(setNumber);
+		var player1Set = player1.getGame().getGameSet(setNumber);
+		var player2Set = player2.getGame().getGameSet(setNumber);
+		var player3Set = player3.getGame().getGameSet(setNumber);
+		var player4Set = player4.getGame().getGameSet(setNumber);
 		var pair1 = new GameSetPlayer(player1, player1Set);
 		var pair2 = new GameSetPlayer(player2, player2Set);
 		var pair3 = new GameSetPlayer(player3, player3Set);
@@ -118,10 +118,10 @@ public class AllAgainstAll120_4PlayerPointSystem extends PointSystem<Game120> {
 		var player2 = players.get(1);
 		var player3 = players.get(2);
 		var player4 = players.get(3);
-		var player1Set = player1.getGame().getDurchgang(setNumber);
-		var player2Set = player2.getGame().getDurchgang(setNumber);
-		var player3Set = player3.getGame().getDurchgang(setNumber);
-		var player4Set = player4.getGame().getDurchgang(setNumber);
+		var player1Set = player1.getGame().getGameSet(setNumber);
+		var player2Set = player2.getGame().getGameSet(setNumber);
+		var player3Set = player3.getGame().getGameSet(setNumber);
+		var player4Set = player4.getGame().getGameSet(setNumber);
 		var pair1 = new GameSetPlayer(player1, player1Set);
 		var pair2 = new GameSetPlayer(player2, player2Set);
 		var pair3 = new GameSetPlayer(player3, player3Set);

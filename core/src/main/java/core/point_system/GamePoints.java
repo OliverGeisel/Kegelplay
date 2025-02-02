@@ -26,11 +26,22 @@ public abstract class GamePoints<G extends Game> {
 	private Player<G> player;
 	private List<GameSetPoints> gameSetPoints;
 
+	/**
+	 * Creates a new GamePoints object with the given player.
+	 *
+	 * @param player the player
+	 */
 	protected GamePoints(Player<G> player) {
 		this.player = player;
 		this.gameSetPoints = new ArrayList<>();
 	}
 
+	/**
+	 * Creates a new GamePoints object with the given player and the given {@link GameSetPoints}.
+	 *
+	 * @param player1       the player for the points
+	 * @param gameSetPoints all {@link GameSetPoints} of the player
+	 */
 	protected GamePoints(Player<G> player1, List<GameSetPoints> gameSetPoints) {
 		this.player = player1;
 		this.gameSetPoints = gameSetPoints;
@@ -53,10 +64,11 @@ public abstract class GamePoints<G extends Game> {
 	 * Returns the points in the selected {@link GameSet} by number.
 	 *
 	 * @return the points for the selected {@link GameSet}
+	 *
 	 * @throws IllegalArgumentException if the {@link GameSet} number is not valid
 	 */
 	public double getGameSetPointsFor(int gameSetNumber) throws IllegalArgumentException {
-		if (gameSetNumber < 0 || player.getGame().getNumberOfDurchgaenge() + 1 < gameSetNumber) {
+		if (gameSetNumber < 0 || player.getGame().getNumberOfGameSets() + 1 < gameSetNumber) {
 			throw new IllegalArgumentException("GameSet number is not valid");
 		}
 		return gameSetPoints.stream()
@@ -68,26 +80,53 @@ public abstract class GamePoints<G extends Game> {
 
 	/**
 	 * Returns the points of the player. It's the sum of all {@link GameSetPoints} of the player.
+	 *
 	 * @return the points of the player
 	 */
 	public abstract double getPoints();
 
+	/**
+	 * Returns if the player is the winner in the fight against his opponent.
+	 *
+	 * @return if the player is the winner.
+	 */
 	public abstract boolean isWinner();
 
+	/**
+	 * Returns if the player is the loser in the fight against his opponent.
+	 *
+	 * @return if the player is the loser
+	 */
 	public abstract boolean isLoser();
 
+	/**
+	 * Returns if the player has a draw in the fight against his opponent.
+	 *
+	 * @return if the player has a draw
+	 */
 	public abstract boolean isDraw();
 
+	/**
+	 * Returns the player of the points.
+	 *
+	 * @return the player of the points
+	 */
 	public Player<G> getPlayer() {
 		return player;
 	}
 
+	/**
+	 * Returns the {@link GameSetPoints} of the player.
+	 *
+	 * @return the {@link GameSetPoints} of the player
+	 */
 	public List<GameSetPoints> getGameSetPoints() {
 		return Collections.unmodifiableList(gameSetPoints);
 	}
 
 	/**
 	 * Returns the sum of all {@link GameSetPoints} of the player.
+	 *
 	 * @return the sum of all {@link GameSetPoints} of the player
 	 */
 	public double getSumGameSetPoints() {

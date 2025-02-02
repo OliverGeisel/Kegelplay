@@ -1,15 +1,21 @@
 package core.point_system;
 
 import core.game.Game;
+import core.match.Match;
 import core.team_and_player.Player;
+import core.team_and_player.Team;
 
 /**
- * The points of a game for a team.
+ * Represents the point that one {@link Player} get for his {@link Team} in the {@link Match}.
+ * This point is used to determine the winner of a match.
  *
- * @param <G>
+ * @param <G> The type of the game the player is playing.
  */
 public class GamePointsTeam<G extends Game> extends GamePoints<G> {
 
+	/**
+	 * The points of the player in the game set. Can be 0, 0.5 or 1. 0.5 means that the player has a draw.
+	 */
 	private double points;
 
 	public GamePointsTeam(Player<G> player, double points) {
@@ -23,6 +29,11 @@ public class GamePointsTeam<G extends Game> extends GamePoints<G> {
 		return points;
 	}
 
+	/**
+	 * Set the points of the player in the game set. Can be 0, 0.5 or 1. 0.5 means that the player has a draw.
+	 *
+	 * @param points
+	 */
 	public void setPoints(double points) {
 		this.points = points;
 	}

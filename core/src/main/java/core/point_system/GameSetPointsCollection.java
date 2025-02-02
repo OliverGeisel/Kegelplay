@@ -31,7 +31,7 @@ public class GameSetPointsCollection {
 		return new GameSetPoints(player, gameSets.get(player), scores.get(player));
 	}
 
-//region setter/getter
+	//region setter/getter
 	public int getGameSetNumber() throws IllegalStateException {
 		var gameSetNumber = -1;
 		for (GameSet gameSet : gameSets.values()) {

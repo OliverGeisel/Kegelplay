@@ -10,10 +10,9 @@ import java.util.Objects;
  *
  * @param <K> the type of the key
  * @param <V> the type of the value
- *
+ * @author Oliver Geisel
  * @version 1.0.0
  * @since 1.0.0
- * @author Oliver Geisel
  */
 public class KeyValueRegion<K, V> {
 
@@ -22,10 +21,10 @@ public class KeyValueRegion<K, V> {
 
 
 	/**
-	 * Creates a new key-value region with the given name and key-value pairs.
+	 * Creates a new KeyValueRegion with the given name and key-value pairs.
 	 *
-	 * @param name      the name of the region
-	 * @param keyValues map with key-value pairs
+	 * @param name      The name of the region.
+	 * @param keyValues The key-value pairs of the region.
 	 */
 	public KeyValueRegion(String name, Map<K, V> keyValues) {
 		this.name = name;
@@ -49,7 +48,8 @@ public class KeyValueRegion<K, V> {
 
 	/**
 	 * Returns the value for the given key or the default value if the key is not present.
-	 * @param key the key
+	 *
+	 * @param key          the key
 	 * @param defaultValue the default value which is returned if the key is not present
 	 * @return value for the given key or the default value if the key is not present
 	 */
@@ -58,18 +58,20 @@ public class KeyValueRegion<K, V> {
 	}
 
 	/**
-	 * Returns true if the region contains the given key.
+	 * Checks if the region contains the given key.
+	 *
 	 * @param key the key
-	 * @return true if the region contains the key
+	 * @return true if the region contains the key, false otherwise
 	 */
 	public boolean containsKey(K key) {
 		return keyValuePairs.containsKey(key);
 	}
 
 	/**
-	 * Returns true if the region contains the given value.
+	 * Checks if the region contains the given value.
+	 *
 	 * @param value the value
-	 * @return true if the region contains the value
+	 * @return true if the region contains the value, false otherwise
 	 */
 	public boolean containsValue(V value) {
 		return keyValuePairs.containsValue(value);
@@ -77,15 +79,17 @@ public class KeyValueRegion<K, V> {
 
 	/**
 	 * Returns the number of key-value pairs in the region.
-	 * @return number of key-value pairs
+	 *
+	 * @return the number of key-value pairs
 	 */
 	public int size() {
 		return keyValuePairs.size();
 	}
 
 	/**
-	 * Put a new key-value pair into the region.
-	 * @param key the key
+	 * Puts a new key-value pair into the region.
+	 *
+	 * @param key   the key
 	 * @param value the value
 	 * @return true if the key-value pair was added, false if the key already exists
 	 */
@@ -94,9 +98,10 @@ public class KeyValueRegion<K, V> {
 	}
 
 	/**
-	 * Remove the key-value pair with the given key from the region.
-	 * @param key the key
-	 * @return true if the key-value pair was removed, false if the key was not present
+	 * Removes the key-value pair with the given key from the region.
+	 *
+	 * @param key the key to remove
+	 * @return true if the key-value pair was removed, false if the key does not exist
 	 */
 	public boolean remove(K key) {
 		return keyValuePairs.remove(key) != null;
@@ -105,8 +110,9 @@ public class KeyValueRegion<K, V> {
 	//region setter/getter
 
 	/**
-	 * Returns a copy of the key-value pairs as a map.
-	 * @return copy of the key-value pairs
+	 * Returns all key-value pairs of the region. (Copy of the original)
+	 *
+	 * @return all key-value pairs
 	 */
 	public Map<K, V> getKeyValuePairs() {
 		return new java.util.HashMap<>(keyValuePairs);
@@ -114,6 +120,7 @@ public class KeyValueRegion<K, V> {
 
 	/**
 	 * Returns a list of all keys in the region.
+	 *
 	 * @return list of all keys
 	 */
 	public List<K> getKeys() {
@@ -122,7 +129,8 @@ public class KeyValueRegion<K, V> {
 
 	/**
 	 * Checks if the region is empty.
-	 * @return true if the region is empty
+	 *
+	 * @return true if the region is empty, false otherwise
 	 */
 	public boolean isEmpty() {
 		return keyValuePairs.isEmpty();
@@ -130,6 +138,7 @@ public class KeyValueRegion<K, V> {
 
 	/**
 	 * Returns the name of the region.
+	 *
 	 * @return the name of the region
 	 */
 	public String getName() {

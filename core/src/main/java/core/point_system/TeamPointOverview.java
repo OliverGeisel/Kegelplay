@@ -51,6 +51,7 @@ public class TeamPointOverview<G extends Game> {
 	}
 
 //region setter/getter
+
 	/**
 	 * Returns the points of the team for the match that will be added in the league table.
 	 *

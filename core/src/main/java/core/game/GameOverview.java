@@ -1,25 +1,40 @@
 package core.game;
 
+import core.match.Match;
+import core.team_and_player.Player;
+import core.team_and_player.Team;
+
 import java.time.LocalDateTime;
 
 /**
- * Overview of a game. This contains the date, the name and the teams of the game.
+ * Represents an overview to a {@link Game}.
+ * This is a short overview of a game with the date, name and the teams that are playing.
+ * NOT USED YET
  *
- * @author Oliver Geisel
+ * @author Oliver
  * @version 1.0.0
+ * @see Game
+ * @see GameSet
+ * @see Abschnitt
+ * @see AbschnittType
+ * @see Wurfbild
+ * @see Match
+ * @see Player
+ * @see Team
  * @since 1.0.0
  */
 public class GameOverview {
+
 	private LocalDateTime date;
 	private String        name;
 	private String[]      teams;
 
 	/**
-	 * Creates a new game overview.
+	 * Creates a new GameOverview with the given date, name and teams.
 	 *
-	 * @param date  The date of the game.
-	 * @param name  The name of the game.
-	 * @param teams The teams of the game.
+	 * @param date  The date of the game
+	 * @param name  The name of the game
+	 * @param teams The teams that are playing
 	 */
 	public GameOverview(LocalDateTime date, String name, String[] teams) {
 		this.date = date;

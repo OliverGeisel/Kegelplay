@@ -5,18 +5,46 @@ import core.team_and_player.Player;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Represents a {@link Game} with 40 throws. A game consists of two {@link GameSet}s.
+ * Each {@link GameSet} has 20 throws. 10 throws for the {@link AbschnittType#VOLLE} and 10 throws for the {@link AbschnittType#RAEUMEN}.
+ *
+ * @author Oliver Geisel
+ * @version 1.0.0
+ * @see Game
+ * @since 1.0.0
+ */
 public class Game40 extends Game {
 
 	GameSet[] sets = new GameSet[2];
 
+	/**
+	 * Create a new game with the given player. The start date of the game is the current date.
+	 *
+	 * @param player Player that plays the game
+	 */
 	public Game40(Player player) {
 		super(player);
 	}
 
+	/**
+	 * Create a new game with the given player and the given date.
+	 *
+	 * @param player Player that plays the game
+	 * @param date   Date when the game was started
+	 */
 	public Game40(Player player, LocalDateTime date) {
 		super(player, date);
 	}
 
+	/**
+	 * Create a new game with the given player and the given substitutions. The start date of the game is the current date.
+	 *
+	 * @param player        Player that plays the game
+	 * @param substitution1 First substitution
+	 * @param substitution2 Second substitution
+	 * @param date          Date when the game was started
+	 */
 	public Game40(Player player, Player substitution1, Player substitution2, LocalDateTime date) {
 		super(player, substitution1, substitution2, date);
 	}
@@ -26,12 +54,21 @@ public class Game40 extends Game {
 
 	}
 
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @param gameSetNumber {@inheritDoc}
+	 * @return {@inheritDoc}
+	 *
+	 * @throws IllegalArgumentException if the game set number is not 0 or 1
+	 */
 	@Override
-	public GameSet getDurchgang(int durchgang) throws IllegalArgumentException {
-		return sets[durchgang];
+	public GameSet getGameSet(int gameSetNumber) throws IllegalArgumentException {
+		return sets[gameSetNumber];
 	}
 
-//region setter/getter
+	//region setter/getter
 	@Override
 	public GameInfo getGameInfo() {
 		return new GameInfo(2, 10, 10, 8, true);
@@ -43,7 +80,7 @@ public class Game40 extends Game {
 	}
 
 	@Override
-	public int getNumberOfDurchgaenge() {
+	public int getNumberOfGameSets() {
 		return 2;
 	}
 
@@ -101,13 +138,13 @@ public class Game40 extends Game {
 	}
 
 	@Override
-	public void setDurchgaenge(List<GameSet> durgaenge) throws IllegalArgumentException {
-		if (durgaenge.size() != 2) {
+	public void setGameSets(List<GameSet> gameSets) throws IllegalArgumentException {
+		if (gameSets.size() != 2) {
 			throw new IllegalArgumentException(
-					STR."Anzahl der Durchgänge stimmt nicht. Erwarte 2; waren aber \{durgaenge.size()}");
+					STR."Anzahl der Durchgänge stimmt nicht. Erwarte 2; waren aber \{gameSets.size()}");
 		}
 		for (int i = 0; i < 2; i++) {
-			sets[i] = durgaenge.get(i);
+			sets[i] = gameSets.get(i);
 		}
 		checkState();
 	}

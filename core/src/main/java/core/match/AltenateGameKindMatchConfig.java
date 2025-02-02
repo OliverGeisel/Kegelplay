@@ -30,6 +30,7 @@ public class AltenateGameKindMatchConfig extends MatchConfig {
 	}
 
 //region setter/getter
+
 	/**
 	 * Get the GameKinds of the match in the correct order.
 	 *

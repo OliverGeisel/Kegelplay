@@ -1,16 +1,16 @@
 package core.match;
 
 import core.game.GameKind;
+import core.team_and_player.Player;
+import core.team_and_player.Team;
 
 import java.util.List;
 
 /**
  * Configuration of a match. This will not change during the match.
- * <p>
- * The configuration contains the number of players per team, the number of teams, the kind of game and the lanes.
- * The lanes are named.
- * Furthermore, the configuration contains the {@link MatchSchema} of the match.
- * </p>
+ * It is set by the creation of the {@link Match}.
+ * The most important values are the {@link MatchSchema}, the {@link GameKind} and the number of
+ * {@link Team}s and {@link Player}s per team.
  *
  * @author Oliver Geisel
  * @version 1.0.0
@@ -27,13 +27,13 @@ public abstract class MatchConfig {
 	private MatchSchema  schema;
 
 	/**
-	 * Creates a new match configuration.
+	 * Create a new MatchConfig with the given values.
 	 *
-	 * @param playersPerTeam The number of players per team.
-	 * @param teams          The number of teams.
-	 * @param kind           The kind of game.
-	 * @param laneCount      The number of lanes.
-	 * @param laneNames      The names of the lanes.
+	 * @param playersPerTeam The number of players per team
+	 * @param teams          The number of teams
+	 * @param kind           The kind of the game
+	 * @param laneCount      The number of lanes
+	 * @param laneNames      The names of the lanes
 	 */
 	protected MatchConfig(int playersPerTeam, int teams, GameKind kind, int laneCount, List<String> laneNames) {
 		this.playersPerTeam = playersPerTeam;
@@ -44,10 +44,11 @@ public abstract class MatchConfig {
 	}
 
 	/**
-	 * Creates a new match configuration.
+	 * Creates a new MatchConfig with the given {@link MatchSchema} and {@link GameKind}.
+	 * Gets the other values from the {@link MatchSchema}.
 	 *
 	 * @param schema The schema of the match.
-	 * @param kind   The kind of game.
+	 * @param kind   The kind of the game.
 	 */
 	protected MatchConfig(MatchSchema schema, GameKind kind) {
 		this.playersPerTeam = schema.getPlayersPerCycle();

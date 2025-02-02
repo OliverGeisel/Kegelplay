@@ -51,6 +51,7 @@ public class PairMatchPointsCollection extends MatchPoints<Player<Game120>> {
 	 * @param player        the player to get the points for
 	 * @param gameSetNumber the game set to get the points for
 	 * @return the points of the player for the game set
+	 *
 	 * @throws IllegalArgumentException if the player is not found or the game set number is not valid
 	 */
 	@Override
@@ -71,6 +72,7 @@ public class PairMatchPointsCollection extends MatchPoints<Player<Game120>> {
 	 * Return the winner of the match.
 	 *
 	 * @return the winner of the match
+	 *
 	 * @throws IllegalStateException if the match is a draw
 	 */
 	@Override

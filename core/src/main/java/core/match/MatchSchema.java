@@ -12,32 +12,47 @@ import java.util.List;
  * Representation of the match schema. Detailed information about the order of all players when and where they play.
  *
  * <p>
- *     Each {@link MatchSchema} has the following properties:
- *     <ul>
- *         <li>name: Name of the match</li>
- *         <li>teams: Number of teams</li>
- *         <li>playersPerCycle: Number of players per cycle -  A cycle is the complete wks </li>
- *         <li>laneCount: Number of lanes</li>
- *         <li>lanes: List of {@link LaneSchema}</li>
- *         <li>cycles: Number of cycles - Number to repeat the cycles to do the full match</li>
- *		</ul>
+ * Each {@link MatchSchema} has the following properties:
+ *   <ul>
+ *       <li>name: Name of the match</li>
+ *       <li>teams: Number of teams</li>
+ *       <li>playersPerCycle: Number of players per cycle -  A cycle is the complete wks </li>
+ *       <li>laneCount: Number of lanes</li>
+ *       <li>lanes: List of {@link LaneSchema}</li>
+ *       <li>cycles: Number of cycles - Number to repeat the cycles to do the full match</li>
+ * </ul>
  *
- *
- * @since 1.0.0
- * @version 1.0.0
  * @author Oliver Geisel
- *
+ * @version 1.0.0
  * @see Match
+ * @since 1.0.0
  */
 public class MatchSchema {
 
 	private static final System.Logger LOGGER = System.getLogger(MatchSchema.class.getName());
 
+	/**
+	 * The name of the match.
+	 */
 	private final String           name;
+	/**
+	 * The number of teams in the match.
+	 */
 	private final int              teams;
 	private final int              playersPerCycle;
+	/**
+	 * The number of lanes in the match.
+	 */
 	private final int              laneCount;
+	/**
+	 * The lanes in the match. Each lane has a {@link LaneSchema}. This is the configuration and order of the players
+	 * that play on this lane.
+	 */
 	private final List<LaneSchema> lanes;
+	/**
+	 * The number of cycles in the match. A cycle is one round in the {@link MatchSchema}.
+	 * But in some cases it can make sense to have more than one cycle.
+	 */
 	private final int              cycles;
 
 	/**
@@ -82,10 +97,11 @@ public class MatchSchema {
 	}
 
 	/**
-	 * Get the {@link GameInfo} for a player in a team.
-	 * @param team the team number
-	 * @param player the player number
-	 * @return the {@link GameInfo} for the given player in the given team
+	 * Get the {@link GameInfo} for a specific player in a team.
+	 *
+	 * @param team   team number
+	 * @param player player number in the team
+	 * @return The {@link GameInfo} for the player
 	 */
 	public GameInfo getGameInfoFor(int team, int player) {
 		var setCount = 0;
@@ -114,6 +130,7 @@ public class MatchSchema {
 
 	/**
 	 * Get the number of cycles.
+	 *
 	 * @return the number of cycles
 	 */
 	public int getCycles() {
@@ -122,6 +139,7 @@ public class MatchSchema {
 
 	/**
 	 * Get the lanes.
+	 *
 	 * @return the lanes
 	 */
 	public List<LaneSchema> getLanes() {
@@ -130,6 +148,7 @@ public class MatchSchema {
 
 	/**
 	 * Get the number of teams.
+	 *
 	 * @return the number of teams
 	 */
 	public int getTeams() {
@@ -137,8 +156,10 @@ public class MatchSchema {
 	}
 
 	/**
-	 * Get the number of players per cycle.
-	 * @return the number of players per cycle
+	 * Get the number of players per cycle. A cycle one round in the {@link MatchSchema}.
+	 * But in some cases, it can make sense to have more than one cycle.
+	 *
+	 * @return The number of players per cycle
 	 */
 	public int getPlayersPerCycle() {
 		return playersPerCycle;
@@ -146,6 +167,7 @@ public class MatchSchema {
 
 	/**
 	 * Get the name of the WKS.
+	 *
 	 * @return the name of the wks
 	 */
 	public String getName() {
@@ -154,6 +176,7 @@ public class MatchSchema {
 
 	/**
 	 * Get the number of lanes that are used.
+	 *
 	 * @return the number of lanes
 	 */
 	public int getLaneCount() {

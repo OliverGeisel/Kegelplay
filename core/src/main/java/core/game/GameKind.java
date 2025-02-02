@@ -13,45 +13,54 @@ package core.game;
  * @since 1.0.0
  */
 public enum GameKind {
+
 	/**
-	 * A game with 2 Durchgaenge, 25 Volle and 25 Abraeumen per GameSet and 20 minutes per GameSet
+	 * A game with 2 {@link GameSet}s, 25 Volle, 25 Abraeumen and 20 minutes per Durchgang.
+	 * 100 throws in total.
 	 */
 	GAME_100(2, 25, 25, 20),
+
 	/**
-	 * A game with 4 Durchgaenge, 25 Volle and 25 Abraeumen per GameSet and 20 minutes per GameSet
+	 * A game with 4 {@link GameSet}s, 25 Volle, 25 Abraeumen and 20 minutes per Durchgang.
+	 * 200 throws in total.
 	 */
 	GAME_200(4, 25, 25, 20),
+
 	/**
-	 * A game with 4 Durchgaenge, 15 Volle and 15 Abraeumen per GameSet and 12 minutes per GameSet
+	 * A game with 4 {@link GameSet}s, 15 Volle, 15 Abraeumen and 12 minutes per Durchgang.
+	 * 120 throws in total.
 	 */
 	GAME_120(4, 15, 15, 12),
 
 	/**
-	 * A game with 2 Durchgaenge, 10 Volle and 10 Abraeumen per GameSet and 8 minutes per GameSet
+	 * A game with 2 {@link GameSet}s, 10 Volle, 10 Abraeumen and 8 minutes per Durchgang.
+	 * 40 throws in total.
 	 */
 	GAME_40(2, 10, 10, 8),
 	/**
-	 * A game with 4 Durchgaenge, 10 Volle and 10 Abraeumen per GameSet and 8 minutes per GameSet
+	 * A game with 4 {@link GameSet}s, 10 Volle, 10 Abraeumen and 8 minutes per Durchgang.
+	 * 40 throws in total.
 	 */
 	GAME_40_2(4, 10, 10, 8);
 
-	private int    numberOfDurchgaenge;
-	private int    numberOfVolle;
-	private int    numberOfAbraeumen;
-	private double timePerDurchgang;
+	private final int    numberOfGameSets;
+	private final int    numberOfVolle;
+	private final int    numberOfAbraeumen;
+	private final double timePerGameSet;
 
 	/**
-	 * Create a new {@link GameKind}
-	 * @param numberOfDurchgaenge The number of Durchgaenge
-	 * @param numberOfVolle The number of Volle
-	 * @param numberOfAbraeumen The number of Abraeumen
-	 * @param timePerDurchgang The time per Durchgang to play
+	 * Create a new {@link GameKind} with the given values.
+	 *
+	 * @param numberOfGameSets  The number of {@link GameSet}s in a {@link Game}
+	 * @param numberOfVolle     The number of Volle in a {@link GameSet}
+	 * @param numberOfAbraeumen The number of Abraeumen in a {@link GameSet}
+	 * @param timePerGameSet  The time per {@link GameSet} in a {@link Game}
 	 */
-	GameKind(int numberOfDurchgaenge, int numberOfVolle, int numberOfAbraeumen, int timePerDurchgang) {
-		this.numberOfDurchgaenge = numberOfDurchgaenge;
+	GameKind(int numberOfGameSets, int numberOfVolle, int numberOfAbraeumen, int timePerGameSet) {
+		this.numberOfGameSets = numberOfGameSets;
 		this.numberOfVolle = numberOfVolle;
 		this.numberOfAbraeumen = numberOfAbraeumen;
-		this.timePerDurchgang = timePerDurchgang;
+		this.timePerGameSet = timePerGameSet;
 	}
 
 	/**
@@ -71,36 +80,40 @@ public enum GameKind {
 
 	/**
 	 * Check if the {@link GameKind} is compatible with a {@link GameInfo}
+	 *
 	 * @param gameInfo The {@link GameInfo} to compare
 	 * @return <b>true</b> if the {@link GameKind} is compatible with the {@link GameInfo}
 	 */
 	public boolean isCompatible(GameInfo gameInfo) {
 		if (gameInfo == null) return false;
 		return gameInfo.vollePerGameSet() == numberOfVolle && gameInfo.abrauemenPerGameSet() == numberOfAbraeumen
-			   && gameInfo.gameSets() == numberOfDurchgaenge && gameInfo.minutesPerGameSet() == timePerDurchgang;
+			   && gameInfo.gameSets() == numberOfGameSets && gameInfo.minutesPerGameSet() == timePerGameSet;
 	}
 
 	/**
 	 * Convert the {@link GameKind} to a {@link GameInfo}
 	 *
+	 * @param symmetric set if a game is symmetric
 	 * @return The {@link GameInfo} of the {@link GameKind}
 	 */
 	public GameInfo toGameInfo(boolean symmetric) {
-		return new GameInfo(numberOfDurchgaenge, numberOfVolle, numberOfAbraeumen, timePerDurchgang, symmetric);
+		return new GameInfo(numberOfGameSets, numberOfVolle, numberOfAbraeumen, timePerGameSet, symmetric);
 	}
 
 	//region setter/getter
 
 	/**
-	 * Get the number of Durchgaenge
-	 * @return The number of Durchgaenge
+	 * Get the number of {@link GameSet}s in a {@link Game}
+	 *
+	 * @return The number of {@link GameSet}s
 	 */
-	public int getNumberOfDurchgaenge() {
-		return numberOfDurchgaenge;
+	public int getNumberOfGameSets() {
+		return numberOfGameSets;
 	}
 
 	/**
-	 * Get the number of Volle
+	 * Get the number of Volle in a {@link GameSet}
+	 *
 	 * @return The number of Volle
 	 */
 	public int getNumberOfVolle() {
@@ -108,7 +121,8 @@ public enum GameKind {
 	}
 
 	/**
-	 * Get the number of Abraeumen
+	 * Get the number of Abraeumen in a {@link GameSet}
+	 *
 	 * @return The number of Abraeumen
 	 */
 	public int getNumberOfAbraeumen() {
@@ -116,11 +130,12 @@ public enum GameKind {
 	}
 
 	/**
-	 * Get the time per Durchgang to play
-	 * @return The time per Durchgang to play
+	 * Get the time per {@link GameSet} in a {@link Game}
+	 *
+	 * @return The time per {@link GameSet}
 	 */
-	public double getTimePerDurchgang() {
-		return timePerDurchgang;
+	public double getTimePerGameSet() {
+		return timePerGameSet;
 	}
 //endregion
 }

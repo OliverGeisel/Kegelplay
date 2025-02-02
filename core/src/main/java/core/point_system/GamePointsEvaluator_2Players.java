@@ -30,7 +30,7 @@ public class GamePointsEvaluator_2Players {
 			}
 			var points1 = new GamePointsPlayer<>(player1);
 			var points2 = new GamePointsPlayer<>(player2);
-			for (int i = 0; i < player1.getGame().getNumberOfDurchgaenge(); i++) {
+			for (int i = 0; i < player1.getGame().getNumberOfGameSets(); i++) {
 				var collection = getSetPoints(i, player1, player2);
 				points1.addGameSetPoints(player1, collection.getGamePoints(player1));
 				points2.addGameSetPoints(player2, collection.getGamePoints(player2));
@@ -62,8 +62,8 @@ public class GamePointsEvaluator_2Players {
 
 	private static <G extends Game> GameSetPointsCollection getSetPoints(int setNumber, Player<G> player1,
 			Player<G> player2) {
-		var player1Set = player1.getGame().getDurchgang(setNumber);
-		var player2Set = player2.getGame().getDurchgang(setNumber);
+		var player1Set = player1.getGame().getGameSet(setNumber);
+		var player2Set = player2.getGame().getGameSet(setNumber);
 		var back = new GameSetPointsCollection();
 		if (player1Set.getScore() > player2Set.getScore()) {
 			back.setScore(player1, 1, player1Set);

@@ -37,6 +37,7 @@ public record GameRound(List<Game> games, int roundNumber) {
 	}
 
 //region setter/getter
+
 	/**
 	 * Get the players of the games in an ordered list.
 	 *

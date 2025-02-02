@@ -29,7 +29,7 @@ class Game120Test {
 	}
 
 	@Test
-	void getDurchgang() {
+	void getGameSet() {
 	}
 
 	@Test
@@ -41,7 +41,7 @@ class Game120Test {
 	}
 
 	@Test
-	void getNumberOfDurchgaenge() {
+	void getNumberOfGameSets() {
 	}
 
 	@Test
@@ -58,15 +58,15 @@ class Game120Test {
 
 	@Test
 	void getTotalVolle() {
-		var durchgang1 = mock(GameSet.class);
-		var durchgang2 = mock(GameSet.class);
-		var durchgang3 = mock(GameSet.class);
-		var durchgang4 = mock(GameSet.class);
-		when(durchgang1.getVolleScore()).thenReturn(50);
-		when(durchgang2.getVolleScore()).thenReturn(50);
-		when(durchgang3.getVolleScore()).thenReturn(50);
-		when(durchgang4.getVolleScore()).thenReturn(50);
-		game.setDurchgaenge(List.of(durchgang1, durchgang2, durchgang3, durchgang4));
+		var gameSet1 = mock(GameSet.class);
+		var gameSet2 = mock(GameSet.class);
+		var gameSet3 = mock(GameSet.class);
+		var gameSet4 = mock(GameSet.class);
+		when(gameSet1.getVolleScore()).thenReturn(50);
+		when(gameSet2.getVolleScore()).thenReturn(50);
+		when(gameSet3.getVolleScore()).thenReturn(50);
+		when(gameSet4.getVolleScore()).thenReturn(50);
+		game.setGameSets(List.of(gameSet1, gameSet2, gameSet3, gameSet4));
 
 		assertEquals(200, game.getTotalVolle());
 	}
@@ -81,6 +81,6 @@ class Game120Test {
 	}
 
 	@Test
-	void setDurchgaenge() {
+	void setGameSets() {
 	}
 }

@@ -36,8 +36,8 @@ class GameTest {
 			public void start() {}
 
 			@Override
-			public GameSet getDurchgang(int durchgang) {
-				return sets[durchgang];
+			public GameSet getGameSet(int gameSetNumber) {
+				return sets[gameSetNumber];
 			}
 
 			//region setter/getter
@@ -52,7 +52,7 @@ class GameTest {
 			}
 
 			@Override
-			public int getNumberOfDurchgaenge() {
+			public int getNumberOfGameSets() {
 				return 0;
 			}
 
@@ -87,12 +87,12 @@ class GameTest {
 			}
 
 			@Override
-			public void setDurchgaenge(List<GameSet> durgaenge) {
-				if (durgaenge.size() != 4) {
+			public void setGameSets(List<GameSet> gameSets) {
+				if (gameSets.size() != 4) {
 					throw new IllegalArgumentException("4 Durchgaenge erwartet");
 				}
-				for (int i = 0; i < durgaenge.size(); i++) {
-					sets[i] = durgaenge.get(i);
+				for (int i = 0; i < gameSets.size(); i++) {
+					sets[i] = gameSets.get(i);
 				}
 			}
 //endregion
@@ -112,7 +112,7 @@ class GameTest {
 	}
 
 	@Test
-	void getDurchgang() {
+	void getGameSet() {
 	}
 
 	@Test
@@ -156,7 +156,7 @@ class GameTest {
 	}
 
 	@Test
-	void getNumberOfDurchgaenge() {
+	void getNumberOfGameSets() {
 	}
 
 	@Test
@@ -208,7 +208,7 @@ class GameTest {
 		when(set3.isNotStarted()).thenReturn(true);
 		when(set4.isNotStarted()).thenReturn(true);
 
-		game.setDurchgaenge(List.of(set1, set2, set3, set4));
+		game.setGameSets(List.of(set1, set2, set3, set4));
 		assertEquals(set1, game.getCurrentSet());
 	}
 
@@ -220,7 +220,7 @@ class GameTest {
 		var set4 = mock(GameSet.class);
 		when(set1.isRunning()).thenReturn(true);
 
-		game.setDurchgaenge(List.of(set1, set2, set3, set4));
+		game.setGameSets(List.of(set1, set2, set3, set4));
 		assertEquals(set1, game.getCurrentSet());
 	}
 
@@ -235,7 +235,7 @@ class GameTest {
 		when(set3.isCompleted()).thenReturn(true);
 		when(set4.isRunning()).thenReturn(true);
 
-		game.setDurchgaenge(List.of(set1, set2, set3, set4));
+		game.setGameSets(List.of(set1, set2, set3, set4));
 		assertEquals(set4, game.getCurrentSet());
 	}
 
@@ -250,7 +250,7 @@ class GameTest {
 		when(set3.isCompleted()).thenReturn(true);
 		when(set4.isCompleted()).thenReturn(true);
 
-		game.setDurchgaenge(List.of(set1, set2, set3, set4));
+		game.setGameSets(List.of(set1, set2, set3, set4));
 		assertEquals(set4, game.getCurrentSet());
 	}
 
@@ -263,7 +263,7 @@ class GameTest {
 		when(set2.isRunning()).thenReturn(true);
 
 
-		game.setDurchgaenge(List.of(set1, set2, set3, set4));
+		game.setGameSets(List.of(set1, set2, set3, set4));
 		assertEquals(set2, game.getCurrentSet());
 	}
 
@@ -277,7 +277,7 @@ class GameTest {
 	}
 
 	@Test
-	void setDurchgaenge() {
+	void setGameSets() {
 	}
 
 	@Test

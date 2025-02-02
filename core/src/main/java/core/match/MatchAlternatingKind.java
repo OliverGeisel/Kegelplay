@@ -25,7 +25,7 @@ public class MatchAlternatingKind extends Match {
 		this.team = team;
 	}
 
-//region setter/getter
+	//region setter/getter
 	@Override
 	public Map<String, Double> getPoints() {
 		return Map.of();

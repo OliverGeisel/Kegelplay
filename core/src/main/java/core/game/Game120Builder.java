@@ -18,14 +18,14 @@ public class Game120Builder extends GameBuilder<Game120> {
 	@Override
 	public Game120 buildGame(GameSource source) {
 		var gameThrows = source.get();
-		final var throwsPerDurchgang = 30;
+		final var throwsPerGameSet = 30;
 		GameSet gameSet = null;
 		int i = 0;
 		var sets = new LinkedList<GameSet>();
 		var setNumber = 0;
 		for (var wurf : gameThrows) {
 			var throwNumber = i++;
-			var throwInGameSet = throwNumber % throwsPerDurchgang;
+			var throwInGameSet = throwNumber % throwsPerGameSet;
 			if (throwInGameSet == 0) {
 				gameSet = new GameSet(30, 15, 15, setNumber++);
 				sets.add(gameSet);
@@ -38,7 +38,7 @@ public class Game120Builder extends GameBuilder<Game120> {
 			}
 		}
 		var game = new Game120(null);
-		game.setDurchgaenge(sets);
+		game.setGameSets(sets);
 		return game;
 	}
 
@@ -47,7 +47,7 @@ public class Game120Builder extends GameBuilder<Game120> {
 		return new Game120(null);
 	}
 
-//region setter/getter
+	//region setter/getter
 	@Override
 	public GameKind getGameKind() {
 		return GameKind.GAME_120;

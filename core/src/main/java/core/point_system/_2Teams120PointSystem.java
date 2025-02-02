@@ -34,6 +34,13 @@ import java.util.List;
 public class _2Teams120PointSystem extends PointSystem<Game120> {
 
 
+	/**
+	 * Get the pairings for a match.  Compares two teams with each other.
+	 *
+	 * @param team1 The first team
+	 * @param team2 The second team
+	 * @return A list of pairs of players. The first player of the first team plays against the first player of the second team and so on.
+	 */
 	public static List<Pair<Player<Game120>, Player<Game120>>> getPairings(Team<Game120> team1, Team<Game120> team2) {
 		var back = new ArrayList<Pair<Player<Game120>, Player<Game120>>>();
 		for (int i = 0; i < team1.getNumberOfPlayers(); i++) {
@@ -50,8 +57,8 @@ public class _2Teams120PointSystem extends PointSystem<Game120> {
 	 *
 	 * @param player1Game the points of team 1
 	 * @param player2Game the points of team 2
-	 * @param player1       the player 1
-	 * @param player2       the player 2
+	 * @param player1     the player 1
+	 * @param player2     the player 2
 	 */
 	private static void setFinalPoints(GamePointsTeam<Game120> player1Game, GamePointsTeam<Game120> player2Game,
 			Player<Game120> player1, Player<Game120> player2) {
@@ -163,9 +170,17 @@ public class _2Teams120PointSystem extends PointSystem<Game120> {
 		}
 	}
 
+	/**
+	 * Get the set points for a set.
+	 *
+	 * @param setNumber The number of the set
+	 * @param player1   The first player
+	 * @param player2   The second player
+	 * @return The set points for the set.
+	 */
 	private GameSetPointsCollection getSetPoints(int setNumber, Player<Game120> player1, Player<Game120> player2) {
-		var player1Set = player1.getGame().getDurchgang(setNumber);
-		var player2Set = player2.getGame().getDurchgang(setNumber);
+		var player1Set = player1.getGame().getGameSet(setNumber);
+		var player2Set = player2.getGame().getGameSet(setNumber);
 		var back = new GameSetPointsCollection();
 		if (player1Set.getScore() > player2Set.getScore()) {
 			back.setScore(player1, 1, player1Set);

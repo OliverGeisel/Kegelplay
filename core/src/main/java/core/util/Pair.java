@@ -3,12 +3,12 @@ package core.util;
 
 /**
  * A simple pair of two values.
+ *
  * @param <K> the type of the first value
  * @param <V> the type of the second value
- *
+ * @author Oliver Geisel
  * @version 1.0.0
  * @since 1.0.0
- * @author Oliver Geisel
  */
 public class Pair<K, V> {
 
@@ -17,7 +17,8 @@ public class Pair<K, V> {
 
 	/**
 	 * Creates a new pair with the given values.
-	 * @param key the first value
+	 *
+	 * @param key   the first value
 	 * @param value the second value
 	 */
 	public Pair(K key, V value) {
@@ -29,6 +30,7 @@ public class Pair<K, V> {
 
 	/**
 	 * Returns the first value of the pair.
+	 *
 	 * @return the first value
 	 */
 	public K getKey() {
@@ -37,6 +39,7 @@ public class Pair<K, V> {
 
 	/**
 	 * Returns the second value of the pair.
+	 *
 	 * @return the second value
 	 */
 	public V getValue() {
@@ -45,6 +48,7 @@ public class Pair<K, V> {
 
 	/**
 	 * Gets the first value of the pair. This is the same as {@link #getKey()}.
+	 *
 	 * @return the first value
 	 */
 	public K getFirst() {
@@ -53,6 +57,7 @@ public class Pair<K, V> {
 
 	/**
 	 * Gets the second value of the pair. This is the same as {@link #getValue()}.
+	 *
 	 * @return the second value
 	 */
 	public V getSecond() {

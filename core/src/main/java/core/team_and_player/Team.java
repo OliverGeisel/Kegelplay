@@ -29,10 +29,10 @@ public abstract class Team<G extends Game> {
 	private       GeneralTeamInfo           generalTeamInfo;
 
 	/**
-	 * Creates a new team.
+	 * Creates a new team with the given name, the {@link GeneralTeamInfo}, the players and the substitutes.
 	 *
 	 * @param name        The name of the team.
-	 * @param teamInfo    The general information about the team.
+	 * @param teamInfo    The {@link GeneralTeamInfo} of the team.
 	 * @param players     The players of the team.
 	 * @param substitutes The substitutes of the team.
 	 */
@@ -41,16 +41,15 @@ public abstract class Team<G extends Game> {
 		this.players = players;
 		this.substitutes = substitutes;
 		this.generalTeamInfo = teamInfo;
-
 	}
 
 	/**
-	 * Creates a new team.
+	 * Creates a new team with the given name, the {@link GeneralTeamInfo}, the players and the substitutes.
 	 *
 	 * @param name                The name of the team.
 	 * @param players             The players of the team.
 	 * @param substitutes         The substitutes of the team.
-	 * @param teamInfo            The general information about the team.
+	 * @param teamInfo            The {@link GeneralTeamInfo} about the team.
 	 * @param numberOfPlayers     The number of players in the team.
 	 * @param numberOfSubstitutes The number of substitutes in the team.
 	 */
@@ -122,20 +121,22 @@ public abstract class Team<G extends Game> {
 	}
 
 	/**
-	 * Sets the player with the given index.
+	 * Sets the player with the given index to the given player. Overwrites the old player.
+	 * 0 is the first player. 1 is second player and so on.
 	 *
 	 * @param index  the index of the player
-	 * @param player the player to set
+	 * @param player the new player
 	 */
 	public void setPlayer(int index, Player<G> player) {
 		players[index] = player;
 	}
 
 	/**
-	 * Sets the substitute with the given index.
+	 * Sets the substitute with the given index to the given player. Overwrites the old substitute.
+	 * 0 is the first substitute. 1 is second substitute and so on.
 	 *
 	 * @param index      the index of the substitute
-	 * @param substitute the substitute to set
+	 * @param substitute the new substitute
 	 */
 	public void setSubstitute(int index, Player<G> substitute) {
 		substitutes[index] = substitute;
@@ -146,7 +147,6 @@ public abstract class Team<G extends Game> {
 	 *
 	 * @param playerIndex     the index of the player
 	 * @param substituteIndex the index of the substitute
-	 *
 	 * @throws IllegalArgumentException if the playerIndex or substituteIndex is out of bounds
 	 */
 	public void substitute(int playerIndex, int substituteIndex) throws IllegalArgumentException {
@@ -175,8 +175,9 @@ public abstract class Team<G extends Game> {
 	}
 
 	/**
-	 * Get the total score of the team. Is the sum of the total score of all players.
-	 * @return total score of the team
+	 * Get the total score of the team. Is the sum of all scores of the players.
+	 *
+	 * @return the total score of the team
 	 */
 	public int getTeamScore() {
 		int score = 0;
@@ -187,8 +188,9 @@ public abstract class Team<G extends Game> {
 	}
 
 	/**
-	 * Get the total number of misses of the team. Is the sum of the total misses of all players.
-	 * @return total number of misses of the team
+	 * Get the total number of throws that missed the pins. Is the sum of all missed throws of the players.
+	 *
+	 * @return the total number of throws that missed the pins
 	 */
 	public int getTeamTotalMissThrow() {
 		int score = 0;
@@ -199,8 +201,9 @@ public abstract class Team<G extends Game> {
 	}
 
 	/**
-	 * Get the total number of volle of the team. Is the sum of the total volle of all players.
-	 * @return total number of volle of the team
+	 * Get the total number of pins that were hit in the Volle phase. Is the sum of all players.
+	 *
+	 * @return the total number of pins that were hit in the Volle phase
 	 */
 	public int getTeamTotalVolle() {
 		int score = 0;
@@ -211,8 +214,9 @@ public abstract class Team<G extends Game> {
 	}
 
 	/**
-	 * Get the total number of abraeumen of the team. Is the sum of the total abraeumen of all players.
-	 * @return total number of abraeumen of the team
+	 * Get the total number of pins that were hit in the Abraeumen phase. Is the sum of all players.
+	 *
+	 * @return the total number of pins that were hit in the Abraeumen phase
 	 */
 	public int getTeamTotalAbraeumen() {
 		int score = 0;
@@ -222,9 +226,11 @@ public abstract class Team<G extends Game> {
 		return score;
 	}
 
+
 	/**
-	 * Get the total number of throws of the team. Is the sum of the total throws of all players.
-	 * @return total number of throws of the team
+	 * Get the total number of throws of the team. Is the sum of all throws of the players.
+	 *
+	 * @return the total number of throws of the team
 	 */
 	public int getTeamTotalThrows() {
 		int score = 0;
@@ -234,8 +240,10 @@ public abstract class Team<G extends Game> {
 		return score;
 	}
 
+
 	/**
-	 * Get the name of the team.
+	 * Name of the team.
+	 *
 	 * @return the name of the team
 	 */
 	public String getName() {
@@ -244,14 +252,16 @@ public abstract class Team<G extends Game> {
 
 	/**
 	 * Set the name of the team.
-	 * @param name the name of the team
+	 *
+	 * @param name the new name of the team
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
-	 * Get the players of the team.
+	 * Get the players of the team. The order matters.
+	 *
 	 * @return the players of the team
 	 */
 	public Player<G>[] getPlayers() {
@@ -259,8 +269,9 @@ public abstract class Team<G extends Game> {
 	}
 
 	/**
-	 * Set the players of the team.
-	 * @param players the players of the team
+	 * Set the players of the team. The order matters.
+	 *
+	 * @param players the new players of the team
 	 */
 	public void setPlayers(Player<G>[] players) {
 		this.players = players;
@@ -268,6 +279,7 @@ public abstract class Team<G extends Game> {
 
 	/**
 	 * Get the substitutes of the team.
+	 *
 	 * @return the substitutes of the team
 	 */
 	public Player<G>[] getSubstitutes() {
@@ -276,15 +288,17 @@ public abstract class Team<G extends Game> {
 
 	/**
 	 * Set the substitutes of the team.
-	 * @param substitutes the substitutes of the team
+	 *
+	 * @param substitutes the new substitutes of the team
 	 */
 	public void setSubstitutes(Player<G>[] substitutes) {
 		this.substitutes = substitutes;
 	}
 
 	/**
-	 * Get the mapping of the substitutes. The key is the player and the value is the substitute.
-	 * @return the mapping of the substitutes
+	 * Get the substitutes map. The key is the player that is substituted and the value is the substitute.
+	 *
+	 * @return the substitutes map
 	 */
 	public Map<Player<G>, Player<G>> getSubstitutesMap() {
 		return Collections.unmodifiableMap(substitutesMap);
@@ -292,6 +306,7 @@ public abstract class Team<G extends Game> {
 
 	/**
 	 * Get the number of players in the team.
+	 *
 	 * @return the number of players in the team
 	 */
 	public int getNumberOfPlayers() {
@@ -300,6 +315,7 @@ public abstract class Team<G extends Game> {
 
 	/**
 	 * Get the number of substitutes in the team.
+	 *
 	 * @return the number of substitutes in the team
 	 */
 	public int getNumberOfSubstitutes() {
@@ -310,20 +326,29 @@ public abstract class Team<G extends Game> {
 
 	/**
 	 * A substitute of a player in a team. The substitute is a player too.
-	 * @param player The player to substitute.
-	 * @param substitute The substitute player.
-	 * @param positionTeam The position of the team.
-	 * @param durchgangNum The number of the Durchgang at which the substitution is made.
-	 * @param wurfNum The number of the Wurf at which the substitution is made.
 	 *
-	 * @since 1.0.0
+	 * @param player       The player to substitute.
+	 * @param substitute   The substitute player.
+	 * @param positionTeam The position of the team.
+	 * @param gameSetNumber The number of the Durchgang at which the substitution is made.
+	 * @param wurfNum      The number of the Wurf at which the substitution is made.
+	 * @author Oliver Geisel
 	 * @version 1.0.0
 	 * @see Player
-	 * @author Oliver Geisel
+	 * @since 1.0.0
 	 */
-	record Substitute(Player player, Player substitute, int positionTeam, int durchgangNum, int wurfNum) {
-		public Substitute(Player player, Player substitute, int positionTeam, int durchgangNum) {
-			this(player, substitute, positionTeam, durchgangNum, 0);
+	record Substitute(Player player, Player substitute, int positionTeam, int gameSetNumber, int wurfNum) {
+
+		/**
+		 * Create a new Substitute with the given values. The WurfNum is set to 0.
+		 *
+		 * @param player        the player that will be substituted
+		 * @param substitute    the player that will substitute the player (go in the game)
+		 * @param positionTeam  the position in the team. 0 is the first player. 1 is the second player and so on.
+		 * @param gameSetNumber the number of the {@link core.game.GameSet} in the {@link core.game.Game}
+		 */
+		public Substitute(Player player, Player substitute, int positionTeam, int gameSetNumber) {
+			this(player, substitute, positionTeam, gameSetNumber, 0);
 		}
 
 	}

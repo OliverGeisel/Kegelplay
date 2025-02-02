@@ -10,12 +10,11 @@ import static java.lang.Math.max;
  * A set consists of a number of throws. The number of throws is divided into full throws and throws to clear the pins.
  * A set is completed when all throws have been made or the time has expired.
  *
+ * @author Oliver Geisel
+ * @version 1.0.0
  * @see Wurf
  * @see Game
- *
- * @version 1.0.0
  * @since 1.0.0
- * @author Oliver Geisel
  */
 public class GameSet {
 
@@ -31,11 +30,13 @@ public class GameSet {
 	 * Create a new set with the given number of throws, number of full throws and number of throws to clear the pins.
 	 *
 	 * @param anzahlWuerfe    Number of throws
-	 * @param anzahlVolle     Number of full throws
-	 * @param anzahlAbraeumen Number of throws abraeumen
+	 * @param anzahlVolle     Number of throws in volle phase
+	 * @param anzahlAbraeumen Number of throws in 'abraeumen' phase
 	 * @param gameSetNumber   Number of the set in the {@link Game}
+	 * @throws IllegalArgumentException if the number of throws is less than 1 or the sum of full throws and throws to clear the pins is not equal to the number of throws
 	 */
-	public GameSet(int anzahlWuerfe, int anzahlVolle, int anzahlAbraeumen, int gameSetNumber) {
+	public GameSet(int anzahlWuerfe, int anzahlVolle, int anzahlAbraeumen, int gameSetNumber) throws
+			IllegalArgumentException {
 		if (anzahlWuerfe < 1) throw new IllegalArgumentException("Number of throws must be greater than 0");
 		if (anzahlVolle + anzahlAbraeumen != anzahlWuerfe) {
 			throw new IllegalArgumentException(
@@ -79,7 +80,7 @@ public class GameSet {
 	 * The throw is set to null.
 	 *
 	 * @param index Number of the throw
-	 * @throws IllegalStateException if the throw is already null
+	 * @throws IllegalStateException    if the throw is already null
 	 * @throws IllegalArgumentException if the number is out of bounds
 	 */
 	public void reset(int index) throws IllegalStateException, IllegalArgumentException {
@@ -100,6 +101,7 @@ public class GameSet {
 	 *
 	 * @param wurf Number of the throw
 	 * @return Wurf at the given number. Is null if the throw was set yet.
+	 *
 	 * @throws IllegalArgumentException if the number is out of bounds
 	 */
 	public Wurf get(int wurf) throws IllegalArgumentException {
@@ -120,6 +122,7 @@ public class GameSet {
 
 	/**
 	 * Number of maximum volle throws in this set.
+	 *
 	 * @return Number of maximum volle throws
 	 */
 	public int getAnzahlVolle() {
@@ -128,6 +131,7 @@ public class GameSet {
 
 	/**
 	 * Number of the set in the {@link Game}.
+	 *
 	 * @return Number of the set
 	 */
 	public int getGameSetNumber() {
@@ -137,6 +141,7 @@ public class GameSet {
 	/**
 	 * Get the remaining time for the set.
 	 * If the time is 0, the set is {@link SetState#FINISHED}.
+	 *
 	 * @return Remaining time in minutes
 	 */
 	public double getTime() {
@@ -173,6 +178,7 @@ public class GameSet {
 
 	/**
 	 * Get the current state of the set.
+	 *
 	 * @return Current state of the set
 	 */
 	public SetState getState() {
@@ -182,6 +188,7 @@ public class GameSet {
 	/**
 	 * Get the last {@link Wurf} of this set. This is either the last throw that was set, null if no throw was set
 	 * yet or the last throw that was set but not the possible last throw of the set, because the time has expired.
+	 *
 	 * @return Last {@link Wurf} or null, if no throw was set yet
 	 */
 	public Wurf getLastWurf() {
@@ -192,7 +199,9 @@ public class GameSet {
 	}
 
 	/**
-	 * Check if the set is completed. (State is {@link SetState#FINISHED})
+	 * Check if the set is completed. All throws are set or the time has expired.
+	 * (State is {@link SetState#FINISHED})
+	 *
 	 * @return true if the set is completed, false otherwise
 	 */
 	public boolean isCompleted() {
@@ -201,6 +210,7 @@ public class GameSet {
 
 	/**
 	 * Check if the set is not started yet. (State is {@link SetState#NOT_STARTED})
+	 *
 	 * @return true if the set is not started yet, false otherwise
 	 */
 	public boolean isNotStarted() {
@@ -208,7 +218,9 @@ public class GameSet {
 	}
 
 	/**
-	 * Check if the set is in progress. (State is {@link SetState#IN_PROGRESS})
+	 * Check if the set is in progress. At least one throw is set and the time has not expired.
+	 * (State is {@link SetState#IN_PROGRESS})
+	 *
 	 * @return true if the set is in progress, false otherwise
 	 */
 	public boolean isRunning() {

@@ -54,14 +54,14 @@ public class AlternatingGameKindGeneralReader {
 			teamNames = status.getTeamNames();
 			KeyValueRegionCollection statusIniFile =
 					new IniFile(baseDir.resolve("status.ini"));
-			int durchgang;
+			int gameSetNumber;
 			if (!backupDir.toFile().exists()) {
-				durchgang = Integer.parseInt(statusIniFile.getRegion("Anzahl").getValue("Durchgang").toString());
+				gameSetNumber = Integer.parseInt(statusIniFile.getRegion("Anzahl").getValue("Durchgang").toString());
 			} else {
 				var backupIniFile = new IniFile(backupDir.resolve("wk_eig_backup.ini"));
-				durchgang = Integer.parseInt(backupIniFile.getRegion("Allgemein").getValue("Durchgang"));
+				gameSetNumber = Integer.parseInt(backupIniFile.getRegion("Allgemein").getValue("Durchgang"));
 			}
-			stateInfo = new MatchStatusInfo(statusIniFile, durchgang);
+			stateInfo = new MatchStatusInfo(statusIniFile, gameSetNumber);
 			// read general match info
 			var generalMatchInfoFile = new IniFile(baseDir.resolve("wettkampf.ini"));
 			general = new GeneralMatchInfo(generalMatchInfoFile.getRegion("Allgemein"));

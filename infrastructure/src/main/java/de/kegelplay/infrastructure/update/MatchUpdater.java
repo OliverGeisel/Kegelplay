@@ -52,9 +52,9 @@ public class MatchUpdater<G extends Game> {
 		try {
 			KeyValueRegionCollection stateIniFile = new IniFile(stateFile);
 			var backup = match.getBaseDir().resolve("Backup-Daten").resolve("wk_eig_backup.ini");
-			var durchgangStr = new IniFile(backup).getRegion("Allgemein").getValue("Durchgang");
-			var durchgang = Integer.parseInt(durchgangStr);
-			var newState = new MatchStatusInfo(stateIniFile, durchgang);
+			var gameSetStr = new IniFile(backup).getRegion("Allgemein").getValue("Durchgang");
+			var gameSetNumber = Integer.parseInt(gameSetStr);
+			var newState = new MatchStatusInfo(stateIniFile, gameSetNumber);
 			match.setStatusInfo(newState);
 		} catch (IOException e) {
 			LOGGER.log(System.Logger.Level.ERROR, STR."Could not read state file for mactch: \{match.getBaseDir()}");

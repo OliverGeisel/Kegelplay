@@ -56,8 +56,9 @@ public abstract class Game {
 
 	/**
 	 * Creates a new game with the given player and date.
+	 *
 	 * @param player The player who plays the game.
-	 * @param date The date of the game. (start)
+	 * @param date   The date of the game. (start)
 	 */
 	protected Game(Player player, LocalDateTime date) {
 		this.player = player;
@@ -70,10 +71,11 @@ public abstract class Game {
 
 	/**
 	 * Creates a new game with the given player and substitutions.
-	 * @param player The player who plays the game.
+	 *
+	 * @param player        The player who plays the game.
 	 * @param substitution1 The first substitution player.
 	 * @param substitution2 The second substitution player.
-	 * @param date The date of the game. (start)
+	 * @param date          The date of the game. (start)
 	 */
 	protected Game(Player player, Player substitution1, Player substitution2, LocalDateTime date) {
 		this(player, date);
@@ -111,14 +113,15 @@ public abstract class Game {
 	/**
 	 * Returns the {@link GameSet} of the game at the given number.
 	 *
-	 * @param durchgang Number of the {@link GameSet}
+	 * @param gameSetNumber Number of the {@link GameSet}
 	 * @return {@link GameSet} at the given number
 	 *
 	 * @throws IllegalArgumentException if the number is out of bounds
 	 */
-	public abstract GameSet getDurchgang(int durchgang) throws IllegalArgumentException;
+	public abstract GameSet getGameSet(int gameSetNumber) throws IllegalArgumentException;
 
 	//region setter/getter
+
 	/**
 	 * Returns the {@link GameSet}s of the game.
 	 * The order of the {@link GameSet}s is important and cannot be changed.
@@ -126,10 +129,9 @@ public abstract class Game {
 	 * @return {@link GameSet}s of the game
 	 */
 	public abstract GameSet[] getGameSets();
-
 	/**
 	 * Returns the player that is currently play the game. This can be the original player or one of the two
-	 * substitutions. If sub1 is not null then he will be returned except sub2 isn`t.
+	 * substitutions. If sub1 is not null, then he will be returned except sub2 isn't.
 	 *
 	 * @return Player that is currently play
 	 */
@@ -144,14 +146,7 @@ public abstract class Game {
 	}
 
 	/**
-	 * Returns the {@link GameInfo} of the game.
-	 *
-	 * @return {@link GameInfo} of the game
-	 */
-	public abstract GameInfo getGameInfo();
-
-	/**
-	 * Game is currently played.
+	 * The Game is currently played.
 	 * A game is currently played if it is in the state {@link RunningState} or {@link PausedState}.
 	 *
 	 * @return true if game is currently played
@@ -161,23 +156,40 @@ public abstract class Game {
 	}
 
 	/**
-	 * Game is finished.
+	 * Returns the {@link GameInfo} of the game.
+	 *
+	 * @return {@link GameInfo} of the game
+	 */
+	public abstract GameInfo getGameInfo();
+
+	/**
+	 * The Game is finished.
 	 * A game is finished if it is in the state {@link FinishedState}.
 	 *
-	 * @return true if game is finished
+	 * @return true if the game is finished
 	 */
 	public boolean isFinished() {
 		return state instanceof FinishedState;
 	}
 
 	/**
-	 * Game is not started.
+	 * The Game is not started.
 	 * A game is not started if it is in the state {@link NotStartedState}.
 	 *
-	 * @return true if game is not started
+	 * @return true if the game is not started
 	 */
 	public boolean isNotStarted() {
 		return state instanceof NotStartedState;
+	}
+
+	/**
+	 * The Game is running.
+	 * A game is running if it is in the state {@link RunningState}.
+	 *
+	 * @return true if the game is running
+	 */
+	public boolean isRunning() {
+		return state instanceof RunningState;
 	}
 
 	/**
@@ -191,24 +203,14 @@ public abstract class Game {
 	}
 
 	/**
-	 * Game is running.
-	 * A game is running if it is in the state {@link RunningState}.
+	 * Get the {@link GameKind} of the game. Is the main decision type for all Logic.
 	 *
-	 * @return true if game is running
-	 */
-	public boolean isRunning() {
-		return state instanceof RunningState;
-	}
-
-	/**
-	 * Returns the kind of the game.
-	 *
-	 * @return Kind of the game
+	 * @return {@link GameKind} of the game
 	 */
 	public abstract GameKind getGameKind();
 
 	/**
-	 * Returns the date of the game.
+	 * Returns the date of the game on which it is played.
 	 *
 	 * @return Date of the game
 	 */
@@ -217,7 +219,7 @@ public abstract class Game {
 	}
 
 	/**
-	 * Sets the date of the game.
+	 * Set the date of the game on which it is played.
 	 *
 	 * @param date Date of the game
 	 */
@@ -226,19 +228,33 @@ public abstract class Game {
 	}
 
 	/**
-	 * Returns the number of Durchgänge of the game.
+	 * Returns the number of {@link GameSet}s of the game.
 	 *
-	 * @return Number of Durchgänge
+	 * @return Number of {@link GameSet}s
 	 */
-	public abstract int getNumberOfDurchgaenge();
+	public abstract int getNumberOfGameSets();
 
 	/**
-	 * Returns the number of played Würfe (throws) of the game.
+	 * Returns the number of {@link Wurf} that were thrown in the game until now.
 	 *
-	 * @return Number of Volle
+	 * @return Number of {@link Wurf}
 	 */
 	public int getNumberOfWurf() {
 		return Arrays.stream(getGameSets()).mapToInt(GameSet::getAnzahlGespielteWuerfe).sum();
+	}
+
+	/**
+	 * Get the total number of Volle for the game.
+	 * Sum of all {@link GameSet#getVolleScore()} of the game.
+	 *
+	 * @return Total number of Volle of the game
+	 */
+	public int getTotalVolle() {
+		var back = 0;
+		for (GameSet set : getGameSets()) {
+			back += set.getVolleScore();
+		}
+		return back;
 	}
 
 	/**
@@ -270,22 +286,9 @@ public abstract class Game {
 	}
 
 	/**
-	 * Get the total number of Volle of the game.
-	 * Sum of all {@link GameSet#getVolleScore()} of the game.
-	 *
-	 * @return Total number of Volle of the game
-	 */
-	public int getTotalVolle() {
-		var back = 0;
-		for (GameSet set : getGameSets()) {
-			back += set.getVolleScore();
-		}
-		return back;
-	}
-
-	/**
-	 * Get the total number of Abraeumen of the game.
+	 * Get the total number of Abraeumen for the game.
 	 * Sum of all {@link GameSet#getAbraeumenScore()} of the game.
+	 *
 	 * @return Total number of Abraeumen of the game
 	 */
 	public int getTotalAbraeumen() {
@@ -294,6 +297,26 @@ public abstract class Game {
 			back += set.getAbraeumenScore();
 		}
 		return back;
+	}
+
+	/**
+	 * Returns the current {@link GameSet} of the game.
+	 *
+	 * @return Current {@link GameSet}
+	 */
+	public GameSet getCurrentSet() {
+		var sets = this.getGameSets();
+		if (Arrays.stream(sets).allMatch(GameSet::isNotStarted))
+			return sets[0];
+		if (Arrays.stream(sets).allMatch(GameSet::isCompleted))
+			return sets[sets.length - 1];
+		for (int i = sets.length - 1; i >= 0; i--) {
+			var set = sets[i];
+			if (set.isRunning() || set.isCompleted()) {
+				return set;
+			}
+		}
+		return getGameSet(sets.length - 1);
 	}
 
 	/**
@@ -334,27 +357,15 @@ public abstract class Game {
 	}
 
 	/**
-	 * Returns the current {@link GameSet} of the game.
+	 * Overrides all {@link GameSet}s of the game.
 	 *
-	 * @return Current {@link GameSet}
+	 * @param gameSets List of {@link GameSet}s to override with
 	 */
-	public GameSet getCurrentSet() {
-		var sets = this.getGameSets();
-		if (Arrays.stream(sets).allMatch(GameSet::isNotStarted))
-			return sets[0];
-		if (Arrays.stream(sets).allMatch(GameSet::isCompleted))
-			return sets[sets.length - 1];
-		for (int i = sets.length - 1; i >= 0; i--) {
-			var set = sets[i];
-			if (set.isRunning() || set.isCompleted()) {
-				return set;
-			}
-		}
-		return getDurchgang(sets.length - 1);
-	}
+	public abstract void setGameSets(List<GameSet> gameSets);
 
 	/**
 	 * Set the first substitution player.
+	 *
 	 * @param player First substitution player
 	 */
 	public void setSubstitution1(Player player) {
@@ -362,18 +373,13 @@ public abstract class Game {
 	}
 
 	/**
-	 * Set the second substitution player.
-	 * @param player Second substitution player
+	 * Set the second substitution for the game.
+	 *
+	 * @param player Player that substitutes the first substitution
 	 */
 	public void setSubstitution2(Player player) {
 		substitution2 = player;
 	}
-
-	/**
-	 * Set all Durchgänge of the game.
-	 * @param durgaenge List of Durchgänge to set
-	 */
-	public abstract void setDurchgaenge(List<GameSet> durgaenge);
 //endregion
 
 	@Override
@@ -397,6 +403,14 @@ public abstract class Game {
 	}
 
 
+	/**
+	 * Representation of the state for a game.
+	 *
+	 * @author Oliver Geisel
+	 * @version 1.0.0
+	 * @see Game
+	 * @since 1.0.0
+	 */
 	private class GameState {
 
 	}

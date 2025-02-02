@@ -3,6 +3,10 @@ package core.point_system;
 /**
  * Enum to define the criteria for the point system.
  * This is the criteria for which the total Points in a match are calculated.
+ *
+ * @version 1.0.0
+ * @since 1.0.0
+ * author Oliver Geisel
  */
 public enum PointSystemCriteria {
 

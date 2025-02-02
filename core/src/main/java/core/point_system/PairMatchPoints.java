@@ -28,8 +28,8 @@ public class PairMatchPoints<G extends Game> extends MatchPoints<Player<G>> {
 		var player2GamePoints = new LinkedList<GameSetPoints>();
 
 		for (int i = 0; i < 4; i++) {
-			var gameSet1 = player1.getGame().getDurchgang(i);
-			var gameSet2 = player2.getGame().getDurchgang(i);
+			var gameSet1 = player1.getGame().getGameSet(i);
+			var gameSet2 = player2.getGame().getGameSet(i);
 			if (gameSet1.getScore() > gameSet2.getScore()) {
 				player1GamePoints.add(new GameSetPoints(player1, gameSet1, 1));
 				player2GamePoints.add(new GameSetPoints(player2, gameSet2, 0));
@@ -74,6 +74,7 @@ public class PairMatchPoints<G extends Game> extends MatchPoints<Player<G>> {
 	 * Return the winner of the match.
 	 *
 	 * @return the winner of the match
+	 *
 	 * @throws IllegalStateException if the match is a draw
 	 */
 	@Override

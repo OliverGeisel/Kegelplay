@@ -5,10 +5,11 @@ import java.util.List;
 
 /**
  * A collection of {@link KeyValueRegion}s.
+ * The order of the regions is strictly preserved.
  *
  * @param <K> The type of the key.
  * @param <V> The type of the value.
- * @param <R> The type of the region.
+ * @param <R> The type of the KeyValueRegion.
  * @author Oliver Geisel
  * @version 1.0.0
  * @see KeyValueRegion
@@ -17,7 +18,7 @@ import java.util.List;
 public class KeyValueRegionCollection<K, V, R extends KeyValueRegion<K, V>> {
 
 	protected final List<R> regions;
-	private       String  name;
+	private String name;
 
 	/**
 	 * Creates a new collection of {@link KeyValueRegion}s.
@@ -45,6 +46,7 @@ public class KeyValueRegionCollection<K, V, R extends KeyValueRegion<K, V>> {
 	 *
 	 * @param index The index of the region.
 	 * @return The region at the index.
+	 *
 	 * @throws IndexOutOfBoundsException If the index is out of bounds.
 	 */
 	public R getRegion(int index) throws IndexOutOfBoundsException {
@@ -52,6 +54,7 @@ public class KeyValueRegionCollection<K, V, R extends KeyValueRegion<K, V>> {
 	}
 
 	//region setter/getter
+
 	/**
 	 * Get the name of the collection.
 	 *
@@ -64,7 +67,7 @@ public class KeyValueRegionCollection<K, V, R extends KeyValueRegion<K, V>> {
 	/**
 	 * Set the name of the collection.
 	 *
-	 * @param name The name of the collection.
+	 * @param name The new name of the collection.
 	 */
 	protected void setName(String name) {
 		this.name = name;

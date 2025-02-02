@@ -105,17 +105,17 @@ public class TableController implements Initializable {
 					}
 					continue;
 				}
-				var durchgang = game.getDurchgang(row - 1);
+				var gameSet = game.getGameSet(row - 1);
 				switch (col) {
-					case 0 -> label.setText(Integer.toString(durchgang.getAnzahlGespielteWuerfe()));
-					case 1 -> label.setText(Integer.toString(durchgang.getVolleScore()));
-					case 2 -> label.setText(Integer.toString(durchgang.getAbraeumenScore()));
-					case 3 -> label.setText(Integer.toString(durchgang.getScore()));
-					case 4 -> label.setText(Integer.toString(durchgang.getAnzahlFehler()));
+					case 0 -> label.setText(Integer.toString(gameSet.getAnzahlGespielteWuerfe()));
+					case 1 -> label.setText(Integer.toString(gameSet.getVolleScore()));
+					case 2 -> label.setText(Integer.toString(gameSet.getAbraeumenScore()));
+					case 3 -> label.setText(Integer.toString(gameSet.getScore()));
+					case 4 -> label.setText(Integer.toString(gameSet.getAnzahlFehler()));
 					case 5 -> {
 						var player = game.getPlayer();
 						var point = points.getGameSetPointsFor(player.getCompleteNameWithUnderscore(),
-								durchgang.getGameSetNumber());
+								gameSet.getGameSetNumber());
 						label.setText(Double.toString(point));
 					}
 					default -> throw new IllegalStateException(STR."Unexpected value: \{col}");

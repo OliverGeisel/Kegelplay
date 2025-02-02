@@ -8,16 +8,19 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Status of a match. This will change during the match.
+ * Status of a {@link Match}.
+ * This will change during the match.
+ * <br>
+ * It contains the start and end time, if the match is aborted or finished and the status of the match.
  * <p>
- *     It is important to know the status of a match. This class contains the status of a match.
- *     At the end of the match, the status will be saved in a file.
+ * It is important to know the status of a match. This class contains the status of a match.
+ * At the end of the match, the status will be saved in a file.
  * </p>
  *
- * @version 1.0.0
- * @since 1.0.0
- * @see Match
  * @author Oliver Geisel
+ * @version 1.0.0
+ * @see Match
+ * @since 1.0.0
  */
 public class MatchStatusInfo {
 
@@ -37,13 +40,13 @@ public class MatchStatusInfo {
 	private int           currentSet;
 
 	/**
-	 * Creates a new match status info.
+	 * Create a new MatchStatusInfo with the given values.
 	 *
-	 * @param iniFile   The ini file of the match.
-	 * @param durchgang The current set of the match.
+	 * @param iniFile        A KeyValueRegionCollection with the values of the match
+	 * @param currentGameSet The current set the match is in
 	 */
 	public MatchStatusInfo(KeyValueRegionCollection<String, String, KeyValueRegion<String, String>> iniFile,
-			int durchgang) {
+			int currentGameSet) {
 		var region = iniFile.getRegion("Allgemein");
 		var format = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 		startTime = LocalDateTime.parse(region.getValue("Anfang"), format);
@@ -72,7 +75,7 @@ public class MatchStatusInfo {
 			refereeGuest = true;
 		}
 		//
-		currentSet = durchgang;
+		currentSet = currentGameSet;
 
 	}
 

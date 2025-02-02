@@ -6,11 +6,10 @@ package core.game;
  * if a pin is fallen the value is true.
  * The pins are numbered from 1 to 9.
  *
- * @see Wurf
- *
- * @version 1.0.0
- * @since 1.0.0
  * @author Oliver Geisel
+ * @version 1.0.0
+ * @see Wurf
+ * @since 1.0.0
  */
 public class Wurfbild {
 
@@ -28,6 +27,7 @@ public class Wurfbild {
 	/**
 	 * create a new instance by an integer. The value is the encoded version of the pitch.
 	 * Each pin is the exponent of the base to in there position -> Pin 5 = 2^5.
+	 *
 	 * @param value integer value of the pitch.
 	 */
 	public Wurfbild(int value) {
@@ -71,6 +71,7 @@ public class Wurfbild {
 
 	/**
 	 * Create a new instance by an array of the values of the pins.
+	 *
 	 * @param fields array of the values of the pins. Must have exactly 9 values.
 	 * @throws IllegalArgumentException
 	 */
@@ -91,8 +92,10 @@ public class Wurfbild {
 
 	/**
 	 * Returns the hit of a specific Pin.
+	 *
 	 * @param i number of the pin
 	 * @return true if the pin is fallen
+	 *
 	 * @throws IllegalArgumentException if the position is not in the range of 1-9
 	 */
 	public boolean get(int i) throws IllegalArgumentException {
@@ -114,6 +117,7 @@ public class Wurfbild {
 
 	/**
 	 * Get the number of fallen pins in this Bild. Must not be identical to the score of a {@link Wurf}.
+	 *
 	 * @return number of fallen pins
 	 */
 	public int getWert() {
@@ -128,6 +132,7 @@ public class Wurfbild {
 
 	/**
 	 * Get the encoded version of the bild.
+	 *
 	 * @return integer value of the bild
 	 */
 	public int getBildEncoded() {

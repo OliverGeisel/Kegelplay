@@ -6,12 +6,12 @@ import core.util.KeyValueRegionCollection;
 
 /**
  * Contains all information about a team.
+ * For example the name, the game class, the league, ...
  *
- * @see Team
- *
- * @version 1.0.0
- * @since 1.0.0
  * @author Oliver Geisel
+ * @version 1.0.0
+ * @see Team
+ * @since 1.0.0
  */
 public class GeneralTeamInfo {
 
@@ -72,7 +72,7 @@ public class GeneralTeamInfo {
 	}
 
 	/**
-	 * Creates a new GeneralTeamInfo object with default values.
+	 * Creates a new GeneralTeamInfo object with default values. Empty strings and 0 for numbers.
 	 */
 	protected GeneralTeamInfo() {
 		name = "";
@@ -89,7 +89,7 @@ public class GeneralTeamInfo {
 	//region setter/getter
 
 	/**
-	 * Returns the name of the team.
+	 * Get the name of the team.
 	 *
 	 * @return The name of the team.
 	 */
@@ -98,7 +98,8 @@ public class GeneralTeamInfo {
 	}
 
 	/**
-	 * Returns the game class of the team. The game class the level of the team in the league system.
+	 * Get the game class of the team
+	 *
 	 * @return The game class of the team.
 	 */
 	public String getGameClass() {
@@ -106,7 +107,8 @@ public class GeneralTeamInfo {
 	}
 
 	/**
-	 * Returns the league of the team.
+	 * Get the league of the team.
+	 *
 	 * @return The league of the team.
 	 */
 	public String getLeague() {
@@ -114,7 +116,8 @@ public class GeneralTeamInfo {
 	}
 
 	/**
-	 * Returns the district of the team.
+	 * Get the district of the team.
+	 *
 	 * @return The district of the team.
 	 */
 	public String getDistrict() {
@@ -122,7 +125,8 @@ public class GeneralTeamInfo {
 	}
 
 	/**
-	 * Returns the leader of the team.
+	 * Get the leader of the team.
+	 *
 	 * @return The leader of the team.
 	 */
 	public String getLeader() {
@@ -130,7 +134,7 @@ public class GeneralTeamInfo {
 	}
 
 	/**
-	 * Returns the observer of the team.
+	 * Get the observer of the team.
 	 *
 	 * @return The observer of the team.
 	 */
@@ -139,7 +143,7 @@ public class GeneralTeamInfo {
 	}
 
 	/**
-	 * Returns the club number of the team.
+	 * Get the club number of the team.
 	 *
 	 * @return The club number of the team.
 	 */
@@ -148,7 +152,7 @@ public class GeneralTeamInfo {
 	}
 
 	/**
-	 * Returns the number of players in the team.
+	 * Get the number of players in the team.
 	 *
 	 * @return The number of players in the team.
 	 */
@@ -157,13 +161,13 @@ public class GeneralTeamInfo {
 	}
 
 	/**
-	 * Returns the number of substitutes in the team.
+	 * Get the number of substitutes in the team.
+	 *
 	 * @return The number of substitutes in the team.
 	 */
 	public int getNumberOfSubstitutes() {
 		return numberOfSubstitutes;
 	}
 //endregion
-
 
 }

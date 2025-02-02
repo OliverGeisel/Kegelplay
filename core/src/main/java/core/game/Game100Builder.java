@@ -22,7 +22,7 @@ public class Game100Builder extends GameBuilder<Game> {
 		return null;
 	}
 
-//region setter/getter
+	//region setter/getter
 	@Override
 	public GameKind getGameKind() {
 		return GameKind.GAME_100;

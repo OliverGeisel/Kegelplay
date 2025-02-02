@@ -84,17 +84,18 @@ public abstract class Match<G extends Game> {
 	}
 
 	/**
-	 * Returns the players that are currently playing in the given set.
+	 * Return the integer encoding for team and player of the given setNumber.
+	 * First value is the team number, second value is the player number.
 	 *
-	 * @param set The set number.
-	 * @return List of players in the set.
+	 * @param setNumber The number of the set
+	 * @return List of pairs with the team and player number
 	 */
-	public List<Pair<Integer, Integer>> getPlayerForSet(int set) {
+	public List<Pair<Integer, Integer>> getPlayerForSet(int setNumber) {
 		var schema = config.getSchema();
 		var back = new LinkedList<Pair<Integer, Integer>>();
 		var lanesInSet = new LinkedList<LaneSchema.LaneSatz>();
 		for (var lane : schema.getLanes()) {
-			lanesInSet.add(lane.getSatze(set));
+			lanesInSet.add(lane.getSatze(setNumber));
 		}
 		for (var lane : lanesInSet) {
 			var team = lane.team();
@@ -114,9 +115,9 @@ public abstract class Match<G extends Game> {
 	//region setter/getter
 
 	/**
-	 * Returns the name of the match.
+	 * Returns the name of the match. The name contains the teams and the date of the match.
 	 *
-	 * @return Name of the match
+	 * @return The name of the match
 	 */
 	public String getName() {
 		return STR."Match: \{getTeamVs()} am \{getStatusInfo().getStartTime()
@@ -126,7 +127,7 @@ public abstract class Match<G extends Game> {
 	/**
 	 * Returns the point system of the match.
 	 *
-	 * @return Point system of the match
+	 * @return The point system of the match
 	 */
 	public PointSystem<G> getPointSystem() {
 		return pointSystem;
@@ -222,16 +223,16 @@ public abstract class Match<G extends Game> {
 	}
 
 	/**
-	 * Returns the players that	are currently playing in the current set.
+	 * Returns the integer-encoding for team and player for the current {@link core.game.GameSet}.
 	 *
-	 * @return List of players in the current set
+	 * @return List of pairs with the team and player number
 	 */
 	public List<Pair<Integer, Integer>> getPlayerForSet() {
 		return getPlayerForSet(getCurrentSet());
 	}
 
 	/**
-	 * Returns the path to the match in the file system.
+	 * Returns the path to the match where the data is stored.
 	 *
 	 * @return Path to the match
 	 */
@@ -240,9 +241,9 @@ public abstract class Match<G extends Game> {
 	}
 
 	/**
-	 * Returns the general information about the match.
+	 * Get the {@link GeneralMatchInfo} of the match.
 	 *
-	 * @return General information about the match
+	 * @return The general information of the match
 	 */
 	public GeneralMatchInfo getGeneralMatchInfo() {
 		return generalMatchInfo;
@@ -366,11 +367,18 @@ public abstract class Match<G extends Game> {
 //endregion
 
 
-	private class MatchState {
+	/**
+	 * Internal state of the match.
+	 */
+	private static class MatchState {
 
 		protected final String name;
 
-
+		/**
+		 * Creates a new match state with the given name.
+		 *
+		 * @param name The name of the state
+		 */
 		private MatchState(String name) {this.name = name;}
 	}
 

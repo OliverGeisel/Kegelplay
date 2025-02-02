@@ -37,7 +37,7 @@ public class PairPlayerAgainstPointSystem extends PointSystem<Game120> {
 		for (var team : match.getTeams()) {
 			var pairs = getPairings(team);
 			for (var pair : pairs) {
-				var points = new PairMatchPoints(pair.getKey(), pair.getValue());
+				var points = new PairMatchPoints<>(pair.getKey(), pair.getValue());
 				back.addMatchPoints(points);
 			}
 		}

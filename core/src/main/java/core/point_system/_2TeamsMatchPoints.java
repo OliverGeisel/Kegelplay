@@ -14,15 +14,13 @@ import java.util.Map;
  * pins (score/Holz).
  *
  * @param <G> The type of the {@link Game} that is played in the match.
- *
+ * @author Oliver Geisel
+ * @version 1.0.0
  * @see Game
  * @see Match
  * @see Player
  * @see Team
- *
- * @version 1.0.0
  * @since 1.0.0
- * @author Oliver Geisel
  */
 public class _2TeamsMatchPoints<G extends Game> extends MatchPoints<Team<G>> {
 
@@ -99,39 +97,33 @@ public class _2TeamsMatchPoints<G extends Game> extends MatchPoints<Team<G>> {
 
 	/**
 	 * Return the points of the second team. Is the sum of the points of the players of the second team.
+	 *
 	 * @return the points of the second team
 	 */
 	public double totalPointsTeam2Players() {
 		return gamePointsTeam2.stream().mapToDouble(GamePoints::getPoints).sum();
 	}
 
-//region setter/getter
-	public List<Pair<Player<G>, Player<G>>> getPairs() {
-		return pairs;
-	}
-
-	public Team<G> getTeam1() {
-		return team1;
-	}
-
-	public Team<G> getTeam2() {
-		return team2;
-	}
-
-	public double getScorePointsTeam1() {
-		return scorePointsTeam1;
-	}
-
-	public double getScorePointsTeam2() {
-		return scorePointsTeam2;
-	}
-
-	public List<GamePointsTeam<G>> getGamePointsTeam1() {
-		return gamePointsTeam1;
-	}
-
-	public List<GamePointsTeam<G>> getGamePointsTeam2() {
-		return gamePointsTeam2;
+	/**
+	 * Return the game points of the player.
+	 *
+	 * @param player name of the player (with underscore)
+	 * @return the game points of the player
+	 *
+	 * @throws IllegalArgumentException if the player is not found
+	 */
+	public GamePoints<G> getGamePointsForPlayer(String player) throws IllegalArgumentException {
+		for (var gamePoints : gamePointsTeam1) {
+			if (gamePoints.getPlayer().getCompleteNameWithUnderscore().equals(player)) {
+				return gamePoints;
+			}
+		}
+		for (var gamePoints : gamePointsTeam2) {
+			if (gamePoints.getPlayer().getCompleteNameWithUnderscore().equals(player)) {
+				return gamePoints;
+			}
+		}
+		throw new IllegalArgumentException("Player not found");
 	}
 
 	@Override
@@ -149,27 +141,80 @@ public class _2TeamsMatchPoints<G extends Game> extends MatchPoints<Team<G>> {
 		throw new IllegalArgumentException("Player not found");
 	}
 
-	public GamePoints getGamePointsForPlayer(String player) {
-		for (var gamePoints : gamePointsTeam1) {
-			if (gamePoints.getPlayer().getCompleteNameWithUnderscore().equals(player)) {
-				return gamePoints;
-			}
-		}
-		for (var gamePoints : gamePointsTeam2) {
-			if (gamePoints.getPlayer().getCompleteNameWithUnderscore().equals(player)) {
-				return gamePoints;
-			}
-		}
-		throw new IllegalArgumentException("Player not found");
+//region setter/getter
+
+	/**
+	 * Return the pairs of players that played against each other.
+	 *
+	 * @return the pairs of players
+	 */
+	public List<Pair<Player<G>, Player<G>>> getPairs() {
+		return pairs;
+	}
+
+	/**
+	 * Return the first team.
+	 *
+	 * @return the first team
+	 */
+	public Team<G> getTeam1() {
+		return team1;
+	}
+
+	/**
+	 * Return the second team.
+	 *
+	 * @return the second team
+	 */
+	public Team<G> getTeam2() {
+		return team2;
+	}
+
+	/**
+	 * Return the score points of the first team.
+	 *
+	 * @return the score points of the first team
+	 */
+	public double getScorePointsTeam1() {
+		return scorePointsTeam1;
+	}
+
+	/**
+	 * Return the score points of the second team.
+	 *
+	 * @return the score points of the second team
+	 */
+	public double getScorePointsTeam2() {
+		return scorePointsTeam2;
+	}
+
+	/**
+	 * Return the game points of the first team.
+	 *
+	 * @return the game points of the first team
+	 */
+	public List<GamePointsTeam<G>> getGamePointsTeam1() {
+		return gamePointsTeam1;
+	}
+
+	/**
+	 * Return the game points of the second team.
+	 *
+	 * @return the game points of the second team
+	 */
+	public List<GamePointsTeam<G>> getGamePointsTeam2() {
+		return gamePointsTeam2;
 	}
 
 	public double getWinnerPoints() {
 		return winnerPoints;
 	}
+
 	/**
 	 * Return the winner of the match.
 	 *
 	 * @return the winner of the match
+	 *
 	 * @throws IllegalStateException if the match is a draw
 	 */
 	@Override

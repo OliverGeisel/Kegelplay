@@ -33,10 +33,11 @@ public class GameCSVFileReader<G extends Game> extends CSVFileReader implements 
 		if (gameKind == null) {
 			throw new IllegalStateException("gameKind must not be null");
 		}
-		var durgaenge = gameKind.getNumberOfDurchgaenge();
+		// Todo use unused variables
+		var durgaenge = gameKind.getNumberOfGameSets();
 		var volleCount = gameKind.getNumberOfVolle();
 		var abraeumenCount = gameKind.getNumberOfAbraeumen();
-		var timePerDurchgang = gameKind.getTimePerDurchgang();
+		var timePerDurchgang = gameKind.getTimePerGameSet();
 		var throwsPerDurchgang = volleCount + abraeumenCount;
 		var header = getHeader();
 		var lines = getData();
@@ -91,17 +92,17 @@ public class GameCSVFileReader<G extends Game> extends CSVFileReader implements 
 			prevCode = picEncoded;
 		}
 
-		game.setDurchgaenge(sets);
+		game.setGameSets(sets);
 		return game;
 	}
 
 	private void fillWithEmpty(G game) {
 		var sets = new LinkedList<GameSet>();
 		var throwsPerDurchgang = gameKind.getNumberOfVolle() + gameKind.getNumberOfAbraeumen();
-		for (int i = 0; i < gameKind.getNumberOfDurchgaenge(); i++) {
+		for (int i = 0; i < gameKind.getNumberOfGameSets(); i++) {
 			sets.add(new GameSet(throwsPerDurchgang, gameKind.getNumberOfVolle(), gameKind.getNumberOfAbraeumen(), i));
 		}
-		game.setDurchgaenge(sets);
+		game.setGameSets(sets);
 	}
 
 
@@ -112,7 +113,7 @@ public class GameCSVFileReader<G extends Game> extends CSVFileReader implements 
 		var data = getData();
 		var volleCount = gameKind.getNumberOfVolle();
 		var abraeumenCount = gameKind.getNumberOfAbraeumen();
-		var timePerDurchgang = gameKind.getTimePerDurchgang();
+		var timePerDurchgang = gameKind.getTimePerGameSet();
 		var throwsPerDurchgang = volleCount + abraeumenCount;
 		var prevCode = 0;
 		for (String[] line : data) {
@@ -148,7 +149,7 @@ public class GameCSVFileReader<G extends Game> extends CSVFileReader implements 
 		for (int i=0; i< gameInfo.gameSets();i++){
 			list.add(new GameSet(gameInfo.getThrowsPerGameSet(), gameInfo.vollePerGameSet(), gameInfo.abrauemenPerGameSet(), i));
 		}
-		game.setDurchgaenge(list);
+		game.setGameSets(list);
 	}
 
 	/**

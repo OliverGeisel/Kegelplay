@@ -40,6 +40,7 @@ public class Match1Team<G extends Game> extends Match<G> {
 
 	/**
 	 * Get the player of the team by name.
+	 *
 	 * @param name The name of the player.
 	 * @return The player with the name.
 	 */
@@ -49,6 +50,7 @@ public class Match1Team<G extends Game> extends Match<G> {
 
 	/**
 	 * Get the player of the team by position.
+	 *
 	 * @param position The position of the player.
 	 * @return The player with the position.
 	 */

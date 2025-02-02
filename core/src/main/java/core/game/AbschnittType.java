@@ -10,15 +10,15 @@ package core.game;
  */
 public enum AbschnittType {
 	/**
-	 * A {@link Abschnitt} with volle.
+	 * Only {@link Wurfbild} where all 9 can be thrown each time.
 	 */
 	VOLLE,
 	/**
-	 * A {@link Abschnitt} with abraeumen.
+	 * Only {@link Wurfbild} where only the pins that are left can be thrown.
 	 */
 	RAEUMEN,
 	/**
-	 * A {@link Abschnitt} with a probe(not a real throw).
+	 * Preparation for a {@link Game} will not be counted.
 	 */
 	PROBE,
 	/**

@@ -21,7 +21,7 @@ public abstract class PointOverview<G extends Game> {
 		return null;
 	}
 
-//region setter/getter
+	//region setter/getter
 	public TeamPointOverview<G> getTeamPointOverview() {
 		return null;
 	}

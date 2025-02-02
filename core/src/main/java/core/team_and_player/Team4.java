@@ -6,20 +6,20 @@ import core.game.Game;
  * Represents a {@link Team} with exact 4 players.
  *
  * @param <G> the type of the game
+ * @author Oliver Geisel
+ * @version 1.0.0
  * @see Team
  * @see Player
  * @see GeneralTeamInfo
  * @see Game
- *
- * @version 1.0.0
  * @since 1.0.0
- * @author Oliver Geisel
  */
 public class Team4<G extends Game> extends Team<G> {
 
 	/**
 	 * Creates a team with 4 players.
-	 * @param name the name of the team
+	 *
+	 * @param name    the name of the team
 	 * @param players the players of the team
 	 * @throws IllegalArgumentException if the number of players is not 4
 	 */
@@ -31,6 +31,11 @@ public class Team4<G extends Game> extends Team<G> {
 		}
 	}
 
+	/**
+	 * Creates a team with 4 players and 4 substitutions.
+	 *
+	 * @param name the name of the team
+	 */
 	protected Team4(String name) {
 		super(name, new GeneralTeamInfo(), new Player[4], new Player[4]);
 	}

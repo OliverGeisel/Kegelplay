@@ -34,18 +34,6 @@ public class Game200 extends Game {
 	/**
 	 * Creates a new game with 200 throws.
 	 *
-	 * @param player        The player who plays the game.
-	 * @param substitution1 The first substitution player.
-	 * @param substitution2 The second substitution player.
-	 * @param date          The date of the game. (start)
-	 */
-	public Game200(Player player, Player substitution1, Player substitution2, LocalDateTime date) {
-		super(player, substitution1, substitution2, date);
-	}
-
-	/**
-	 * Creates a new game with 200 throws.
-	 *
 	 * @param player The player who plays the game.
 	 * @param date   The date of the game. (start)
 	 */
@@ -56,6 +44,18 @@ public class Game200 extends Game {
 		}
 	}
 
+	/**
+	 * Creates a new game with 200 throws.
+	 *
+	 * @param player        The player who plays the game.
+	 * @param substitution1 The first substitution player.
+	 * @param substitution2 The second substitution player.
+	 * @param date          The date of the game. (start)
+	 */
+	public Game200(Player player, Player substitution1, Player substitution2, LocalDateTime date) {
+		super(player, substitution1, substitution2, date);
+	}
+
 
 	@Override
 	public void start() {
@@ -63,14 +63,15 @@ public class Game200 extends Game {
 	}
 
 	@Override
-	public GameSet getDurchgang(int durchgang) throws IllegalArgumentException {
-		if (durchgang < 0 || durchgang >= ANZAHL_DURCHGAENGE) {
-			throw new IllegalArgumentException(STR."Index out of bounds: \{durchgang}. Game200 has only 4 Durchgänge.");
+	public GameSet getGameSet(int gameSetNumber) throws IllegalArgumentException {
+		if (gameSetNumber < 0 || gameSetNumber >= ANZAHL_DURCHGAENGE) {
+			throw new IllegalArgumentException(
+					STR."Index out of bounds: \{gameSetNumber}. Game200 has only 4 Durchgänge.");
 		}
-		return sets[durchgang];
+		return sets[gameSetNumber];
 	}
 
-//region setter/getter
+	//region setter/getter
 	@Override
 	public GameInfo getGameInfo() {
 		return new GameInfo(4, 25, 25, 20, true);
@@ -82,7 +83,7 @@ public class Game200 extends Game {
 	}
 
 	@Override
-	public int getNumberOfDurchgaenge() {
+	public int getNumberOfGameSets() {
 		return ANZAHL_DURCHGAENGE;
 	}
 
@@ -92,7 +93,7 @@ public class Game200 extends Game {
 	}
 
 	@Override
-	public void setDurchgaenge(List<GameSet> durgaenge) {
+	public void setGameSets(List<GameSet> durgaenge) {
 		if (durgaenge.size() != ANZAHL_DURCHGAENGE) {
 			throw new IllegalArgumentException(
 					STR."Anzahl der Durchgänge stimmt nicht. Erwarte \{ANZAHL_DURCHGAENGE}; waren aber \{durgaenge.size()}");

@@ -4,8 +4,9 @@ package core.match;
 import core.util.KeyValueRegion;
 
 /**
- * General information about a match. This contains information like the name, location, facility, match leader, kind
- * etc.
+ * This class represents the general information of a {@link Match}.
+ * This information is stored in the public record.
+ * It contains all the information that is not directly related to the game itself like place, league, referee, ...
  *
  * @param name           The name of the match.
  * @param location       The location of the match.
@@ -41,9 +42,9 @@ public record GeneralMatchInfo(String name, String location, String facility, St
 	}
 
 	/**
-	 * Creates a new general match information by a {@link KeyValueRegion}.
+	 * Creates a new GeneralMatchInfo object with the given values.
 	 *
-	 * @param region The region with the information.
+	 * @param region the region with the values for the record.
 	 */
 	public GeneralMatchInfo(KeyValueRegion<String, String> region) {
 		this(region.getValue("Name"),

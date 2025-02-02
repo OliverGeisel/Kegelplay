@@ -12,16 +12,13 @@ import java.util.Objects;
  * {@link PlayerID}.
  * A player play exactly one {@link Game} per {@link Match}. A player can be substituted by another player.
  *
- *
  * @param <G> The type of the game the player is playing.
- *
+ * @author Oliver Geisel
+ * @version 1.0.0
  * @see Game
  * @see PlayerID
  * @see Match
- *
  * @since 1.0.0
- * @version 1.0.0
- * @author Oliver Geisel
  */
 public class Player<G extends Game> {
 
@@ -49,10 +46,10 @@ public class Player<G extends Game> {
 	/**
 	 * Creates a new player.
 	 *
-	 * @param vorname The first name of the player.
+	 * @param vorname  The first name of the player.
 	 * @param nachname The last name of the player.
-	 * @param club The club of the player.
-	 * @param team The team(name) of the player.
+	 * @param club     The club of the player.
+	 * @param team     The team(name) of the player.
 	 * @param birthday The birthday of the player.
 	 */
 	public Player(String vorname, String nachname, String club, String team, LocalDate birthday) {
@@ -64,8 +61,8 @@ public class Player<G extends Game> {
 
 	/**
 	 * Get the state of the player.
-	 * @param state The state of the player.
 	 *
+	 * @param state The state of the player.
 	 * @return The state of the player.
 	 */
 	private PlayerState getStateFrom(PlayerStateEnum state) {
@@ -82,6 +79,7 @@ public class Player<G extends Game> {
 
 	/**
 	 * Returns the first name of the player.
+	 *
 	 * @return The first name of the player.
 	 */
 	public String getVorname() {
@@ -90,6 +88,7 @@ public class Player<G extends Game> {
 
 	/**
 	 * Returns the last name of the player.
+	 *
 	 * @return The last name of the player.
 	 */
 	public String getNachname() {
@@ -98,6 +97,7 @@ public class Player<G extends Game> {
 
 	/**
 	 * Returns the state of the player.
+	 *
 	 * @return The state of the player.
 	 */
 	public String getClub() {
@@ -106,6 +106,7 @@ public class Player<G extends Game> {
 
 	/**
 	 * Returns the team(name) of the player.
+	 *
 	 * @return The team(name) of the player.
 	 */
 	public String getTeam() {
@@ -114,6 +115,7 @@ public class Player<G extends Game> {
 
 	/**
 	 * Returns the birthday of the player.
+	 *
 	 * @return The birthday of the player.
 	 */
 	public LocalDate getBirthday() {
@@ -122,6 +124,7 @@ public class Player<G extends Game> {
 
 	/**
 	 * Returns the playerID of the player.
+	 *
 	 * @return The playerID of the player.
 	 */
 	public PlayerID getPlayerID() {
@@ -130,6 +133,7 @@ public class Player<G extends Game> {
 
 	/**
 	 * Get the Game of the player.
+	 *
 	 * @return The Game of the player.
 	 */
 	public G getGame() {
@@ -138,6 +142,7 @@ public class Player<G extends Game> {
 
 	/**
 	 * Set the Game of the player.
+	 *
 	 * @param game The Game of the player.
 	 */
 	public void setGame(G game) {
@@ -153,6 +158,7 @@ public class Player<G extends Game> {
 	/**
 	 * Returns the complete name of the player. This is the first name followed by the last name.
 	 * The string is trimmed.
+	 *
 	 * @return the complete name of the player
 	 */
 	public String getCompleteName() {
@@ -161,8 +167,10 @@ public class Player<G extends Game> {
 
 	/**
 	 * Returns the complete name of the player. Each blank and ',' is replaced by an underscore.
-	 * @see #getCompleteName()
+	 *
 	 * @return the complete name of the player
+	 *
+	 * @see #getCompleteName()
 	 */
 	public String getCompleteNameWithUnderscore() {
 		return STR."\{vorname}_\{nachname}".replace(" ", "_").replace(",", "_").trim();
@@ -170,8 +178,10 @@ public class Player<G extends Game> {
 
 	/**
 	 * Returns the complete name of the player. the for and surname are separated by a ','. The string is trimmed.
-	 * @see #getCompleteName()
+	 *
 	 * @return the complete name of the player
+	 *
+	 * @see #getCompleteName()
 	 */
 	public String getCompleteNameWithCommata() {
 		return STR."\{nachname},\{vorname}".trim();
@@ -179,6 +189,7 @@ public class Player<G extends Game> {
 
 	/**
 	 * Set the state of the player.
+	 *
 	 * @param state The state of the player.
 	 */
 	public void setStateTo(PlayerStateEnum state) {
@@ -219,10 +230,10 @@ public class Player<G extends Game> {
 	/**
 	 * Enum of the states of a player.
 	 *
-	 * @since 1.0.0
+	 * @author Oliver Geisel
 	 * @version 1.0.0
 	 * @see Player
-	 * @author Oliver Geisel
+	 * @since 1.0.0
 	 */
 	public enum PlayerStateEnum {
 		NOT_PLAYED_YET,

@@ -16,11 +16,12 @@ import java.util.Map;
 import static core.point_system.Evaluate2TeamsPair.evaluateMatchAsPoints;
 
 /**
- * Represents a match between two {@link Team}s.
+ * Represents a match with two {@link Team}s. This is normally used for league matches.
  *
- * @param <G> The type of the {@link Game} that is played in this match.
+ * @param <G> The type of the {@link Game} that is played in the match
  * @author Oliver Geisel
  * @version 1.0.0
+ * @see Match
  * @see Game
  * @since 1.0.0
  */
@@ -50,6 +51,7 @@ public class Match2Teams<G extends Game> extends Match<G> {
 
 	/**
 	 * Returns the player of the home team with the given name.
+	 *
 	 * @param name The name of the player.
 	 * @return The player with the given name.
 	 */
@@ -59,6 +61,7 @@ public class Match2Teams<G extends Game> extends Match<G> {
 
 	/**
 	 * Returns the player of the guest team with the given name.
+	 *
 	 * @param name The name of the player.
 	 * @return The player with the given name.
 	 */
@@ -68,6 +71,7 @@ public class Match2Teams<G extends Game> extends Match<G> {
 
 	/**
 	 * Returns the player of the home team with the given position.
+	 *
 	 * @param position The position of the player.
 	 * @return The player with the given position.
 	 */
@@ -77,6 +81,7 @@ public class Match2Teams<G extends Game> extends Match<G> {
 
 	/**
 	 * Returns the player of the guest team with the given position.
+	 *
 	 * @param position The position of the player.
 	 * @return The player with the given position.
 	 */
@@ -86,6 +91,7 @@ public class Match2Teams<G extends Game> extends Match<G> {
 
 	/**
 	 * Returns the pair of players with the given position.
+	 *
 	 * @param position The position of the players.
 	 * @return The pair of players with the given position.
 	 */
@@ -96,8 +102,9 @@ public class Match2Teams<G extends Game> extends Match<G> {
 	//region setter/getter
 
 	/**
-	 * Returns the home team.
-	 * @return the home team.
+	 * Get the home team.
+	 *
+	 * @return The home team.
 	 */
 	public Team<G> getHome() {
 		return home;

@@ -11,10 +11,9 @@ import java.util.Map;
  *
  * @param <W> the type of what is returned when the winner is asked.
  *            This can be a team or a player
- *
- * @since 1.0.0
- * @version 1.0.0
  * @author Oliver Geisel
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public abstract class MatchPoints<W> {
 
@@ -31,15 +30,18 @@ public abstract class MatchPoints<W> {
 	 * @param player        the player to get the points for
 	 * @param gameSetNumber the game set to get the points for
 	 * @return the points of the player for the game set
+	 *
 	 * @throws IllegalArgumentException if the player is not found or the game set number is not valid
 	 */
 	public abstract double getGameSetPointsFor(String player, int gameSetNumber) throws IllegalArgumentException;
 
 //region setter/getter
+
 	/**
 	 * Return the winner of the match.
 	 *
 	 * @return the winner of the match
+	 *
 	 * @throws IllegalStateException if the match is a draw
 	 */
 	public abstract W getWinner() throws IllegalStateException;

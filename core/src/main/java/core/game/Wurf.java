@@ -3,17 +3,20 @@ package core.game;
 
 /**
  * Representation of a single Throw ({@link Wurf}) in a game.
- * @param value the score of the Wurf. Pins hitted by the Wurf.
- * @param bild the {@link Wurfbild} of the Wurf. Number of pins must not be null.
- * @param foul true if the Wurf is a foul.
- * @param redCard true if the Wurf is a red card.
- * @param volle true if the Wurf is a volle (all 9 Pins are there).
- * @param anschub true if the Wurf is an anschub (in abräumen is the first throw after all pin were hit in abräumen).
  *
- * @version 1.0.0
- * @since 1.0.0
- * @see Wurfbild
+ * @param value   the score of the Wurf. Pins hit by the Wurf.
+ * @param bild    the {@link Wurfbild} of the Wurf. Number of pins must not be null.
+ * @param foul    true if the Wurf is a foul.
+ * @param redCard true if the Wurf is a red card.
+ * @param volle   true if the Wurf is a volle (all 9 Pins are there).
+ * @param anschub true if the Wurf is an anschub (in abräumen is the first throw after all pin were hit in abräumen).
+ * @param volle   true if the Wurf is a volle. If false, the Wurf is raeumer
+ * @param anschub true if the Wurf is an Anschub. If false, the Wurf is not an Anschub. Is only important in the
+ *                raemer phase
  * @author Oliver Geisel
+ * @version 1.0.0
+ * @see Wurfbild
+ * @since 1.0.0
  */
 public record Wurf(int value, Wurfbild bild, boolean foul, boolean redCard, boolean volle, boolean anschub) {
 
