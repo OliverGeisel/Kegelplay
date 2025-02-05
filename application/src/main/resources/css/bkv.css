@@ -20,6 +20,24 @@
     -fx-font-family: "Roboto", sans-serif;
 }
 
+positive {
+    -fx-border-color: #005500;
+    -fx-background-color: #00ff00;
+    -fx-border-radius: 2px;
+}
+
+negative {
+    -fx-border-color: #550000;
+    -fx-background-color: #ff0000;
+    -fx-border-radius: 2px;
+}
+
+.neutral {
+    -fx-border-color: #fff14f;
+    -fx-background-color: yellow;
+    -fx-border-radius: 2px;
+}
+
 
 .centering {
     -fx-alignment: center;
