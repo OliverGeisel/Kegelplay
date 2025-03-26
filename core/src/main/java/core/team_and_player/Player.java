@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * Represents a player. Each player has a first name, a last name, a state, a game, a club, a team, a birthday and a
  * {@link PlayerID}.
- * A player play exactly one {@link Game} per {@link Match}. A player can be substituted by another player.
+ * A player plays exactly one {@link Game} per {@link Match}. A player can be substituted by another player.
  *
  * @param <G> The type of the game the player is playing.
  * @author Oliver Geisel
@@ -158,6 +158,9 @@ public class Player<G extends Game> {
 	/**
 	 * Returns the complete name of the player. This is the first name followed by the last name.
 	 * The string is trimmed.
+	 * <br>
+	 * Example: <br>
+	 * "Tim Muster"
 	 *
 	 * @return the complete name of the player
 	 */
@@ -177,7 +180,7 @@ public class Player<G extends Game> {
 	}
 
 	/**
-	 * Returns the complete name of the player. the for and surname are separated by a ','. The string is trimmed.
+	 * Returns the complete name of the player. The for and surname are separated by a ','. The string is trimmed.
 	 *
 	 * @return the complete name of the player
 	 *
@@ -228,7 +231,7 @@ public class Player<G extends Game> {
 
 
 	/**
-	 * Enum of the states of a player.
+	 * Enum of the states for a player.
 	 *
 	 * @author Oliver Geisel
 	 * @version 1.0.0
@@ -265,7 +268,7 @@ public class Player<G extends Game> {
 
 	/**
 	 * Represents the state of a player.
-	 * Normally a player starts in the state NOT_PLAYED_YET.
+	 * Normally, a player starts in the state NOT_PLAYED_YET.
 	 * If a player comes to the game, the state changes to PROBE.
 	 * If the player starts playing, the state changes to RUNNING.
 	 * If the player has finished a set, the state changes to SATZ_COMPLETE.

@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 
 /**
@@ -25,24 +26,25 @@ import java.util.List;
  *     ...
  * </pre>
  * </p>
- * @see IniRegion
  *
- * @version 1.0.0
- * @since 1.0.0
  * @author Oliver Geisel
+ * @version 1.0.0
+ * @see IniRegion
+ * @since 1.0.0
  */
 public class IniFile extends KeyValueRegionCollection<String, String, IniRegion> {
 
 	private static final System.Logger LOGGER = System.getLogger(IniFile.class.getName());
 
+	private final String HEAD_REGEX = "\\[.*]";
 
 	/**
 	 * Creates a new IniFile object from a Path.
 	 *
-	 * @param path The path to the file.
+	 * @param path     The path to the file.
 	 * @param encoding The encoding of the file.
-	 * @throws IOException If the file could not be read.
-	 * @throws IniFileException If the file is not a valid ini file.
+	 * @throws IOException              If the file could not be read.
+	 * @throws IniFileException         If the file is not a valid ini file.
 	 * @throws IllegalArgumentException If the path is null, the file does not exist or the file does not end with .ini.
 	 */
 	public IniFile(Path path, String encoding) throws IOException, IniFileException, IllegalArgumentException {
@@ -58,10 +60,18 @@ public class IniFile extends KeyValueRegionCollection<String, String, IniRegion>
 			throw new IllegalArgumentException("file must exist");
 		}
 		setName(path.getFileName().toString());
+		var commentSymbol = "#";
 
 		String[] lines;
 		try (var reader = new BufferedReader(new FileReader(file, Charset.forName(encoding)))) {
 			lines = reader.lines().toArray(String[]::new);
+			// clean lines
+			for (var i = 0; i < lines.length; i++) {
+				lines[i] = lines[i].trim();
+				if (lines[i].contains(commentSymbol)) {
+					lines[i] = lines[i].substring(0, lines[i].indexOf(commentSymbol));
+				}
+			}
 		} catch (Exception e) {
 			throw new IOException("could not read file", e);
 		}
@@ -70,10 +80,10 @@ public class IniFile extends KeyValueRegionCollection<String, String, IniRegion>
 			throw new IniFileException("Ini file is empty");
 		}
 		var firstLine = lines[0].trim();
-		if (!firstLine.startsWith("[") || !firstLine.endsWith("]")) {
-			creatWithOneRegion(lines);
-		} else {
+		if (Pattern.matches(STR."\{HEAD_REGEX}\\s*", firstLine)) {
 			createWithMultipleRegions(firstLine, lines);
+		} else {
+			creatWithOneRegion(lines);
 		}
 	}
 
@@ -81,8 +91,8 @@ public class IniFile extends KeyValueRegionCollection<String, String, IniRegion>
 	 * Creates a new IniFile object from a Path with default encoding ISO-8859-1.
 	 *
 	 * @param path The path to the file.
-	 * @throws IOException If the file could not be read.
-	 * @throws IniFileException If the file is not a valid ini file.
+	 * @throws IOException              If the file could not be read.
+	 * @throws IniFileException         If the file is not a valid ini file.
 	 * @throws IllegalArgumentException If the path is null, the file does not exist or the file does not end with .ini.
 	 */
 	public IniFile(Path path) throws IOException, IniFileException, IllegalArgumentException {
@@ -94,13 +104,12 @@ public class IniFile extends KeyValueRegionCollection<String, String, IniRegion>
 	}
 
 
-
 	/**
 	 * Create IniFile with multiple regions
 	 *
 	 * @param firstLine first line of the ini file. Is the name of the first region
-	 * @param lines all lines of the ini file
-	 *  @throws IniFileException if the first line is not the name of a region
+	 * @param lines     all lines of the ini file
+	 * @throws IniFileException if the first line is not the name of a region
 	 */
 	private void createWithMultipleRegions(String firstLine, String[] lines) throws IniFileException {
 		String regionName;
@@ -112,15 +121,15 @@ public class IniFile extends KeyValueRegionCollection<String, String, IniRegion>
 		for (var line : lines) {
 			var trimmedLine = line.trim();
 			if (trimmedLine.startsWith("[") && trimmedLine.endsWith("]")) { // new region
-				currentRegion.setLines(regionLines.toArray(String[]::new)); // finish old region
-				// add new region to regions
+				currentRegion.setLines(regionLines.toArray(String[]::new)); // finish an old region
+				// add a new region to regions
 				regionName = trimmedLine.substring(1, trimmedLine.length() - 1);
 				regionLines = new ArrayList<>();
 				currentRegion = new IniRegion(regionName, regionLines.toArray(String[]::new));
 				regions.add(currentRegion);
 			} else {
 				if (!trimmedLine.contains("=")) {
-					LOGGER.log(System.Logger.Level.INFO, "invalid pair {line} in ini file");
+					LOGGER.log(System.Logger.Level.INFO, STR."invalid pair on \{line} in ini file");
 					continue;
 				}
 				var keyValue = trimmedLine.split("=");
@@ -137,9 +146,9 @@ public class IniFile extends KeyValueRegionCollection<String, String, IniRegion>
 	 * The given lines are the lines of the region. The region has no name. If you want the name of the region, you
 	 * get the empty string.
 	 *
-	 * @see IniRegion
 	 * @param lines all lines of the ini region
 	 * @throws IniFileException if one key value pair is not valid
+	 * @see IniRegion
 	 */
 	private void creatWithOneRegion(String[] lines) {
 		var map = new java.util.HashMap<String, String>();

@@ -1,11 +1,7 @@
-package de.kegelplay.infrastructure.data_reader;
+package core.match;
 
 
 import core.game.Game;
-import core.match.GeneralMatchInfo;
-import core.match.Match;
-import core.match.MatchConfig;
-import core.match.MatchStatusInfo;
 import core.point_system.PointSystem;
 import core.team_and_player.Team;
 
@@ -13,6 +9,16 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A match with n teams.
+ *
+ * @param <G> The type of the game the match is about.
+ * @author Oliver Geisel
+ * @version 1.0.0
+ * @see Match
+ * @see Team
+ * @since 1.0.0
+ */
 public class MatchNTeams<G extends Game> extends Match<G> {
 	private final List<Team<G>> teams;
 
