@@ -4,10 +4,7 @@ package de.olivergeisel.kegelplay.gui;
 import core.game.Game;
 import core.game.Game120;
 import core.match.Match;
-import core.point_system.AllAgainstAll120_4PlayerPointSystem;
-import core.point_system.MatchPoints;
-import core.point_system.PairPlayerAgainstPointSystem;
-import core.point_system.PointSystem;
+import core.point_system.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -63,9 +60,8 @@ public class TableController implements Initializable {
 
 	private void updateTable(Match match) {
 		var rowcount = grid.getRowCount();
-		PointSystem<Game120> pointsystem = match.getPointSystem();
-		MatchPoints points;
-		points = pointsystem.getMatchPoints(match);
+		PointSystem<Game120> pointSystem = match.getPointSystem();
+		var points = pointSystem.getMatchPoints(match);
 		for (var lane : grid.getChildren()) {
 			if (lane instanceof Label label) {
 				var row = GridPane.getRowIndex(label);
@@ -81,25 +77,9 @@ public class TableController implements Initializable {
 						case 3 -> label.setText(Integer.toString(game.getTotalScore()));
 						case 4 -> label.setText(Integer.toString(game.getTotalFehlwurf()));
 						case 5 -> {
-							var player = game.getPlayer();
-							if (pointsystem instanceof PairPlayerAgainstPointSystem pairSystem) {
-								var matchPoints = pairSystem.getMatchPoints(match);
-								double playerPoints = (double) matchPoints.getMatchPoints().get(player);
-								label.setText(Double.toString(playerPoints));
-							}
-							if (pointsystem instanceof AllAgainstAll120_4PlayerPointSystem allAgainst) {
-								var matchPoints = allAgainst.getMatchPoints(match);
-								double playerPoints = (double) matchPoints.getMatchPoints().get(player);
-								label.setText(Double.toString(playerPoints));
-							} else { // TODO replace with better solution
-								final var setNumbers = List.of(0, 1, 2, 3);
-								var sum = 0.0;
-								for (var setNumber : setNumbers) {
-									sum += points.getGameSetPointsFor(player.getCompleteNameWithUnderscore(),
-											setNumber);
-								}
-								label.setText(Double.toString(sum));
-							}
+							var pointsRe = calcPoints(pointSystem, match);
+							label.setText(STR."\{pointsRe}");
+
 						}
 						default -> throw new IllegalStateException(STR."Unexpected value: \{col}");
 					}
@@ -122,6 +102,34 @@ public class TableController implements Initializable {
 				}
 			}
 		}
+	}
+
+	private double calcPoints(PointSystem<Game120> pointSystem, Match<Game120> match) {
+		if (game == null || pointSystem == null) {
+			return 0.0;
+		}
+		if (pointSystem instanceof DummyPointSystem) {
+			return 0.0;
+		}
+		MatchPoints points = pointSystem.getMatchPoints(match);
+		var player = game.getPlayer();
+		if (pointSystem instanceof PairPlayerAgainstPointSystem pairSystem) {
+			return pairSystem.getMatchPoints(match).getMatchPoints().get(player);
+		}
+		var back = 0.0;
+		if (pointSystem instanceof AllAgainstAll120_4PlayerPointSystem allAgainst) {
+			var matchPoints = allAgainst.getMatchPoints(match);
+			back = matchPoints.getMatchPoints().get(player);
+		} else { // TODO replace with better solution
+			final var setNumbers = List.of(0, 1, 2, 3);
+			var sum = 0.0;
+			for (var setNumber : setNumbers) {
+				sum += points.getGameSetPointsFor(player.getCompleteNameWithUnderscore(),
+						setNumber);
+			}
+			back = sum;
+		}
+		return back;
 	}
 
 	public void setGame(Game game, Match match) {

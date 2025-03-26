@@ -5,10 +5,7 @@ import core.game.Game;
 import core.game.GameKind;
 import core.match.Match;
 import core.match.Match1Team;
-import core.point_system.AllAgainstAll120_4PlayerPointSystem;
-import core.point_system.PairPlayerAgainstPointSystem;
-import core.point_system.PointSystem;
-import core.point_system._2Teams120PointSystem;
+import core.point_system.*;
 import de.kegelplay.infrastructure.data_reader.KeglerheimGeneralReader;
 import de.kegelplay.infrastructure.data_reader.UnsupportedMatchSchema;
 import javafx.event.ActionEvent;
@@ -52,10 +49,10 @@ public class SelectGameController implements Initializable {
 
 	private static final double        ASPECT_RATIO  = 16.0 / 9; // Gewünschtes Seitenverhältnis (z. B. 16:9)
 	private static final System.Logger LOGGER        = System.getLogger(SelectGameController.class.getName());
-	private static final List<String> VIEWS =
+	private static final List<String>  VIEWS         =
 			List.of("4 gegeneinander", "2 Teams", "2 Teams-A2", "N Teams", "Vorlauf-Endlauf", "Halbfinale");
 	private static final List<String>  POINT_SYSTEMS =
-			List.of("4 Spieler gegeneinander", "2 Teams paarweise", "Teams summe", "Paarweise gegeneinander");
+			List.of("4 Spieler gegeneinander", "2 Teams paarweise", "Teams summe", "Paarweise gegeneinander", "DUMMY");
 
 	private static final Map<String, String> VIEW_INFO = Map.of(
 			"4 gegeneinander", "4 Spieler in einem Team, die alle gegeneinander spielen",
@@ -102,9 +99,17 @@ public class SelectGameController implements Initializable {
 		}
 	}
 
-	private void loadGames(Path path, LocalDate date) throws FileNotFoundException, IOException {
+	/**
+	 * Load the games for the given date.
+	 *
+	 * @param settingPath the path to the settings file
+	 * @param date        the date for which the games should be loaded
+	 * @throws FileNotFoundException if the games could not be found
+	 * @throws IOException           if the games could not be loaded
+	 */
+	private void loadGames(Path settingPath, LocalDate date) throws FileNotFoundException, IOException {
 		var parser = new ObjectMapper();
-		var parsed = parser.readTree(path.toFile());
+		var parsed = parser.readTree(settingPath.toFile());
 		var folder = parsed.get("dataFolder").asText();
 		var formatted = date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 
@@ -158,13 +163,16 @@ public class SelectGameController implements Initializable {
 		var stage = (Stage) oldScene.getWindow();
 		// stage.close();
 		stage = new Stage();
-		var fxmlLoader = new FXMLLoader(getClass().getResource("display-game.fxml"));
+		FXMLLoader fxmlLoader;
 		var datePath = this.datePath;
 		var dataReader = new KeglerheimGeneralReader(datePath.resolve(selectedGame), true);
 		var kind = gameKind.getValue();
 		var selectedView = view.getValue();
-		var systemSelect = pointSystemField.getValue();
-		var title = "";
+		var selectedPointSystem = pointSystemField.getValue();
+		if (selectedPointSystem == null) {
+			selectedPointSystem="DUMMY";
+		}
+		String title;
 		Match<?> match;
 		try {
 			match = dataReader.initNewMatch();
@@ -172,62 +180,14 @@ public class SelectGameController implements Initializable {
 			e.printStackTrace();
 			return;
 		}
-		PointSystem pointSystem = switch (systemSelect) {
-			case "4 Spieler gegeneinander" -> {
-				title = "4 gegeneinander Satzpunkte";
-				yield new AllAgainstAll120_4PlayerPointSystem();
-			}
-			case "2 Teams paarweise" -> {
-				title = "2 Mannschaften mit Satzpunkten";
-				yield new _2Teams120PointSystem();
-			}
-			case "Paarweise gegeneinander" -> {
-				title = "Paarweise gegeneinander";
-				yield new PairPlayerAgainstPointSystem();
-			}
-			case "Teams summe" -> {
-				title = "Teams summe";
-				yield new PairPlayerAgainstPointSystem();
-			}
-			default -> throw new IllegalStateException(STR."Unexpected value: \{systemSelect}");
-		};
+		var resPT = getPointSystem(selectedPointSystem);
+		PointSystem pointSystem = resPT.pointSystem;
+		title = resPT.title;
 		match.setPointSystem(pointSystem);
-		DisplayGameController<? extends Game> controller = switch (selectedView) {
-			case "4 gegeneinander" -> {
-				if (match instanceof Match1Team match1Team) {
-					fxmlLoader = new FXMLLoader(getClass().getResource("display-game.fxml"));
-					yield new _4PlayersAllAgainstController<>(match1Team);
-				} else {
-					throw new IllegalStateException(STR."Unexpected value: \{match}");
-				}
-			}
-			case "2 Teams-A2" -> {
-				fxmlLoader = new FXMLLoader(getClass().getResource("2Teams6Players-A2.fxml"));
-				yield new _2TeamsAgainstA2Controller<>(match);
-			}
-			case "2 Teams" -> {
-				fxmlLoader = new FXMLLoader(getClass().getResource("2Teams6Players.fxml"));
-				yield new _2TeamsAgainstController<>(match);
-			}
-			case "Vorlauf-Endlauf" -> {
-				if (match instanceof Match match1Team) {
-					fxmlLoader = new FXMLLoader(getClass().getResource("vorlauf-endlauf.fxml"));
-					yield new VorlaufEndlaufController(match1Team);
-				} else {
-					throw new IllegalStateException(STR."Unexpected value: \{match}");
-				}
-			}
-			case "Halbfinale" -> {
-				if (match instanceof Match1Team match1Team) {
-					fxmlLoader = new FXMLLoader(getClass().getResource("semi-final.fxml"));
-					yield new SemiFinalController(match1Team);
-				} else {
-					throw new IllegalStateException(STR."Unexpected value: \{match}");
-				}
-			}
-			case "N Teams" -> null;
-			default -> throw new IllegalStateException(STR."Unexpected value: \{selectedView}");
-		};
+		DisplayGameController<? extends Game> controller;
+		var resCL = getController(selectedView, match);
+		controller = resCL.controller;
+		fxmlLoader = resCL.fxmlLoader;
 		fxmlLoader.setController(controller);
 		Pane stackPane;
 		try {
@@ -258,8 +218,8 @@ public class SelectGameController implements Initializable {
 		// Setzen der Position und Größe des neuen Fensters basierend auf dem zweiten Bildschirm
 		stage.setX(bounds.getMinX() + (bounds.getWidth() - 1000) / 2); // 400 ist die Breite des neuen Fensters
 		stage.setY(bounds.getMinY() + (bounds.getHeight() - 500) / 2); // 300 ist die Höhe des neuen Fensters
-		stage.setMaxWidth(max(selectedScreen.getBounds().getWidth() + 20, 20+1920));
-		stage.setMaxHeight(max(selectedScreen.getBounds().getHeight(), 1080+20));
+		stage.setMaxWidth(max(selectedScreen.getBounds().getWidth() + 20, 20 + 1920));
+		stage.setMaxHeight(max(selectedScreen.getBounds().getHeight(), 1080 + 20));
 		stage.show();
 		if (frameless.isSelected()) {
 			stage.setFullScreen(true);
@@ -271,6 +231,76 @@ public class SelectGameController implements Initializable {
 			});
 		}
 		stage.setAlwaysOnTop(onTop.isSelected());
+	}
+
+	private PointSystemAndTitle getPointSystem(String systemSelect) {
+		String title;
+		PointSystem pointSystem;
+		switch (systemSelect) {
+			case "4 Spieler gegeneinander" -> {
+				title = "4 gegeneinander Satzpunkte";
+				pointSystem = new AllAgainstAll120_4PlayerPointSystem();
+			}
+			case "2 Teams paarweise" -> {
+				title = "2 Mannschaften mit Satzpunkten";
+				pointSystem = new _2Teams120PointSystem();
+			}
+			case "Paarweise gegeneinander" -> {
+				title = "Paarweise gegeneinander";
+				pointSystem = new PairPlayerAgainstPointSystem();
+			}
+			case "Teams summe" -> {
+				title = "Teams summe";
+				pointSystem = new PairPlayerAgainstPointSystem();
+			}
+			case "DUMMY" -> {
+				title = "DUMMY PointSystem";
+				pointSystem = new DummyPointSystem();
+			}
+			default -> throw new IllegalStateException(STR."Unexpected value: \{systemSelect}");
+		}
+		return new PointSystemAndTitle(pointSystem, title);
+	}
+
+	private <G extends Game> ControllerAndLoader getController(String selectedView, Match<G> match) {
+		DisplayGameController<? extends Game> controller = null;
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("display-game.fxml"));
+		switch (selectedView) {
+			case "4 gegeneinander" -> {
+				if (match instanceof Match1Team match1Team) {
+					fxmlLoader = new FXMLLoader(getClass().getResource("display-game.fxml"));
+					controller = new _4PlayersAllAgainstController<>(match1Team);
+				} else {
+					throw new IllegalStateException(STR."Unexpected value: \{match}");
+				}
+			}
+			case "2 Teams-A2" -> {
+				fxmlLoader = new FXMLLoader(getClass().getResource("2Teams6Players-A2.fxml"));
+				controller = new _2TeamsAgainstA2Controller<>(match);
+			}
+			case "2 Teams" -> {
+				fxmlLoader = new FXMLLoader(getClass().getResource("2Teams6Players.fxml"));
+				controller = new _2TeamsAgainstController<>(match);
+			}
+			case "Vorlauf-Endlauf" -> {
+				var match1 = (Match) match;
+				fxmlLoader = new FXMLLoader(getClass().getResource("vorlauf-endlauf.fxml"));
+				controller = new VorlaufEndlaufController(match1);
+			}
+			case "Halbfinale" -> {
+				if (match instanceof Match1Team match1Team) {
+					fxmlLoader = new FXMLLoader(getClass().getResource("semi-final.fxml"));
+					controller = new SemiFinalController(match1Team);
+				} else {
+					throw new IllegalStateException(
+							STR."Unexpected value: \{match} - \{match.getClass()} cannot be used for this view");
+				}
+			}
+			case "N Teams" -> {
+			}
+			default -> throw new IllegalStateException(STR."Unexpected value: \{selectedView}");
+		}
+		return new ControllerAndLoader(fxmlLoader, controller);
 	}
 
 	/**
@@ -306,5 +336,11 @@ public class SelectGameController implements Initializable {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	private record PointSystemAndTitle(PointSystem pointSystem, String title) {
+	}
+
+	private record ControllerAndLoader(FXMLLoader fxmlLoader, DisplayGameController<? extends Game> controller) {
 	}
 }

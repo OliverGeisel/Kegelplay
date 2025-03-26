@@ -11,7 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -23,6 +22,13 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Controller for displaying a Vorlauf-Endlauf Match (special for Endlauf)
+ *
+ * @author Oliver Geisel
+ * @version 1.0.0
+ * @since 1.0.0
+ */
 public class VorlaufEndlaufController extends DisplayGameController<Game120> implements Initializable {
 
 	private static final long          REFRESH_INTERVAL;
@@ -67,7 +73,6 @@ public class VorlaufEndlaufController extends DisplayGameController<Game120> imp
 			@Override
 			public void run() {
 				Platform.runLater(() -> {
-					matchUpdater.updateMatch();
 					update();
 				});
 			}
@@ -90,6 +95,7 @@ public class VorlaufEndlaufController extends DisplayGameController<Game120> imp
 		var difference = Duration.between(start, end);
 		LOGGER.log(System.Logger.Level.INFO, STR."Update complete: Duration: \{difference.toMillis()} ms");
 		int i = 0;
+		// update teams section
 		var teamBoxes = List.of(team1, team2, team3);
 		for (var team : match.getTeams()) {
 			var box = teamBoxes.get(i++);
@@ -98,11 +104,13 @@ public class VorlaufEndlaufController extends DisplayGameController<Game120> imp
 		}
 	}
 
+	/**
+	 * Set {@link Player} in the selected line
+	 * @param player player in the lane
+	 * @param lane Lane to set
+	 */
 	private void setLane(Player<Game120> player, VBox lane) {
-		var lanes = match.getConfig().getLaneNames();
-		var parent = (Pane) lane.getParent();
-		var index = parent.getChildren().indexOf(lane);
-		var header = (GridPane) lane.getChildren().get(0);
+		var header = (GridPane) lane.getChildren().getFirst();
 		var headerController = (HeaderController) header.getProperties().get(FXMLLoader.CONTROLLER_KEYWORD);
 		if (!player.equals(headerController.getPlayer())) {
 			headerController.setPlayer(player);
