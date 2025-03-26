@@ -82,7 +82,19 @@ public class VorlaufEndlaufController extends DisplayGameController<Game120> imp
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+		// look for selected Controller
+		boolean extended = true;
+		if (extended) {
+			var controller = new TeamOrderExtendedController();
+			controller.setRoot(team1);
+			team1.getProperties().put(FXMLLoader.CONTROLLER_KEYWORD, controller);
+			controller = new TeamOrderExtendedController();
+			controller.setRoot(team2);
+			team2.getProperties().put(FXMLLoader.CONTROLLER_KEYWORD, controller);
+			controller = new TeamOrderExtendedController();
+			controller.setRoot(team3);
+			team3.getProperties().put(FXMLLoader.CONTROLLER_KEYWORD, controller);
+		}
 	}
 
 	public void update() {

@@ -196,7 +196,7 @@ public class SelectGameController implements Initializable {
 			e.printStackTrace();
 			return;
 		}
-		//  Todo check if view is not wrong for the match
+		//  Todo check if view is correct for the match
 		var scene = new Scene(stackPane);
 		scene.getStylesheets().add(STR."file:css/\{cssFile.getValue()}");
 		stage.setTitle(title);
@@ -297,6 +297,7 @@ public class SelectGameController implements Initializable {
 				}
 			}
 			case "N Teams" -> {
+				//controller
 			}
 			default -> throw new IllegalStateException(STR."Unexpected value: \{selectedView}");
 		}

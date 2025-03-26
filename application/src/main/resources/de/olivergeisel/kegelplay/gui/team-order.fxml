@@ -2,10 +2,11 @@
 
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-      minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.14-internal"
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="root" maxHeight="1.7976931348623157E308"
+      maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/11.0.14-internal"
       fx:controller="de.olivergeisel.kegelplay.gui.TeamOrderController">
     <children>
-        <HBox prefHeight="100.0" prefWidth="200.0"/>
+        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0"
+              prefWidth="200.0"/>
     </children>
 </VBox>

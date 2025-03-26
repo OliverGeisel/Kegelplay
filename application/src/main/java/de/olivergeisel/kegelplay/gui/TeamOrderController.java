@@ -32,7 +32,8 @@ import java.util.stream.Stream;
  */
 public class TeamOrderController implements Initializable {
 
-	private static final Log log = LogFactory.getLog(TeamOrderController.class);
+	protected static final Log log = LogFactory.getLog(TeamOrderController.class);
+
 	@FXML
 	private VBox root;
 
@@ -50,7 +51,7 @@ public class TeamOrderController implements Initializable {
 		root.getProperties().put(FXMLLoader.CONTROLLER_KEYWORD, this);
 	}
 
-	private static Stream<PlayerScore> getPlayerScoreStream(Team team, IniFile iniFile) {
+	protected static Stream<PlayerScore> getPlayerScoreStream(Team team, IniFile iniFile) {
 		// Sort the players by their score (current score + vorlauf)
 		var mapping = Arrays.stream(team.getPlayers()).map(player -> {
 			var game = player.getGame();
@@ -103,6 +104,6 @@ public class TeamOrderController implements Initializable {
 	 * @param player The player.
 	 * @param score The score.
 	 */
-	private record PlayerScore(Player player, int score) {
+	protected record PlayerScore(Player player, int score) {
 	}
 }

@@ -53,7 +53,7 @@ public class HelloController {
 	public void onNeuFensterClick(ActionEvent actionEvent) throws IOException {
 		var oldScene = ((Button) actionEvent.getSource()).getScene();
 		var stage = (Stage) oldScene.getWindow();
-		var fxmlLoader = new FXMLLoader(getClass().getResource("selectgame.fxml"));
+		var fxmlLoader = new FXMLLoader(getClass().getResource("select-game.fxml"));
 		Pane stackPane = fxmlLoader.load();
 		var scene = new Scene(stackPane);
 		stage.setTitle("Wahl Spiel");
