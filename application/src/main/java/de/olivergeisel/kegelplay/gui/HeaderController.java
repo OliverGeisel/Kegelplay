@@ -15,12 +15,12 @@ import java.util.ResourceBundle;
 
 public class HeaderController implements Initializable {
 
-	private static final String DEFAULT_IMAGE = "file:./images/kegeln.png";
+	private static final String DEFAULT_IMAGE = "./images/kegeln.png";
 
 
-	private Player player;
+	private Player   player;
 	@FXML
-	private Label  vorname;
+	private Label    vorname;
 	@FXML
 	private Label     name;
 	@FXML
@@ -42,6 +42,25 @@ public class HeaderController implements Initializable {
 		return STR."./images/\{player.getClub()}/\{player.getCompleteNameWithUnderscore()}.jpg";
 	}
 
+	private static String getClubLogo(Player player) {
+		var defaultImage = STR."./images/\{player.getClub()}/logo.png";
+		if (new File(defaultImage).exists()) {
+			return defaultImage;
+		}
+		// JPG
+		var imagePath = STR."./images/\{player.getClub()}/logo.jpg";
+		if (new File(imagePath).exists()) {
+			return imagePath;
+		}
+		/** TODO IMPROVE
+		 // SVG
+		 imagePath = STR."./images/\{player.getClub()}/logo.svg";
+		 if (new File(imagePath).exists()) {
+		 return imagePath;
+		 }**/
+		return DEFAULT_IMAGE;
+	}
+
 	/**
 	 * Called to initialize a controller after its root element has been
 	 * completely processed.
@@ -59,7 +78,7 @@ public class HeaderController implements Initializable {
 		vorname.setWrapText(true);
 		name.setWrapText(true);
 		verein.setWrapText(true);
-		image.setImage(new Image(DEFAULT_IMAGE));
+		image.setImage(new Image(STR."file:\{DEFAULT_IMAGE}"));
 
 		vorname.getProperties().put(FXMLLoader.CONTROLLER_KEYWORD, this);
 		name.getProperties().put(FXMLLoader.CONTROLLER_KEYWORD, this);
@@ -103,12 +122,8 @@ public class HeaderController implements Initializable {
 			if (new File(imagePath).exists()) {
 				this.image.setImage(new Image(STR."file:\{imagePath}"));
 			} else {
-				var fallBack = STR."images/\{player.getClub()}/logo.png";
-				if (new File(fallBack).exists()) {
-					this.image.setImage(new Image(STR."file:\{fallBack}"));
-				} else {
-					this.image.setImage(new Image(DEFAULT_IMAGE));
-				}
+				var fallBack = getClubLogo(player);
+				this.image.setImage(new Image(STR."file:\{fallBack}"));
 			}
 		}
 	}
