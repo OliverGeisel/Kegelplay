@@ -2,6 +2,7 @@ package de.olivergeisel.kegelplay.gui;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.game.Game;
+import core.game.Game120;
 import core.game.GameKind;
 import core.match.Match;
 import core.match.Match1Team;
@@ -30,6 +31,8 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static java.lang.Math.max;
 import static java.lang.Math.round;
@@ -47,9 +50,9 @@ import static java.lang.Math.round;
  */
 public class SelectGameController implements Initializable {
 
-	private static final double        ASPECT_RATIO  = 16.0 / 9; // Gewünschtes Seitenverhältnis (z. B. 16:9)
-	private static final System.Logger LOGGER        = System.getLogger(SelectGameController.class.getName());
-	private static final List<String>  VIEWS         =
+	private static final double       ASPECT_RATIO = 16.0 / 9; // Gewünschtes Seitenverhältnis (z. B. 16:9)
+	private static final Logger       LOGGER       = Logger.getLogger(SelectGameController.class.getName());
+	private static final List<String> VIEWS        =
 			List.of("4 gegeneinander", "2 Teams", "2 Teams-A2", "N Teams", "Vorlauf-Endlauf", "Halbfinale");
 	private static final List<String>  POINT_SYSTEMS =
 			List.of("4 Spieler gegeneinander", "2 Teams paarweise", "Teams summe", "Paarweise gegeneinander", "DUMMY");
@@ -95,7 +98,7 @@ public class SelectGameController implements Initializable {
 			vBox.getChildren()
 				.add(new Label(STR."No games for the \{date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))}"));
 		} catch (IOException e) {
-			LOGGER.log(System.Logger.Level.ERROR, STR."Error loading games: \{e.getMessage()}");
+			LOGGER.log(Level.FINER, STR."Error loading games: \{e.getMessage()}");
 		}
 	}
 
@@ -255,7 +258,7 @@ public class SelectGameController implements Initializable {
 			}
 			case "DUMMY" -> {
 				title = "DUMMY PointSystem";
-				pointSystem = new DummyPointSystem();
+				pointSystem = new DummyPointSystem<Game120>();
 			}
 			default -> throw new IllegalStateException(STR."Unexpected value: \{systemSelect}");
 		}
@@ -327,7 +330,13 @@ public class SelectGameController implements Initializable {
 		}
 		screenSelect.setValue(STR."Screen 1");
 		File cssFolder = new File("css");
+		if (!cssFolder.exists()) {
+			cssFolder.mkdir();
+		}
 		var cssFiles = cssFolder.listFiles();
+		if (cssFiles.length == 0) {
+			LOGGER.log(Level.INFO, "No CSS files found");
+		}
 		for (var css : cssFiles) {
 			cssFile.getItems().add(css.getName());
 		}

@@ -23,7 +23,25 @@
             <artifactId>infrastructure</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx-version}</version>
+            <classifier>win</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>${javafx-version}</version>
+            <classifier>win</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.controlsfx</groupId>
+            <artifactId>controlsfx</artifactId>
+            <version>11.2.1</version>
+        </dependency>
     </dependencies>
+
 
     <build>
         <pluginManagement>
@@ -49,11 +67,11 @@
                 </executions>
                 <configuration>
                     <mainClass>de.kegelplay.application/de.olivergeisel.kegelplay.KegelplayApplication</mainClass>
-                    <compilerArgs>
+                    <commandlineArgs>
                         <arg>-module-path</arg>
                         <arg>${project.build.directory}/modules</arg>
                         <arg>--enable-preview</arg>
-                    </compilerArgs>
+                    </commandlineArgs>
                     <launcher>app</launcher>
                     <jlinkZipName>app</jlinkZipName>
                     <jlinkImageName>app</jlinkImageName>
@@ -65,7 +83,52 @@
                     </options>
                 </configuration>
             </plugin>
-            <!-- <plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <transformers>
+                        <transformer
+                                implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <mainClass>
+                                de.olivergeisel.kegelplay.KegelplayApplication
+                            </mainClass>
+                        </transformer>
+                    </transformers>
+                </configuration>
+            </plugin>
+            <!--<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jlink-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>create-runtime-image</id>
+                        <goals>
+                            <goal>jlink</goal>
+                        </goals>
+                        <configuration>
+                            <compress>2</compress>
+                            <noHeaderFiles>true</noHeaderFiles>
+                            <noManPages>true</noManPages>
+                            <stripDebug>true</stripDebug>
+                            <addModules>javafx.controls,javafx.fxml</addModules>
+                            <launcher>
+                            </launcher>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+             <plugin>
                  <groupId>org.openjfx</groupId>
                  <artifactId>javafx-maven-plugin</artifactId>
                  <version>0.0.8</version>

@@ -101,7 +101,7 @@ public class Player<G extends Game> {
 	 * @return The state of the player.
 	 */
 	public String getClub() {
-		return club;
+		return club.trim();
 	}
 
 	/**

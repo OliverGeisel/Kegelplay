@@ -18,12 +18,13 @@ public class TeamOrderExtendedController extends TeamOrderController {
 	private VBox root;
 
 	@Override
-	public void update(Team team){
+	public void update(Team team) {
 		IniFile iniFile;
 		try {
 			iniFile = new IniFile("display-infos/additional-info.ini");
 		} catch (IOException e) {
-			log.error("Could not read additional-info.ini. Please create 'display-infos/additional-info.ini'", e);
+			log.log(System.Logger.Level.ERROR,
+					"Could not read additional-info.ini. Please create 'display-infos/additional-info.ini'", e);
 			return;
 		}
 		// Clear the root node
@@ -31,6 +32,26 @@ public class TeamOrderExtendedController extends TeamOrderController {
 		var teamLabel = new Label(team.getName());
 		teamLabel.fontProperty().set(new Font(30));
 		root.getChildren().add(teamLabel);
+		var header = new HBox();
+		header.paddingProperty().set(new Insets(10, 0, 2, 0));
+		var playerNameHeader = new Label(STR."Spieler");
+		playerNameHeader.fontProperty().set(new Font(22));
+		playerNameHeader.prefWidthProperty().set(200);
+		var vereinHeader = new Label(STR."Verein");
+		vereinHeader.fontProperty().set(new Font(22));
+		vereinHeader.prefWidthProperty().set(200);
+		var scoreVorlaufHeader = new Label(STR."Vorlauf");
+		scoreVorlaufHeader.fontProperty().set(new Font(22));
+		scoreVorlaufHeader.prefWidthProperty().set(100);
+		var scoreEndlaufHeader = new Label(STR."Endlauf");
+		scoreEndlaufHeader.fontProperty().set(new Font(22));
+		scoreEndlaufHeader.prefWidthProperty().set(100);
+		var totalScoreHeader = new Label(STR."Gesamt");
+		totalScoreHeader.fontProperty().set(new Font(22));
+		totalScoreHeader.prefWidthProperty().set(100);
+		header.getChildren()
+			  .addAll(playerNameHeader, vereinHeader, scoreVorlaufHeader, scoreEndlaufHeader, totalScoreHeader);
+		root.getChildren().add(header);
 		var sorted = getPlayerScoreStream(team, iniFile);
 		sorted.forEach(playerAndScore -> {
 			var playerLine = new HBox();
@@ -62,7 +83,7 @@ public class TeamOrderExtendedController extends TeamOrderController {
 		});
 	}
 
-//region setter/getter
+	//region setter/getter
 	public void setRoot(VBox root) {
 		this.root = root;
 	}

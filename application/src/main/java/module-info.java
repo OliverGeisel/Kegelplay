@@ -17,6 +17,7 @@ module de.kegelplay.application {
 	requires com.opencsv;
 	requires com.fasterxml.jackson.databind;
 	requires commons.logging;
+	requires java.logging;
 
 	opens de.olivergeisel.kegelplay.gui to javafx.fxml, javafx.graphics;
 	opens de.olivergeisel.kegelplay to javafx.fxml, javafx.graphics;

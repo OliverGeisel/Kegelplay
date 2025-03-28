@@ -110,15 +110,6 @@ public class Game120 extends Game {
 		return GameKind.GAME_120;
 	}
 
-	/**
-	 * Returns the number of {@link Wurf} that were thrown in the game until now.
-	 *
-	 * @return Number of {@link Wurf}
-	 */
-	@Override
-	public int getNumberOfWurf() {
-		return 0;
-	}
 
 	@Override
 	public void setGameSets(List<GameSet> gameSets) throws IllegalArgumentException {

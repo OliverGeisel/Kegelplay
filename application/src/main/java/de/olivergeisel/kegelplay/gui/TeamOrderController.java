@@ -12,8 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,7 +30,7 @@ import java.util.stream.Stream;
  */
 public class TeamOrderController implements Initializable {
 
-	protected static final Log log = LogFactory.getLog(TeamOrderController.class);
+	protected static final System.Logger log = System.getLogger(TeamOrderController.class.getName());
 
 	@FXML
 	private VBox root;
@@ -71,7 +69,8 @@ public class TeamOrderController implements Initializable {
 		try {
 			iniFile = new IniFile("display-infos/additional-info.ini");
 		} catch (IOException e) {
-			log.error("Could not read additional-info.ini. Please create 'display-infos/additional-info.ini'", e);
+			log.log(System.Logger.Level.ERROR,
+					"Could not read additional-info.ini. Please create 'display-infos/additional-info.ini'", e);
 			return;
 		}
 		// Clear the root node
