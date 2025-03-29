@@ -26,7 +26,9 @@ public class GameCSVFileReader<G extends Game> extends CSVFileReader implements 
 	/**
 	 * Read the game data from the file.
 	 * The player will be <b>null</b>
+	 *
 	 * @return Game object with the data from the file.
+	 *
 	 * @throws IllegalStateException if gameKind is <b>null</b>
 	 */
 	public G readGame() throws IllegalStateException {
@@ -143,11 +145,12 @@ public class GameCSVFileReader<G extends Game> extends CSVFileReader implements 
 		return back;
 	}
 
-	private void fillWithEmptySets(Game game){
+	private void fillWithEmptySets(Game game) {
 		var list = new LinkedList<GameSet>();
 		var gameInfo = game.getGameInfo();
-		for (int i=0; i< gameInfo.gameSets();i++){
-			list.add(new GameSet(gameInfo.getThrowsPerGameSet(), gameInfo.vollePerGameSet(), gameInfo.abrauemenPerGameSet(), i));
+		for (int i = 0; i < gameInfo.gameSets(); i++) {
+			list.add(new GameSet(gameInfo.getThrowsPerGameSet(), gameInfo.vollePerGameSet(),
+					gameInfo.abrauemenPerGameSet(), i));
 		}
 		game.setGameSets(list);
 	}

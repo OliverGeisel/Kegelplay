@@ -16,7 +16,6 @@ module de.kegelplay.application {
 	requires org.kordamp.bootstrapfx.core;
 	requires com.opencsv;
 	requires com.fasterxml.jackson.databind;
-	requires commons.logging;
 	requires java.logging;
 
 	opens de.olivergeisel.kegelplay.gui to javafx.fxml, javafx.graphics;

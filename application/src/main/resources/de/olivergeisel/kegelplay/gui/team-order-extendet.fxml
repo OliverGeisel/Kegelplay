@@ -6,7 +6,6 @@
       maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/11.0.14-internal"
       fx:controller="de.olivergeisel.kegelplay.gui.TeamOrderExtendedController">
     <children>
-        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0"
-              prefWidth="200.0"/>
+        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="200.0"/>
     </children>
 </VBox>

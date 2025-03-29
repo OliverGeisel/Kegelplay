@@ -3,53 +3,77 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-      minHeight="300.0" minWidth="400.0" xmlns="http://javafx.com/javafx/11.0.14-internal">
+      minHeight="545.0" minWidth="1025.0" xmlns="http://javafx.com/javafx/11.0.14-internal">
     <children>
-        <HBox prefHeight="100.0" prefWidth="200.0">
+        <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0"
+                                   percentWidth="25.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0"
+                                   percentWidth="25.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0"
+                                   percentWidth="25.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0"
+                                   percentWidth="25.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
             <children>
                 <VBox fx:id="lane1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                      HBox.hgrow="ALWAYS">
+                      GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                     <children>
-                        <fx:include minHeight="200.0" source="header.fxml" VBox.vgrow="ALWAYS"/>
-                        <fx:include source="tabelle.fxml" VBox.vgrow="ALWAYS"/>
+                        <fx:include maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                    source="header.fxml" VBox.vgrow="ALWAYS"/>
+                        <fx:include maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                    source="tabelle.fxml" VBox.vgrow="ALWAYS"/>
                     </children>
                     <padding>
                         <Insets right="5.0"/>
                     </padding>
+                    <GridPane.margin>
+                        <Insets/>
+                    </GridPane.margin>
                 </VBox>
                 <VBox fx:id="lane2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                      HBox.hgrow="ALWAYS">
+                      GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                     <children>
-                        <fx:include minHeight="200.0" source="header.fxml" VBox.vgrow="ALWAYS"/>
-                        <fx:include source="tabelle.fxml" VBox.vgrow="ALWAYS"/>
+                        <fx:include maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                    source="header.fxml" VBox.vgrow="ALWAYS"/>
+                        <fx:include maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                    source="tabelle.fxml" VBox.vgrow="ALWAYS"/>
                     </children>
                     <padding>
                         <Insets right="5.0"/>
                     </padding>
                 </VBox>
                 <VBox fx:id="lane3" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                      HBox.hgrow="ALWAYS">
+                      GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                     <children>
-                        <fx:include minHeight="200.0" source="header.fxml" VBox.vgrow="ALWAYS"/>
-                        <fx:include source="tabelle.fxml" VBox.vgrow="ALWAYS"/>
+                        <fx:include maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                    source="header.fxml" VBox.vgrow="ALWAYS"/>
+                        <fx:include maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                    source="tabelle.fxml" VBox.vgrow="ALWAYS"/>
                     </children>
                     <padding>
                         <Insets right="5.0"/>
                     </padding>
                 </VBox>
                 <VBox fx:id="lane4" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                      HBox.hgrow="ALWAYS">
+                      GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                     <children>
-                        <fx:include minHeight="200.0" source="header.fxml" VBox.vgrow="ALWAYS"/>
-                        <fx:include source="tabelle.fxml" VBox.vgrow="ALWAYS"/>
+                        <fx:include maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                    source="header.fxml" VBox.vgrow="ALWAYS"/>
+                        <fx:include maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                    source="tabelle.fxml" VBox.vgrow="ALWAYS"/>
                     </children>
                     <padding>
-                        <Insets left="5.0" right="5.0"/>
+                        <Insets right="5.0"/>
                     </padding>
                 </VBox>
             </children>
-        </HBox>
-        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+        </GridPane>
+        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="40.0" VBox.vgrow="ALWAYS">
             <children>
                 <fx:include fx:id="team1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                             minWidth="0.0" source="team-order.fxml" HBox.hgrow="ALWAYS"/>

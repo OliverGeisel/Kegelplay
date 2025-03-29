@@ -77,8 +77,11 @@ public class TeamOrderExtendedController extends TeamOrderController {
 			var verein = new Label(STR."\{playerAndScore.player().getClub()}");
 			verein.paddingProperty().set(new Insets(0, 10, 0, 0));
 			verein.fontProperty().set(new Font(20));
+			verein.wrapTextProperty().set(true);
 			verein.prefWidthProperty().set(200);
 			playerLine.getChildren().addAll(playerName, verein, scoreVorlauf, scoreEndlauf, totalScore);
+			playerLine.paddingProperty().set(new Insets(4, 0, 0, 0));
+			playerLine.alignmentProperty().set(javafx.geometry.Pos.CENTER_LEFT);
 			root.getChildren().add(playerLine);
 		});
 	}
