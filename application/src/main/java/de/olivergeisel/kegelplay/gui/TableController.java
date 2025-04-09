@@ -94,7 +94,7 @@ public class TableController implements Initializable {
 					case 4 -> label.setText(Integer.toString(gameSet.getAnzahlFehler()));
 					case 5 -> {
 						var player = game.getPlayer();
-						var point = points.getGameSetPointsFor(player.getCompleteNameWithUnderscore(),
+						var point = points.getGameSetPointsFor(player.getCompleteName(),
 								gameSet.getGameSetNumber());
 						label.setText(Double.toString(point));
 					}
@@ -124,7 +124,7 @@ public class TableController implements Initializable {
 			final var setNumbers = List.of(0, 1, 2, 3);
 			var sum = 0.0;
 			for (var setNumber : setNumbers) {
-				sum += points.getGameSetPointsFor(player.getCompleteNameWithUnderscore(),
+				sum += points.getGameSetPointsFor(player.getCompleteName(),
 						setNumber);
 			}
 			back = sum;

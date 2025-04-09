@@ -36,13 +36,13 @@ public class GamePointsCollection<G extends Game> {
 	/**
 	 * Returns the points of a player in a specific game set.
 	 *
-	 * @param playerName    Player name
+	 * @param playerName    Player name (Format "FirstName LastName")
 	 * @param gameSetNumber Game set number
-	 * @return The points of the player in the game set. Can be 0 if the was not found.
+	 * @return The points of the player in the game set. Can be 0 if the Player was not found.
 	 */
 	public double getGameSetPointsFor(String playerName, int gameSetNumber) {
 		var player =
-				scores.keySet().stream().filter(p -> p.getCompleteNameWithUnderscore().equals(playerName)).findFirst()
+				scores.keySet().stream().filter(p -> p.getCompleteName().equals(playerName)).findFirst()
 					  .orElse(null);
 		return scores.get(player).stream()
 					 .filter(it -> it.getGameSetNumber() == gameSetNumber)

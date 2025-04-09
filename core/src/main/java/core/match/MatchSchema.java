@@ -3,6 +3,7 @@ package core.match;
 import core.game.GameInfo;
 import core.util.KeyValueRegion;
 import core.util.KeyValueRegionCollection;
+import core.util.Pair;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -156,13 +157,35 @@ public class MatchSchema {
 	}
 
 	/**
-	 * Get the number of players per cycle. A cycle one round in the {@link MatchSchema}.
+	 * Get the number of players per cycle.
+	 * A cycle is one round in the {@link MatchSchema}.
 	 * But in some cases, it can make sense to have more than one cycle.
 	 *
 	 * @return The number of players per cycle
 	 */
 	public int getPlayersPerCycle() {
 		return playersPerCycle;
+	}
+
+	/**
+	 * Get the List of {@link Pair}s with the encoded team and player (int) how they will start.
+	 * The first entry is the Player who starts first on the first lane. The second entry is the Player who starts
+	 * on the second lane and so on.
+	 *
+	 * @return List of {@link Pair}s with the encoded team and player.
+	 */
+	public List<Pair<Integer, Integer>> getStartPositions() {
+		var startPositions = new ArrayList<Pair<Integer, Integer>>();
+		var numOfSets = lanes.getFirst().getSaetze().size();
+		for (int i = 0; i < numOfSets; i += 4) {
+			for (LaneSchema lane : lanes) {
+				var set = lane.getSaetze().get(i);
+				if (set != null) {
+					startPositions.add(new Pair<>(set.team(), set.player()));
+				}
+			}
+		}
+		return startPositions;
 	}
 
 	/**

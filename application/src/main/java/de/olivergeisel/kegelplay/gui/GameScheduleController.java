@@ -1,19 +1,24 @@
 package de.olivergeisel.kegelplay.gui;
 
+import core.game.Game120;
 import core.match.Match;
+import core.team_and_player.Player;
+import core.util.MatchPlayerHelper;
 import de.kegelplay.infrastructure.ini.IniFile;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -43,11 +48,11 @@ public class GameScheduleController implements Initializable {
 	}
 
 
-	public void update(Match match, int gameSet) {
+	public void update(Match match, int gameRound) {
 		final var playerPerGameSet = 4;
 		// get the players to play
-		var allPlayers = match.getTeams()[0].getPlayers();
-		var remainingPlayers = Arrays.stream(allPlayers).skip(gameSet * playerPerGameSet).toList();
+		List<Player> orderedPlayers = MatchPlayerHelper.<Game120>getPlayersOrderedByStartPosition(match);
+		var remainingPlayers = orderedPlayers.stream().skip((long) gameRound * playerPerGameSet).toList();
 		// load times from ini
 		var times = new LinkedList<String>();
 		try {
@@ -63,14 +68,16 @@ public class GameScheduleController implements Initializable {
 		}
 		gameSchedule.getChildren().clear();
 		outer:
-		for (int i = gameSet; i < times.size(); i++) {
+		for (int i = 0; i < times.size(); i++) {
 			// create new line
 			var line = new HBox();
-			var time = times.get(i+1);
+			var time = times.get(i + gameRound);
 			var children = line.getChildren();
+			line.setAlignment(Pos.CENTER);
 			var timeLabel = new Label(STR."\{time} Uhr");
 			timeLabel.paddingProperty().setValue(new Insets(0, 10, 0, 10));
 			timeLabel.minWidthProperty().setValue(100);
+			timeLabel.setFont(new Font(14));
 			children.add(timeLabel);
 			// get next 4 players
 			for (int k = 0; k < playerPerGameSet; k++) {
@@ -79,6 +86,7 @@ public class GameScheduleController implements Initializable {
 					var playerLabel = new Label(STR."\{player.getVorname()} \{player.getNachname()}");
 					playerLabel.paddingProperty().setValue(new Insets(0, 10, 0, 10));
 					playerLabel.minWidthProperty().setValue(150);
+					playerLabel.setFont(new Font(14));
 					children.add(playerLabel);
 				} catch (IndexOutOfBoundsException e) {
 					break outer;

@@ -9,15 +9,17 @@
       nodeOrientation="LEFT_TO_RIGHT" xmlns="http://javafx.com/javafx/11.0.14-internal"
       fx:controller="de.olivergeisel.kegelplay.gui.GameScheduleController">
     <children>
-        <Label text="Zeitplan">
+        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+               maxWidth="1.7976931348623157E308" text="Zeitplan" VBox.vgrow="ALWAYS">
             <font>
                 <Font size="33.0"/>
             </font>
         </Label>
-        <VBox fx:id="gameSchedule" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-              VBox.vgrow="ALWAYS">
+        <VBox fx:id="gameSchedule" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308"
+              maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
             <children>
-                <HBox fx:id="lanes" VBox.vgrow="ALWAYS">
+                <HBox fx:id="lanes" alignment="CENTER" maxHeight="1.7976931348623157E308"
+                      maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                     <children>
                         <Label text="Zeit">
                             <padding>
@@ -39,7 +41,7 @@
                                 <Insets right="5.0"/>
                             </HBox.margin>
                         </Label>
-                        <Label text="Bahn 4">
+                        <Label alignment="CENTER" text="Bahn 4">
                             <HBox.margin>
                                 <Insets right="5.0"/>
                             </HBox.margin>

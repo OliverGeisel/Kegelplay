@@ -65,9 +65,6 @@ public class TeamOrderExtendedController extends TeamOrderController {
 			totalScore.fontProperty().set(new Font(20));
 			var endlaufScoreValue = playerAndScore.player().getGame().getTotalScore();
 			var vorlaufScoreValue = playerAndScore.score() - endlaufScoreValue;
-			if (endlaufScoreValue == 0) {
-				vorlaufScoreValue = 0;
-			}
 			var scoreVorlauf = new Label(STR."\{vorlaufScoreValue}");
 			scoreVorlauf.fontProperty().set(new Font(20));
 			scoreVorlauf.prefWidthProperty().set(100);

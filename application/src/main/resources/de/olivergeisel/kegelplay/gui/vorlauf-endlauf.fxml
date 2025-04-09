@@ -86,6 +86,10 @@
                 <Insets left="5.0" top="10.0"/>
             </VBox.margin>
         </HBox>
+
+
+        <fx:include fx:id="gameschedule" source="game-schedule.fxml"/>
+
     </children>
     <padding>
         <Insets left="5.0" top="5.0"/>

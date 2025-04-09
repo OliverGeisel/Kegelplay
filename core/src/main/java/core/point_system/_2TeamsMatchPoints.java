@@ -107,19 +107,19 @@ public class _2TeamsMatchPoints<G extends Game> extends MatchPoints<Team<G>> {
 	/**
 	 * Return the game points of the player.
 	 *
-	 * @param player name of the player (with underscore)
+	 * @param player name of the player (with spaces)
 	 * @return the game points of the player
 	 *
 	 * @throws IllegalArgumentException if the player is not found
 	 */
 	public GamePoints<G> getGamePointsForPlayer(String player) throws IllegalArgumentException {
 		for (var gamePoints : gamePointsTeam1) {
-			if (gamePoints.getPlayer().getCompleteNameWithUnderscore().equals(player)) {
+			if (gamePoints.getPlayer().getCompleteName().equals(player)) {
 				return gamePoints;
 			}
 		}
 		for (var gamePoints : gamePointsTeam2) {
-			if (gamePoints.getPlayer().getCompleteNameWithUnderscore().equals(player)) {
+			if (gamePoints.getPlayer().getCompleteName().equals(player)) {
 				return gamePoints;
 			}
 		}
@@ -129,12 +129,12 @@ public class _2TeamsMatchPoints<G extends Game> extends MatchPoints<Team<G>> {
 	@Override
 	public double getGameSetPointsFor(String player, int gameSetNumber) throws IllegalArgumentException {
 		for (var gamePoints : gamePointsTeam1) {
-			if (gamePoints.getPlayer().getCompleteNameWithUnderscore().equals(player)) {
+			if (gamePoints.getPlayer().getCompleteName().equals(player)) {
 				return gamePoints.getGameSetPointsFor(gameSetNumber);
 			}
 		}
 		for (var gamePoints : gamePointsTeam2) {
-			if (gamePoints.getPlayer().getCompleteNameWithUnderscore().equals(player)) {
+			if (gamePoints.getPlayer().getCompleteName().equals(player)) {
 				return gamePoints.getGameSetPointsFor(gameSetNumber);
 			}
 		}

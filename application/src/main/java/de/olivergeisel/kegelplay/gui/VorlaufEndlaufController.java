@@ -63,6 +63,7 @@ public class VorlaufEndlaufController extends DisplayGameController<Game120> imp
 	@FXML private VBox  lane2;
 	@FXML private VBox  lane3;
 	@FXML private VBox  lane4;
+	@FXML private VBox gameschedule;
 
 	public VorlaufEndlaufController(Match<Game120> match) {
 		super(match);
@@ -114,12 +115,17 @@ public class VorlaufEndlaufController extends DisplayGameController<Game120> imp
 			var controller = (TeamOrderController) box.getProperties().get(FXMLLoader.CONTROLLER_KEYWORD);
 			controller.update(team);
 		}
+		// update game schedule
+		var gameScheduleController =
+				(GameScheduleController) gameschedule.getProperties().get(FXMLLoader.CONTROLLER_KEYWORD);
+		gameScheduleController.update(match, ((match.getCurrentSet() + 4) / 4) - 1);
 	}
 
 	/**
 	 * Set {@link Player} in the selected line
+	 *
 	 * @param player player in the lane
-	 * @param lane Lane to set
+	 * @param lane   Lane to set
 	 */
 	private void setLane(Player<Game120> player, VBox lane) {
 		var header = (GridPane) lane.getChildren().getFirst();
