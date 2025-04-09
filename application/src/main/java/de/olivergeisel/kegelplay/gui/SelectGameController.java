@@ -291,13 +291,14 @@ public class SelectGameController implements Initializable {
 				controller = new VorlaufEndlaufController(match1);
 			}
 			case "Halbfinale" -> {
-				if (match instanceof Match1Team match1Team) {
+				// if (match instanceof Match1Team match1Team) { // Not required anymore
+				var match1 = (Match) match;
 					fxmlLoader = new FXMLLoader(getClass().getResource("semi-final.fxml"));
-					controller = new SemiFinalController(match1Team);
-				} else {
+				controller = new SemiFinalController(match1);
+				/*} else {
 					throw new IllegalStateException(
 							STR."Unexpected value: \{match} - \{match.getClass()} cannot be used for this view");
-				}
+				}*/
 			}
 			case "N Teams" -> {
 				//controller

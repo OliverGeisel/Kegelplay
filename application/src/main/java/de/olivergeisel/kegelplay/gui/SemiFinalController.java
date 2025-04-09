@@ -3,7 +3,6 @@ package de.olivergeisel.kegelplay.gui;
 
 import core.game.Game120;
 import core.match.Match;
-import core.match.Match1Team;
 import core.point_system.Winner;
 import core.team_and_player.Player;
 import de.kegelplay.infrastructure.update.MatchUpdater;
@@ -61,7 +60,7 @@ public class SemiFinalController extends DisplayGameController<Game120> implemen
 	private VBox lane4;
 
 
-	public SemiFinalController(Match1Team<Game120> match) {
+	public SemiFinalController(Match<Game120> match) {
 		super(match);
 		this.match = match;
 		matchUpdater = new MatchUpdater<>(match);
@@ -117,20 +116,20 @@ public class SemiFinalController extends DisplayGameController<Game120> implemen
 		var controller = (FinalistListController) semiFinalList.getProperties().get(FXMLLoader.CONTROLLER_KEYWORD);
 		controller.clearFinalist();
 		for (var winner : winners) {
-			var nameSplit = winner.getName().split("_"); // Fix to " "
+			var nameSplit = winner.getName().split(" ");
 			controller.addFinalist(nameSplit[0], nameSplit[1], winner.getScore());
 		}
 	}
 
 	private void updateGameSchedule(Match match) {
 		// update game schedule
-		var gameSet = (match.getCurrentSet()-1) / 4;
+		var gameRound = ((match.getCurrentSet() + 4) / 4) - 1;
 		/*if (gameSet == currentGameSet) {
 			return;
 		}
 		currentGameSet = gameSet;*/
 		var controller = (GameScheduleController) gameSchedule.getProperties().get(FXMLLoader.CONTROLLER_KEYWORD);
-		controller.update(match, gameSet);
+		controller.update(match, gameRound);
 	}
 
 

@@ -5,9 +5,11 @@
 <VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308"
       maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/11.0.14-internal">
     <children>
-        <HBox prefHeight="100.0" prefWidth="200.0">
+        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0"
+              VBox.vgrow="ALWAYS">
             <children>
-                <VBox fx:id="lane1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                <VBox fx:id="lane1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                      HBox.hgrow="ALWAYS">
                     <children>
                         <fx:include source="header.fxml"/>
                         <fx:include source="tabelle.fxml"/>
@@ -16,7 +18,8 @@
                         <Insets right="5.0"/>
                     </padding>
                 </VBox>
-                <VBox fx:id="lane2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                <VBox fx:id="lane2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                      HBox.hgrow="ALWAYS">
                     <children>
                         <fx:include source="header.fxml"/>
                         <fx:include source="tabelle.fxml"/>
@@ -25,7 +28,8 @@
                         <Insets right="5.0"/>
                     </padding>
                 </VBox>
-                <VBox fx:id="lane3" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                <VBox fx:id="lane3" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                      HBox.hgrow="ALWAYS">
                     <children>
                         <fx:include source="header.fxml"/>
                         <fx:include source="tabelle.fxml"/>
@@ -34,7 +38,8 @@
                         <Insets right="5.0"/>
                     </padding>
                 </VBox>
-                <VBox fx:id="lane4" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                <VBox fx:id="lane4" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                      HBox.hgrow="ALWAYS">
                     <children>
                         <fx:include source="header.fxml"/>
                         <fx:include source="tabelle.fxml"/>
