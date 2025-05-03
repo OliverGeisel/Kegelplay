@@ -10,7 +10,7 @@ import java.util.LinkedList;
 
 /**
  * Reader for CSV files with game data.
- * This represents the data of a game. A game is played by one player in a team. A team is a parts in a match.
+ * This represents the data of a game. One player plays a game in a team. A team is a part in a match.
  */
 public class GameCSVFileReader<G extends Game> extends CSVFileReader implements GameSource {
 

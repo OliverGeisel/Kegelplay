@@ -179,6 +179,9 @@ public abstract class Match<G extends Game> {
 		var lanes = getPlayerForSet();
 		var back = new LinkedList<Player<G>>();
 		for (var lane : lanes) {
+			if (lane.getKey() < 0 || lane.getValue() < 0) { // Ignore empty lanes
+				continue;
+			}
 			back.add(getTeams()[lane.getKey()].getPlayers()[lane.getValue()]);
 		}
 		return back;

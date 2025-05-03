@@ -74,12 +74,12 @@ public class Game100 extends Game {
 	//region setter/getter
 	@Override
 	public GameInfo getGameInfo() {
-		return new GameInfo(4, 25, 25, 20, true);
+		return new GameInfo(2, 25, 25, 20, true);
 	}
 
 	@Override
 	public GameKind getGameKind() {
-		return GameKind.GAME_200;
+		return GameKind.GAME_100;
 	}
 
 	@Override

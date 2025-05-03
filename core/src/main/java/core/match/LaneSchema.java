@@ -32,7 +32,8 @@ public class LaneSchema {
 	 * @throws IllegalArgumentException if the lane schema is invalid
 	 * @throws UnusedLaneException      if the lane is not played
 	 */
-	public LaneSchema(KeyValueRegion<String, String> region, int cycles, int playerPerCycle, boolean singleTeam)
+	public LaneSchema(KeyValueRegion<String, String> region, int cycles, int playerPerCycle, boolean singleTeam,
+			boolean gapsAllowed)
 			throws IllegalArgumentException,
 			UnusedLaneException {
 		name = region.getName();
@@ -42,7 +43,7 @@ public class LaneSchema {
 		var setCount = region.size() / 5;
 		saetze = new java.util.ArrayList<>(setCount);
 		// check if is used
-		if (!isUsed(region, singleTeam)) {
+		if (!isUsed(region, singleTeam, gapsAllowed)) {
 			throw new UnusedLaneException("Lane is not used");
 		}
 		for (int c = 0; c < cycles; c++) {
@@ -51,9 +52,22 @@ public class LaneSchema {
 				var player = Integer.parseInt(region.getValue(STR."Spieler \{i}"));
 				var parsedTeam = Integer.parseInt(region.getValue(STR."Mannschaft \{i}"));
 				var team = singleTeam ? 0 : parsedTeam;
-				var volle = Integer.parseInt(region.getValue(STR."Volle \{i}"));
-				var abraeumen = Integer.parseInt(region.getValue(STR."Abraeumer \{i}"));
-				var time = Integer.parseInt(region.getValue(STR."Zeit \{i}"));
+				int volle, abraeumen, time;
+				try {
+					volle = Integer.parseInt(region.getValue(STR."Volle \{i}"));
+				} catch (NumberFormatException e) {
+					volle = 0;
+				}
+				try {
+					abraeumen = Integer.parseInt(region.getValue(STR."Abraeumer \{i}"));
+				} catch (NumberFormatException e) {
+					abraeumen = 0;
+				}
+				try {
+					time = Integer.parseInt(region.getValue(STR."Zeit \{i}"));
+				} catch (NumberFormatException e) {
+					time = 0;
+				}
 				saetze.add(new LaneSatz(player + c * playerPerCycle, team, number, volle, abraeumen, time));
 			}
 		}
@@ -66,8 +80,12 @@ public class LaneSchema {
 	 * @param singleTeam has to be ture if only one team is in the match
 	 * @return true if the lane is used
 	 */
-	private boolean isUsed(KeyValueRegion<String, String> region, boolean singleTeam) {
+	private boolean isUsed(KeyValueRegion<String, String> region, boolean singleTeam, boolean gapsAllowed) {
+
 		var playerF = region.getKeys().stream().filter(it -> it.startsWith("Spieler")).toList();
+		if (gapsAllowed && playerF.stream().anyMatch(it -> !it.equals("-1"))) {
+			return true;
+		}
 		for (var player : playerF) {
 			var value = region.getValue(player);
 			if (value.isEmpty() || value.equals("-1")) { // -1 is not used

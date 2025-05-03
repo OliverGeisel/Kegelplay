@@ -1,8 +1,6 @@
 package de.kegelplay.infrastructure.update;
 
 import core.game.Game;
-import core.game.Game120;
-import core.game.GameKind;
 import core.match.Match;
 import core.match.MatchStatusInfo;
 import core.team_and_player.Player;
@@ -104,15 +102,16 @@ public class MatchUpdater<G extends Game> {
 	}
 
 	private void loadTeamGames(Team<G> team) {
+		var generalKind = team.getPlayers()[0].getGame().getGameKind();
 		for (var playerFolder : Objects.requireNonNull(
 				match.getBaseDir().resolve(team.getName()).toFile().listFiles())) {
 			var path = playerFolder.toPath().resolve("werte.csv");
 			var playerName = playerFolder.getName(); // Todo reuse old Reader if not changed
 			Game game;
 			try {
-				game = new GameCSVFileReader<Game120>(path, GameKind.GAME_120).readGame(); // Todo allow other games
+				game = new GameCSVFileReader<>(path, generalKind).readGame();
 			} catch (Exception e) {
-				LOGGER.log(System.Logger.Level.ERROR, "Not able to load game in path" + path);
+				LOGGER.log(System.Logger.Level.ERROR, STR."Not able to load game in path: \{path}");
 				continue;
 			}
 			try {
