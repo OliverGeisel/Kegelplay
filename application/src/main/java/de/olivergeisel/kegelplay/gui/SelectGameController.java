@@ -50,11 +50,11 @@ import static java.lang.Math.round;
  */
 public class SelectGameController implements Initializable {
 
-	private static final double       ASPECT_RATIO = 16.0 / 9; // Gewünschtes Seitenverhältnis (z. B. 16:9)
-	private static final Logger       LOGGER       = Logger.getLogger(SelectGameController.class.getName());
-	private static final List<String> VIEWS        =
+	private static final double       ASPECT_RATIO  = 16.0 / 9; // Gewünschtes Seitenverhältnis (z. B. 16:9)
+	private static final Logger       LOGGER        = Logger.getLogger(SelectGameController.class.getName());
+	private static final List<String> VIEWS         =
 			List.of("4 gegeneinander", "2 Teams", "2 Teams-A2", "N Teams", "Vorlauf-Endlauf", "Halbfinale");
-	private static final List<String>  POINT_SYSTEMS =
+	private static final List<String> POINT_SYSTEMS =
 			List.of("4 Spieler gegeneinander", "2 Teams paarweise", "Teams summe", "Paarweise gegeneinander", "DUMMY");
 
 	private static final Map<String, String> VIEW_INFO = Map.of(
@@ -173,7 +173,7 @@ public class SelectGameController implements Initializable {
 		var selectedView = view.getValue();
 		var selectedPointSystem = pointSystemField.getValue();
 		if (selectedPointSystem == null) {
-			selectedPointSystem="DUMMY";
+			selectedPointSystem = "DUMMY";
 		}
 		String title;
 		Match<?> match;
@@ -219,8 +219,8 @@ public class SelectGameController implements Initializable {
 		Rectangle2D bounds = selectedScreen.getBounds();
 
 		// Setzen der Position und Größe des neuen Fensters basierend auf dem zweiten Bildschirm
-		stage.setX(bounds.getMinX() + (bounds.getWidth() - 1000) / 2); // 400 ist die Breite des neuen Fensters
-		stage.setY(bounds.getMinY() + (bounds.getHeight() - 500) / 2); // 300 ist die Höhe des neuen Fensters
+		stage.setX(bounds.getMinX() + (bounds.getWidth() - 1000) / 2);
+		stage.setY(bounds.getMinY() + (bounds.getHeight() - 500) / 2);
 		stage.setMaxWidth(max(selectedScreen.getBounds().getWidth() + 20, 20 + 1920));
 		stage.setMaxHeight(max(selectedScreen.getBounds().getHeight(), 1080 + 20));
 		stage.show();
@@ -293,7 +293,7 @@ public class SelectGameController implements Initializable {
 			case "Halbfinale" -> {
 				// if (match instanceof Match1Team match1Team) { // Not required anymore
 				var match1 = (Match) match;
-					fxmlLoader = new FXMLLoader(getClass().getResource("semi-final.fxml"));
+				fxmlLoader = new FXMLLoader(getClass().getResource("semi-final.fxml"));
 				controller = new SemiFinalController(match1);
 				/*} else {
 					throw new IllegalStateException(
@@ -302,6 +302,8 @@ public class SelectGameController implements Initializable {
 			}
 			case "N Teams" -> {
 				//controller
+				fxmlLoader = new FXMLLoader(getClass().getResource("10Staedte.fxml"));
+				controller = new _10StaedteController<>(match);
 			}
 			default -> throw new IllegalStateException(STR."Unexpected value: \{selectedView}");
 		}

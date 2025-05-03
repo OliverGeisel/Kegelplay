@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="root" prefWidth="470.0"
+      xmlns="http://javafx.com/javafx/11.0.14-internal" fx:controller="de.olivergeisel.kegelplay.gui._10StaedteTeamController">
+    <children>
+        <Label fx:id="teamName" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308"
+               text="Team Name" VBox.vgrow="ALWAYS">
+            <font>
+                <Font name="System Bold" size="18.0"/>
+            </font>
+        </Label>
+        <HBox prefWidth="200.0" VBox.vgrow="NEVER">
+            <children>
+                <Label maxWidth="480.0" minWidth="100.0" text="Name">
+                    <font>
+                        <Font name="System Bold" size="12.0"/>
+                    </font>
+                    <HBox.margin>
+                        <Insets left="175.0"/>
+                    </HBox.margin>
+                </Label>
+                <Label alignment="CENTER" minWidth="40.0" text="W">
+                    <font>
+                        <Font name="System Bold" size="12.0"/>
+                    </font>
+                </Label>
+                <Label alignment="CENTER" minWidth="40.0" text="V">
+                    <font>
+                        <Font name="System Bold" size="12.0"/>
+                    </font>
+                </Label>
+                <Label alignment="CENTER" minWidth="40.0" text="R">
+                    <font>
+                        <Font name="System Bold" size="12.0"/>
+                    </font>
+                </Label>
+                <Label alignment="CENTER" minWidth="40.0" text="G">
+                    <font>
+                        <Font name="System Bold" size="12.0"/>
+                    </font>
+                </Label>
+            </children>
+            <VBox.margin>
+                <Insets bottom="1.0"/>
+            </VBox.margin>
+        </HBox>
+        <HBox prefHeight="100.0" prefWidth="200.0">
+            <children>
+                <VBox alignment="CENTER" fillWidth="false" maxHeight="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                    <children>
+                        <ImageView fx:id="image" fitHeight="200.0" fitWidth="150.0" pickOnBounds="true"
+                                   preserveRatio="true" VBox.vgrow="ALWAYS"/>
+                    </children>
+                    <HBox.margin>
+                        <Insets right="5.0"/>
+                    </HBox.margin>
+                </VBox>
+                <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="300.0">
+                    <children>
+                        <fx:include fx:id="player1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                    source="10Staedte_Player.fxml" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS"/>
+                        <fx:include fx:id="player2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                    source="10Staedte_Player.fxml" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS"/>
+                        <fx:include fx:id="player3" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                    source="10Staedte_Player.fxml" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS"/>
+                        <fx:include fx:id="player4" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                    source="10Staedte_Player.fxml" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS"/>
+                        <fx:include fx:id="player5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                    source="10Staedte_Player.fxml" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS"/>
+                        <fx:include fx:id="player6" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                    source="10Staedte_Player.fxml" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS"/>
+                    </children>
+                </VBox>
+            </children>
+            <VBox.margin>
+                <Insets right="2.0"/>
+            </VBox.margin>
+        </HBox>
+    </children>
+</VBox>
