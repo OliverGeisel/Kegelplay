@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="1080.0" prefWidth="1920.0"
+      xmlns="http://javafx.com/javafx/11.0.14-internal">
+    <children>
+        <HBox maxWidth="1.7976931348623157E308" prefHeight="40.0" VBox.vgrow="NEVER">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308"
+                       text="10 Städte Turnier 2025" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                    <font>
+                        <Font size="36.0"/>
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+        <HBox fx:id="row1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="300.0"
+              prefWidth="1920.0">
+            <children>
+                <fx:include fx:id="team1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            source="10Staedte_Team.fxml" HBox.hgrow="ALWAYS"/>
+                <fx:include fx:id="team2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            source="10Staedte_Team.fxml" HBox.hgrow="ALWAYS"/>
+                <fx:include fx:id="team3" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            source="10Staedte_Team.fxml" HBox.hgrow="ALWAYS"/>
+                <fx:include fx:id="team4" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            source="10Staedte_Team.fxml" HBox.hgrow="ALWAYS"/>
+            </children>
+            <padding>
+                <Insets top="5.0"/>
+            </padding>
+        </HBox>
+        <HBox fx:id="row2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="300.0"
+              prefWidth="1920.0">
+            <children>
+                <fx:include fx:id="team5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            source="10Staedte_Team.fxml" HBox.hgrow="ALWAYS"/>
+                <fx:include fx:id="team6" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            source="10Staedte_Team.fxml" HBox.hgrow="ALWAYS"/>
+                <fx:include fx:id="team7" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            source="10Staedte_Team.fxml" HBox.hgrow="ALWAYS"/>
+                <fx:include fx:id="team8" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            source="10Staedte_Team.fxml" HBox.hgrow="ALWAYS"/>
+            </children>
+            <padding>
+                <Insets top="5.0"/>
+            </padding>
+        </HBox>
+        <HBox fx:id="row3" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="300.0"
+              prefWidth="1920.0">
+            <children>
+                <fx:include fx:id="team9" source="10Staedte_Team.fxml" HBox.hgrow="NEVER"/>
+                <fx:include fx:id="team10" source="10Staedte_Team.fxml" HBox.hgrow="NEVER"/>
+                <fx:include fx:id="summary" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            source="10Staedte_Summary.fxml" HBox.hgrow="ALWAYS"/>
+            </children>
+            <padding>
+                <Insets top="5.0"/>
+            </padding>
+        </HBox>
+    </children>
+</VBox>
