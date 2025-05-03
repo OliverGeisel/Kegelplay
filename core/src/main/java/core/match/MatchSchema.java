@@ -89,7 +89,7 @@ public class MatchSchema {
 				break;
 			}
 			try {
-				lanes.add(new LaneSchema(lane, cycles, playersPerCycle, singleTeam));
+				lanes.add(new LaneSchema(lane, cycles, playersPerCycle, singleTeam, true));
 				count++;
 			} catch (IllegalArgumentException | UnusedLaneException e) {
 				LOGGER.log(System.Logger.Level.DEBUG, "Lane is not used");
