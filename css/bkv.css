@@ -243,3 +243,10 @@
 .margin-left-3 {
     -fx-margin: 0 0 0 3em;
 }
+
+svg {
+    width: 100vw;
+    height: 100vh;
+    display: block;
+}
+
