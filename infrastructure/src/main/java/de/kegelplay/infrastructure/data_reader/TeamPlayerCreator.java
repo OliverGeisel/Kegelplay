@@ -78,8 +78,8 @@ public class TeamPlayerCreator<G extends Game> {
 
 		@Override
 		public String toString() {
-			return STR."PlayerAndSubstitute{player=\{Arrays.toString(player)}, substitute=\{Arrays.toString(
-					substitute)}\{'}'}";
+			return "PlayerAndSubstitute{player=" + Arrays.toString(player) + ", substitute="
+				   + Arrays.toString(substitute) + "}";
 		}
 	}
 }

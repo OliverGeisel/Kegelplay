@@ -41,7 +41,7 @@ public class TableController implements Initializable {
 					double fontSize = stage.getWidth() / 30; //
 					for (var lane : grid.getChildren()) {
 						if (lane instanceof Label label) {
-							label.setStyle(STR."-fx-font-size: \{fontSize}px;");
+							label.setStyle("-fx-font-size: " + fontSize + "px;");
 						}
 					}
 				});
@@ -78,10 +78,10 @@ public class TableController implements Initializable {
 						case 4 -> label.setText(Integer.toString(game.getTotalFehlwurf()));
 						case 5 -> {
 							var pointsRe = calcPoints(pointSystem, match);
-							label.setText(STR."\{pointsRe}");
+							label.setText(Double.toString(pointsRe));
 
 						}
-						default -> throw new IllegalStateException(STR."Unexpected value: \{col}");
+						default -> throw new IllegalStateException("Unexpected value: " + col);
 					}
 					continue;
 				}
@@ -98,7 +98,7 @@ public class TableController implements Initializable {
 								gameSet.getGameSetNumber());
 						label.setText(Double.toString(point));
 					}
-					default -> throw new IllegalStateException(STR."Unexpected value: \{col}");
+					default -> throw new IllegalStateException("Unexpected value: " + col);
 				}
 			}
 		}

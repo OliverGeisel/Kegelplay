@@ -93,7 +93,7 @@ class WurfbildTest {
 		boolean[] fields = {true, false, false, false, false, false, false, false, false};
 		wurfbild = new Wurfbild(fields);
 		for (int i = 1; i <= 9; i++) {
-			assertEquals(fields[i - 1], wurfbild.get(i), STR."i = \{i}");
+			assertEquals(fields[i - 1], wurfbild.get(i), "i = " + i);
 		}
 	}
 

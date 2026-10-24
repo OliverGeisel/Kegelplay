@@ -60,7 +60,7 @@ public class GameScheduleController implements Initializable {
 			var gameTimes = iniFile.getRegion("Zeiten");
 			var timeSlots = gameTimes.getKeys().stream().filter(it -> it.matches("Durchgangszeit\\d+")).count();
 			for (int j = 1; j <= timeSlots; j++) {
-				times.add(gameTimes.getValue(STR."Durchgangszeit\{j}"));
+				times.add(gameTimes.getValue("Durchgangszeit" + j));
 			}
 		} catch (IOException e) {
 			LOGGER.log(System.Logger.Level.ERROR, "could not read ini file", e);
@@ -74,7 +74,7 @@ public class GameScheduleController implements Initializable {
 			var time = times.get(i + gameRound);
 			var children = line.getChildren();
 			line.setAlignment(Pos.CENTER);
-			var timeLabel = new Label(STR."\{time} Uhr");
+			var timeLabel = new Label(time + " Uhr");
 			timeLabel.paddingProperty().setValue(new Insets(0, 10, 0, 10));
 			timeLabel.minWidthProperty().setValue(100);
 			timeLabel.setFont(new Font(14));
@@ -83,7 +83,7 @@ public class GameScheduleController implements Initializable {
 			for (int k = 0; k < playerPerGameSet; k++) {
 				try {
 					var player = remainingPlayers.get(k + i * playerPerGameSet);
-					var playerLabel = new Label(STR."\{player.getVorname()} \{player.getNachname()}");
+					var playerLabel = new Label(player.getVorname() + " " + player.getNachname());
 					playerLabel.paddingProperty().setValue(new Insets(0, 10, 0, 10));
 					playerLabel.minWidthProperty().setValue(150);
 					playerLabel.setFont(new Font(14));

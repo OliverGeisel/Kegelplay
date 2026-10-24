@@ -48,12 +48,12 @@ public class LaneSchema {
 		for (int c = 0; c < cycles; c++) {
 			for (int i = 1; i <= setCount; i++) {
 				final var number = i - 1 + c * playerPerCycle;
-				var player = Integer.parseInt(region.getValue(STR."Spieler \{i}"));
-				var parsedTeam = Integer.parseInt(region.getValue(STR."Mannschaft \{i}"));
+				var player = Integer.parseInt(region.getValue("Spieler " + i));
+				var parsedTeam = Integer.parseInt(region.getValue("Mannschaft " + i));
 				var team = singleTeam ? 0 : parsedTeam;
-				var volle = Integer.parseInt(region.getValue(STR."Volle \{i}"));
-				var abraeumen = Integer.parseInt(region.getValue(STR."Abraeumer \{i}"));
-				var time = Integer.parseInt(region.getValue(STR."Zeit \{i}"));
+				var volle = Integer.parseInt(region.getValue("Volle " + i));
+				var abraeumen = Integer.parseInt(region.getValue("Abraeumer " + i));
+				var time = Integer.parseInt(region.getValue("Zeit " + i));
 				saetze.add(new LaneSatz(player + c * playerPerCycle, team, number, volle, abraeumen, time));
 			}
 		}

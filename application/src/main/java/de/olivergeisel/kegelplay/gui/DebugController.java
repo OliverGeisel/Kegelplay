@@ -21,8 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-
-import static java.util.FormatProcessor.FMT;
+import java.util.Locale;
 
 public class DebugController {
 
@@ -48,7 +47,7 @@ public class DebugController {
 		var folder = parsed.get("dataFolder").asText();
 		var formatted = date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 
-		Path pathDay = Path.of(STR."\{folder}/\{formatted}");
+		Path pathDay = Path.of(folder + "/" + formatted);
 		datePath = pathDay;
 		var file = pathDay.toFile();
 		if (!file.exists() || !file.isDirectory()) {
@@ -68,7 +67,7 @@ public class DebugController {
 		var folder = parsed.get("dataFolder").asText();
 		var formatted = today.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 
-		Path pathToday = Path.of(STR."\{folder}/\{formatted}");
+		Path pathToday = Path.of(folder + "/" + formatted);
 		var file = pathToday.toFile();
 		if (!file.exists() || file.isDirectory()) {
 			throw new FileNotFoundException("There is no game at moment for today");
@@ -91,7 +90,7 @@ public class DebugController {
 	@FXML
 	public void stop(ActionEvent event) {
 		service.cancel();
-		System.out.println(STR."stopped \{LocalDateTime.now()}");
+		System.out.println("stopped " + LocalDateTime.now());
 
 	}
 
@@ -108,7 +107,8 @@ public class DebugController {
 						int i = 0;
 						while (!isCancelled()) {
 							try {
-								System.out.println(FMT."load: \{LocalDateTime.now()} \t %05d\{i++}");
+								System.out.println(String.format(Locale.ROOT, "load: %s \t %05d",
+										LocalDateTime.now(), i++));
 								var match = dataReader.initNewMatch();
 							} catch (Exception e) {
 								Thread.sleep(1000);

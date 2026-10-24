@@ -35,26 +35,26 @@ public class HeaderController implements Initializable {
 	}
 
 	private static String getImagePathPNG(Player player) {
-		return STR."./images/\{player.getClub()}/\{player.getCompleteNameWithUnderscore()}.png";
+		return "./images/" + player.getClub() + "/" + player.getCompleteNameWithUnderscore() + ".png";
 	}
 
 	private static String getImagePathJPG(Player player) {
-		return STR."./images/\{player.getClub()}/\{player.getCompleteNameWithUnderscore()}.jpg";
+		return "./images/" + player.getClub() + "/" + player.getCompleteNameWithUnderscore() + ".jpg";
 	}
 
 	private static String getClubLogo(Player player) {
-		var defaultImage = STR."./images/\{player.getClub()}/logo.png";
+		var defaultImage = "./images/" + player.getClub() + "/logo.png";
 		if (new File(defaultImage).exists()) {
 			return defaultImage;
 		}
 		// JPG
-		var imagePath = STR."./images/\{player.getClub()}/logo.jpg";
+		var imagePath = "./images/" + player.getClub() + "/logo.jpg";
 		if (new File(imagePath).exists()) {
 			return imagePath;
 		}
 		/** TODO IMPROVE
 		 // SVG
-		 imagePath = STR."./images/\{player.getClub()}/logo.svg";
+		 imagePath = "./images/" + player.getClub() + "/logo.svg";
 		 if (new File(imagePath).exists()) {
 		 return imagePath;
 		 }**/
@@ -78,7 +78,7 @@ public class HeaderController implements Initializable {
 		vorname.setWrapText(true);
 		name.setWrapText(true);
 		verein.setWrapText(true);
-		image.setImage(new Image(STR."file:\{DEFAULT_IMAGE}"));
+		image.setImage(new Image("file:" + DEFAULT_IMAGE));
 
 		vorname.getProperties().put(FXMLLoader.CONTROLLER_KEYWORD, this);
 		name.getProperties().put(FXMLLoader.CONTROLLER_KEYWORD, this);
@@ -116,14 +116,14 @@ public class HeaderController implements Initializable {
 		var imagePath = getImagePathPNG(player);
 		var imageFile = new File(imagePath);
 		if (imageFile.exists()) {
-			this.image.setImage(new Image(STR."file:\{imagePath}"));
+			this.image.setImage(new Image("file:" + imagePath));
 		} else { // Todo refactor
 			imagePath = getImagePathJPG(player);
 			if (new File(imagePath).exists()) {
-				this.image.setImage(new Image(STR."file:\{imagePath}"));
+				this.image.setImage(new Image("file:" + imagePath));
 			} else {
 				var fallBack = getClubLogo(player);
-				this.image.setImage(new Image(STR."file:\{fallBack}"));
+				this.image.setImage(new Image("file:" + fallBack));
 			}
 		}
 	}

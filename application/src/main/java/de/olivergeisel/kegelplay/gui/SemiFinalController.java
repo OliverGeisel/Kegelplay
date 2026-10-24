@@ -151,12 +151,12 @@ public class SemiFinalController extends DisplayGameController<Game120> implemen
 				Platform.runLater(() -> {
 					// update
 					var start = LocalDateTime.now();
-					LOGGER.log(System.Logger.Level.INFO, STR."Update start: \{start}");
+					LOGGER.log(System.Logger.Level.INFO, "Update start: " + start);
 					matchUpdater.updateMatch();
 					update();
 					var end = LocalDateTime.now();
 					var difference = Duration.between(start, end);
-					LOGGER.log(System.Logger.Level.INFO, STR."Update complete: Duration: \{difference.toMillis()} ms");
+					LOGGER.log(System.Logger.Level.INFO, "Update complete: Duration: " + difference.toMillis() + " ms");
 				});
 			}
 		}, 5_000, REFRESH_INTERVAL);

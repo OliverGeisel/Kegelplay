@@ -47,7 +47,7 @@ public class AllAgainstAll120_4PlayerPointSystem extends PointSystem<Game120> {
 		var matchPoints = getMatchPoints(match);
 		var winner = matchPoints.getWinner();
 		return List.of(
-				new Winner(STR."\{winner.getVorname()} \{winner.getNachname()}", winner.getGame().getTotalScore(),
+				new Winner(winner.getVorname() + " " + winner.getNachname(), winner.getGame().getTotalScore(),
 						Winner.WinnerType.PLAYER));
 	}
 

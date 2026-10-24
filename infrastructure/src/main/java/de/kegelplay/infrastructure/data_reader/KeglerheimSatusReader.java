@@ -37,7 +37,7 @@ public class KeglerheimSatusReader {
 		teamCount = Integer.parseInt(teamRegion.getValue("Anzahl"));
 		teamNames = new ArrayList<>(teamCount);
 		for (int i = 0; i < teamCount; i++) {
-			teamNames.add(teamRegion.getValue(STR."Mannschaft \{i}"));
+			teamNames.add(teamRegion.getValue("Mannschaft " + i));
 		}
 	}
 

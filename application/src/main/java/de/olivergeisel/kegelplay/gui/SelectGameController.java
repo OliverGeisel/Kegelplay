@@ -96,9 +96,9 @@ public class SelectGameController implements Initializable {
 			loadGames(path, date);
 		} catch (FileNotFoundException e) {
 			vBox.getChildren()
-				.add(new Label(STR."No games for the \{date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))}"));
+				.add(new Label("No games for the " + date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))));
 		} catch (IOException e) {
-			LOGGER.log(Level.FINER, STR."Error loading games: \{e.getMessage()}");
+			LOGGER.log(Level.FINER, "Error loading games: " + e.getMessage());
 		}
 	}
 
@@ -116,7 +116,7 @@ public class SelectGameController implements Initializable {
 		var folder = parsed.get("dataFolder").asText();
 		var formatted = date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 
-		Path pathDay = Path.of(STR."\{folder}/\{formatted}");
+		Path pathDay = Path.of(folder + "/" + formatted);
 		datePath = pathDay;
 		var file = pathDay.toFile();
 		if (!file.exists() || !file.isDirectory()) {
@@ -201,7 +201,7 @@ public class SelectGameController implements Initializable {
 		}
 		//  Todo check if view is correct for the match
 		var scene = new Scene(stackPane);
-		scene.getStylesheets().add(STR."file:css/\{cssFile.getValue()}");
+		scene.getStylesheets().add("file:css/" + cssFile.getValue());
 		stage.setTitle(title);
 		stage.setResizable(true);
 		var image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/kegeln.png")));
@@ -260,7 +260,7 @@ public class SelectGameController implements Initializable {
 				title = "DUMMY PointSystem";
 				pointSystem = new DummyPointSystem<Game120>();
 			}
-			default -> throw new IllegalStateException(STR."Unexpected value: \{systemSelect}");
+			default -> throw new IllegalStateException("Unexpected value: " + systemSelect);
 		}
 		return new PointSystemAndTitle(pointSystem, title);
 	}
@@ -274,7 +274,7 @@ public class SelectGameController implements Initializable {
 					fxmlLoader = new FXMLLoader(getClass().getResource("display-game.fxml"));
 					controller = new _4PlayersAllAgainstController<>(match1Team);
 				} else {
-					throw new IllegalStateException(STR."Unexpected value: \{match}");
+					throw new IllegalStateException("Unexpected value: " + match);
 				}
 			}
 			case "2 Teams-A2" -> {
@@ -297,13 +297,13 @@ public class SelectGameController implements Initializable {
 				controller = new SemiFinalController(match1);
 				/*} else {
 					throw new IllegalStateException(
-							STR."Unexpected value: \{match} - \{match.getClass()} cannot be used for this view");
+							"Unexpected value: " + match + " - " + match.getClass() + " cannot be used for this view");
 				}*/
 			}
 			case "N Teams" -> {
 				//controller
 			}
-			default -> throw new IllegalStateException(STR."Unexpected value: \{selectedView}");
+			default -> throw new IllegalStateException("Unexpected value: " + selectedView);
 		}
 		return new ControllerAndLoader(fxmlLoader, controller);
 	}
@@ -327,9 +327,9 @@ public class SelectGameController implements Initializable {
 		pointSystemField.getItems().addAll(POINT_SYSTEMS);
 		var screens = Screen.getScreens();
 		for (int i = 0; i < screens.size(); i++) {
-			screenSelect.getItems().add(STR."Screen \{i + 1}");
+			screenSelect.getItems().add("Screen " + (i + 1));
 		}
-		screenSelect.setValue(STR."Screen 1");
+		screenSelect.setValue("Screen 1");
 		File cssFolder = new File("css");
 		if (!cssFolder.exists()) {
 			cssFolder.mkdir();

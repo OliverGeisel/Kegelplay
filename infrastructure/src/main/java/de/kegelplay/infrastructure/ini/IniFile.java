@@ -80,7 +80,7 @@ public class IniFile extends KeyValueRegionCollection<String, String, IniRegion>
 			throw new IniFileException("Ini file is empty");
 		}
 		var firstLine = lines[0].trim();
-		if (Pattern.matches(STR."\{HEAD_REGEX}\\s*", firstLine)) {
+		if (Pattern.matches(HEAD_REGEX + "\\s*", firstLine)) {
 			createWithMultipleRegions(firstLine, lines);
 		} else {
 			creatWithOneRegion(lines);
@@ -129,7 +129,7 @@ public class IniFile extends KeyValueRegionCollection<String, String, IniRegion>
 				regions.add(currentRegion);
 			} else {
 				if (!trimmedLine.contains("=")) {
-					LOGGER.log(System.Logger.Level.INFO, STR."invalid pair on \{line} in ini file");
+					LOGGER.log(System.Logger.Level.INFO, "invalid pair on " + line + " in ini file");
 					continue;
 				}
 				var keyValue = trimmedLine.split("=");
@@ -155,7 +155,7 @@ public class IniFile extends KeyValueRegionCollection<String, String, IniRegion>
 		for (var line : lines) {
 			var keyValue = line.split("=");
 			if (keyValue.length != 2) {
-				throw new IniFileException(STR."invalid ini file! Missing value or key in line: \{line}");
+				throw new IniFileException("invalid ini file! Missing value or key in line: " + line);
 			}
 			map.put(keyValue[0].trim(), keyValue[1].trim());
 		}
@@ -163,6 +163,5 @@ public class IniFile extends KeyValueRegionCollection<String, String, IniRegion>
 	}
 
 }
-
 
 

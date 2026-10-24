@@ -43,7 +43,7 @@ public class SpecialMatchUpdater extends MatchUpdater {
 			var newState = new MatchStatusInfo(stateIniFile, gameSetNumber);
 			match.setStatusInfo(newState);
 		} catch (IOException e) {
-			LOGGER.log(System.Logger.Level.ERROR, STR."Could not read state file for mactch: \{match.getBaseDir()}");
+			LOGGER.log(System.Logger.Level.ERROR, "Could not read state file for mactch: " + match.getBaseDir());
 		}
 		// update teams
 		for (var team : match.getTeams()) {
@@ -57,7 +57,7 @@ public class SpecialMatchUpdater extends MatchUpdater {
 	}
 
 	private void updateTeam(Team team) {
-		var dir = getMatch().getBaseDir().resolve(STR."\{team.getName()}.ini");
+		var dir = getMatch().getBaseDir().resolve(team.getName() + ".ini");
 		try {
 			var teamIniFile = new IniFile(dir);
 			var players = teamIniFile.getRegions().stream().filter(r -> r.getName().startsWith("Spieler")).toList();
@@ -119,7 +119,7 @@ public class SpecialMatchUpdater extends MatchUpdater {
 				game.setPlayer(player);
 			} catch (NoSuchElementException ne) {
 				// ignore
-				LOGGER.log(System.Logger.Level.DEBUG, STR."player (folder) \{playerName} not found in team");
+				LOGGER.log(System.Logger.Level.DEBUG, "player (folder) " + playerName + " not found in team");
 			}
 		}
 	}

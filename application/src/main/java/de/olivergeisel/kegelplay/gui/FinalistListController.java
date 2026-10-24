@@ -23,7 +23,7 @@ public class FinalistListController implements Initializable {
 	}
 
 	public void addFinalist(String fornname, String surname, int score) {
-		var displayString = STR."\{fornname} \{surname} - \{score}";
+		var displayString = fornname + " " + surname + " - " + score;
 		if (finalistList.getChildren().stream().noneMatch(node -> {
 			if (node instanceof HBox box) {
 				var children = box.getChildren();
@@ -38,7 +38,7 @@ public class FinalistListController implements Initializable {
 		})) {
 			HBox playerLine = new HBox();
 			var children = playerLine.getChildren();
-			children.add(new Label(STR."\{fornname} \{surname}"));
+			children.add(new Label(fornname + " " + surname));
 			finalistList.getChildren().add(playerLine);
 		}
 	}

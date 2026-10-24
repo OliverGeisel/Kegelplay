@@ -50,7 +50,7 @@ public class TeamOrderController implements Initializable {
 	}
 
 	protected static Stream<PlayerScore> getPlayerScoreStream(Team team, IniFile iniFile) {
-		// Sort the players by their score (current score + vorlauf)
+		// Sort the players by their score (current score + vorlaufExtra)
 		var mapping = Arrays.stream(team.getPlayers()).map(player -> {
 			var game = player.getGame();
 			int vorlauf;
@@ -59,7 +59,13 @@ public class TeamOrderController implements Initializable {
 			} catch (Exception e) {
 				vorlauf = 0;
 			}
-			return new PlayerScore(player, game.getTotalScore() + vorlauf);
+			int endlauf;
+			try {
+				endlauf = Integer.parseInt(iniFile.getRegion("Endlauf").getValue(player.getCompleteName()));
+			} catch (Exception e) {
+				endlauf = 0;
+			}
+			return new PlayerScore(player, game.getTotalScore() + vorlauf + endlauf, vorlauf, endlauf);
 		});
 		return mapping.sorted((a, b) -> b.score() - a.score());
 	}
@@ -85,11 +91,11 @@ public class TeamOrderController implements Initializable {
 			playerName.paddingProperty().set(new Insets(0, 10, 0, 0));
 			playerName.fontProperty().set(new Font(20));
 			playerName.prefWidthProperty().set(200);
-			var score = new Label(STR."\{player.score()}");
+			var score = new Label(Integer.toString(player.score()));
 			score.paddingProperty().set(new Insets(0, 0, 0, 10));
 			score.prefWidthProperty().set(100);
 			score.fontProperty().set(new Font(20));
-			var verein = new Label(STR."\{player.player().getClub()}");
+			var verein = new Label(player.player().getClub());
 			verein.paddingProperty().set(new Insets(0, 10, 0, 0));
 			verein.fontProperty().set(new Font(20));
 			verein.prefWidthProperty().set(200);
@@ -103,6 +109,6 @@ public class TeamOrderController implements Initializable {
 	 * @param player The player.
 	 * @param score The score.
 	 */
-	protected record PlayerScore(Player player, int score) {
+	protected record PlayerScore(Player player, int score, int vorlaufExtra, int endlaufExtra) {
 	}
 }

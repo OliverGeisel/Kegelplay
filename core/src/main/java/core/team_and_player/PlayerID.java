@@ -1,6 +1,6 @@
 package core.team_and_player;
 
-import static java.util.FormatProcessor.FMT;
+import java.util.Locale;
 
 
 /**
@@ -31,6 +31,6 @@ public record PlayerID(String countryCode, int number) {
 
 	@Override
 	public String toString() {
-		return FMT."\{countryCode}%06d\{number}";
+		return String.format(Locale.ROOT, "%s%06d", countryCode, number);
 	}
 }

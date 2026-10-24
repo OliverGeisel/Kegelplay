@@ -7,14 +7,14 @@
         <groupId>de.kegelplay</groupId>
         <artifactId>project</artifactId>
         <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>application</artifactId>
     <name>Kegelplay Application</name>
 
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <javafx-version>25.0.5</javafx-version>
     </properties>
 
     <dependencies>
@@ -23,6 +23,12 @@
             <artifactId>infrastructure</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>de.kegelplay</groupId>
+            <artifactId>core</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -39,6 +45,16 @@
             <groupId>org.controlsfx</groupId>
             <artifactId>controlsfx</artifactId>
             <version>11.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.kordamp.ikonli</groupId>
+            <artifactId>ikonli-javafx</artifactId>
+            <version>12.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.kordamp.bootstrapfx</groupId>
+            <artifactId>bootstrapfx-core</artifactId>
+            <version>0.4.0</version>
         </dependency>
     </dependencies>
 
@@ -70,7 +86,6 @@
                     <commandlineArgs>
                         <arg>-module-path</arg>
                         <arg>${project.build.directory}/modules</arg>
-                        <arg>--enable-preview</arg>
                     </commandlineArgs>
                     <launcher>app</launcher>
                     <jlinkZipName>app</jlinkZipName>
@@ -79,14 +94,13 @@
                     <stripDebug>true</stripDebug>
                     <noHeaderFiles>true</noHeaderFiles>
                     <options>
-                        <option>--enable-preview</option>
                     </options>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.0</version>
+                <version>3.6.2</version>
                 <executions>
                     <execution>
                         <phase>package</phase>

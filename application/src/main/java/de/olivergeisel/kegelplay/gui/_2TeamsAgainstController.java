@@ -43,13 +43,13 @@ public class _2TeamsAgainstController<G extends Game> extends DisplayGameControl
 				Platform.runLater(() -> {
 					// update
 					var start = LocalDateTime.now();
-					LOGGER.log(System.Logger.Level.INFO, STR."Update start: \{start}");
+					LOGGER.log(System.Logger.Level.INFO, "Update start: " + start);
 					getMatchUpdater().updateMatch();
 					setByMatch((Match<Game120>) getMatch());
 
 					var end = LocalDateTime.now();
 					var difference = Duration.between(start, end);
-					LOGGER.log(System.Logger.Level.INFO, STR."Update complete: Duration: \{difference.toMillis()} ms");
+					LOGGER.log(System.Logger.Level.INFO, "Update complete: Duration: " + difference.toMillis() + " ms");
 				});
 			}
 		}, 2_000, REFRESH_INTERVAL);
@@ -89,7 +89,7 @@ public class _2TeamsAgainstController<G extends Game> extends DisplayGameControl
 			getTimer().cancel();
 		});
 		if (match.getStatusInfo().isFinished()) {
-			LOGGER.log(System.Logger.Level.INFO, STR."\{match.getName()} is finished");
+			LOGGER.log(System.Logger.Level.INFO, match.getName() + " is finished");
 			getTimer().cancel();
 		}
 	}

@@ -61,11 +61,12 @@ public abstract class Team<G extends Game> {
 		this.generalTeamInfo = teamInfo;
 		if (players.length != numberOfPlayers) {
 			throw new IllegalArgumentException(
-					STR."A team with \{numberOfPlayers} players must have \{numberOfPlayers} players.");
+					"A team with " + numberOfPlayers + " players must have " + numberOfPlayers + " players.");
 		}
 		if (substitutes.length != numberOfSubstitutes) {
 			throw new IllegalArgumentException(
-					STR."A team with \{numberOfSubstitutes} substitutes must have \{numberOfSubstitutes} substitutes.");
+					"A team with " + numberOfSubstitutes + " substitutes must have " + numberOfSubstitutes
+					+ " substitutes.");
 		}
 	}
 
@@ -81,7 +82,7 @@ public abstract class Team<G extends Game> {
 		try {
 			return players[index];
 		} catch (IndexOutOfBoundsException e) {
-			throw new IllegalArgumentException(STR."Index out of bounds: \{index}", e);
+			throw new IllegalArgumentException("Index out of bounds: " + index, e);
 		}
 	}
 
@@ -115,7 +116,7 @@ public abstract class Team<G extends Game> {
 	 */
 	public Player<G> getSubstitute(int index) throws IllegalArgumentException {
 		if (index < 0 || index >= substitutes.length) {
-			throw new IllegalArgumentException(STR."Index out of bounds: \{index}");
+			throw new IllegalArgumentException("Index out of bounds: " + index);
 		}
 		return substitutes[index];
 	}
@@ -151,10 +152,10 @@ public abstract class Team<G extends Game> {
 	 */
 	public void substitute(int playerIndex, int substituteIndex) throws IllegalArgumentException {
 		if (playerIndex < 0 || playerIndex >= players.length) {
-			throw new IllegalArgumentException(STR."playerIndex out of bounds: \{playerIndex}");
+			throw new IllegalArgumentException("playerIndex out of bounds: " + playerIndex);
 		}
 		if (substituteIndex < 0 || substituteIndex >= substitutes.length) {
-			throw new IllegalArgumentException(STR."substituteIndex out of bounds: \{substituteIndex}");
+			throw new IllegalArgumentException("substituteIndex out of bounds: " + substituteIndex);
 		}
 		Player<G> player = players[playerIndex];
 		Player<G> substitute = substitutes[substituteIndex];

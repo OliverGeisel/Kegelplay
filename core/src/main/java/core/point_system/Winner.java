@@ -65,7 +65,7 @@ public class Winner {
 
 	@Override
 	public String toString() {
-		return STR."Winner{name='\{name}', score=\{score}, winnerType=\{winnerType}}";
+		return "Winner{name='" + name + "', score=" + score + ", winnerType=" + winnerType + "}";
 	}
 
 	/**

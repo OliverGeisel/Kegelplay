@@ -55,6 +55,7 @@ public class IniRegion extends KeyValueRegion<String, String> {
 
 	@Override
 	public String toString() {
-		return STR."IniRegion{name='\{getName()}',keyValuePairs=\{getKeyValuePairs()}, lines=\{lines.length}'}";
+		return "IniRegion{name='" + getName() + "',keyValuePairs=" + getKeyValuePairs() + ", lines=" + lines.length
+			   + "'}";
 	}
 }

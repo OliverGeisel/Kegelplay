@@ -120,8 +120,8 @@ public abstract class Match<G extends Game> {
 	 * @return The name of the match
 	 */
 	public String getName() {
-		return STR."Match: \{getTeamVs()} am \{getStatusInfo().getStartTime()
-															  .format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))}";
+		return "Match: " + getTeamVs() + " am " + getStatusInfo().getStartTime()
+																 .format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 	}
 
 	/**

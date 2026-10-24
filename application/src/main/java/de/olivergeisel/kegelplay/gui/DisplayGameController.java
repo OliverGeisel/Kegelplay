@@ -98,20 +98,20 @@ public abstract class DisplayGameController<G extends Game> implements GameContr
 				Platform.runLater(() -> {
 					// update
 					var start = LocalDateTime.now();
-					LOGGER.log(System.Logger.Level.INFO, STR."Update start: \{start}");
+					LOGGER.log(System.Logger.Level.INFO, "Update start: " + start);
 					matchUpdater.updateMatch();
 					var players = match.getCurrentPlayers();
 					setPlayers(players);
 					var end = LocalDateTime.now();
 					var difference = Duration.between(start, end);
-					LOGGER.log(System.Logger.Level.INFO, STR."Update complete: Duration: \{difference.toMillis()} ms");
+					LOGGER.log(System.Logger.Level.INFO, "Update complete: Duration: " + difference.toMillis() + " ms");
 				});
 			}
 		}, 0, REFRESH_INTERVAL);
 		int i = 1;
 		for (var lane : List.of(lane1, lane2, lane3, lane4)) {
 			final Label bahnLabel = (Label) lane.getChildren().getFirst();
-			bahnLabel.setText(STR."Bahn \{i++}");
+			bahnLabel.setText("Bahn " + i++);
 			final Pane finalTabelle = (Pane) lane.getChildren().get(1);
 			final Pane finalHeader = (Pane) lane.getChildren().get(2);
 			final Pane finalFallbild = (Pane) lane.getChildren().get(3);

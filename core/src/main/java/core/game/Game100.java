@@ -66,7 +66,7 @@ public class Game100 extends Game {
 	public GameSet getGameSet(int gameSetNumber) throws IllegalArgumentException {
 		if (gameSetNumber < 0 || gameSetNumber >= ANZAHL_DURCHGAENGE) {
 			throw new IllegalArgumentException(
-					STR."Index out of bounds: \{gameSetNumber}. Game100 has only 2 Durchgänge.");
+					"Index out of bounds: " + gameSetNumber + ". Game100 has only 2 Durchgänge.");
 		}
 		return sets[gameSetNumber];
 	}
@@ -96,7 +96,8 @@ public class Game100 extends Game {
 	public void setGameSets(List<GameSet> gameSets) {
 		if (gameSets.size() != ANZAHL_DURCHGAENGE) {
 			throw new IllegalArgumentException(
-					STR."Anzahl der Durchgänge stimmt nicht. Erwarte \{ANZAHL_DURCHGAENGE}; waren aber \{gameSets.size()}");
+					"Anzahl der Durchgänge stimmt nicht. Erwarte " + ANZAHL_DURCHGAENGE + "; waren aber "
+					+ gameSets.size());
 		}
 		for (int i = 0; i < ANZAHL_DURCHGAENGE; i++) {
 			sets[i] = gameSets.get(i);

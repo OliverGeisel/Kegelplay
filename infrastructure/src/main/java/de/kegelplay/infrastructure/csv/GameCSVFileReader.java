@@ -5,6 +5,7 @@ import core.game.*;
 
 import java.io.Closeable;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -67,7 +68,7 @@ public class GameCSVFileReader<G extends Game> extends CSVFileReader implements 
 				sets.add(gameSet);
 			}
 			if (line.length != 14) {
-				LOGGER.log(System.Logger.Level.ERROR, STR."Line has not 14 columns: \{line}");
+				LOGGER.log(System.Logger.Level.ERROR, "Line has not 14 columns: " + line);
 				continue;
 			}
 			var picRaw = line[3];
@@ -121,7 +122,7 @@ public class GameCSVFileReader<G extends Game> extends CSVFileReader implements 
 		for (String[] line : data) {
 			++i;
 			if (line.length != 14) {
-				LOGGER.log(System.Logger.Level.ERROR, STR."Line has not 14 columns: \{line}");
+				LOGGER.log(System.Logger.Level.ERROR, "Line has not 14 columns: " + Arrays.toString(line));
 				continue;
 			}
 			var picRaw = line[3];

@@ -165,7 +165,7 @@ public class Player<G extends Game> {
 	 * @return the complete name of the player
 	 */
 	public String getCompleteName() {
-		return STR."\{vorname} \{nachname}".trim();
+		return (vorname + " " + nachname).trim();
 	}
 
 	/**
@@ -176,7 +176,7 @@ public class Player<G extends Game> {
 	 * @see #getCompleteName()
 	 */
 	public String getCompleteNameWithUnderscore() {
-		return STR."\{vorname}_\{nachname}".replace(" ", "_").replace(",", "_").trim();
+		return (vorname + "_" + nachname).replace(" ", "_").replace(",", "_").trim();
 	}
 
 	/**
@@ -187,7 +187,7 @@ public class Player<G extends Game> {
 	 * @see #getCompleteName()
 	 */
 	public String getCompleteNameWithCommata() {
-		return STR."\{nachname},\{vorname}".trim();
+		return (nachname + "," + vorname).trim();
 	}
 
 	/**
@@ -226,7 +226,8 @@ public class Player<G extends Game> {
 
 	@Override
 	public String toString() {
-		return STR."Player{vorname='\{vorname}', nachname='\{nachname}', club='\{club}', birthday=\{birthday}, playerID=\{playerID}}";
+		return "Player{vorname='" + vorname + "', nachname='" + nachname + "', club='" + club + "', birthday="
+			   + birthday + ", playerID=" + playerID + "}";
 	}
 
 

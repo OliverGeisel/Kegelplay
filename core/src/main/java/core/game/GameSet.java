@@ -85,9 +85,9 @@ public class GameSet {
 	 */
 	public void reset(int index) throws IllegalStateException, IllegalArgumentException {
 		if (index < 0 || index >= throwCount)
-			throw new IllegalArgumentException(STR."Wurf \{index} don't exist");
+			throw new IllegalArgumentException("Wurf " + index + " don't exist");
 		if (wuerfe[index] == null)
-			throw new IllegalStateException(STR."Wurf \{index} is already null");
+			throw new IllegalStateException("Wurf " + index + " is already null");
 		wuerfe[index] = null;
 		if (getAnzahlGespielteWuerfe() == 0) {
 			state = SetState.NOT_STARTED;
@@ -105,7 +105,7 @@ public class GameSet {
 	 * @throws IllegalArgumentException if the number is out of bounds
 	 */
 	public Wurf get(int wurf) throws IllegalArgumentException {
-		if (wurf < 0 || wurf >= throwCount) throw new IllegalArgumentException(STR."Wurf \{wurf} existiert nicht");
+		if (wurf < 0 || wurf >= throwCount) throw new IllegalArgumentException("Wurf " + wurf + " existiert nicht");
 		return wuerfe[wurf];
 	}
 
@@ -318,6 +318,7 @@ public class GameSet {
 
 	@Override
 	public String toString() {
-		return STR."GameSet{state=\{state}, gameSetNumber=\\{gameSetNumber}, wuerfe=\{Arrays.toString(wuerfe)}'}";
+		return "GameSet{state=" + state + ", gameSetNumber=\\" + gameSetNumber + ", wuerfe="
+			   + Arrays.toString(wuerfe) + "'}";
 	}
 }

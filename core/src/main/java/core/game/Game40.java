@@ -141,7 +141,7 @@ public class Game40 extends Game {
 	public void setGameSets(List<GameSet> gameSets) throws IllegalArgumentException {
 		if (gameSets.size() != 2) {
 			throw new IllegalArgumentException(
-					STR."Anzahl der Durchgänge stimmt nicht. Erwarte 2; waren aber \{gameSets.size()}");
+					"Anzahl der Durchgänge stimmt nicht. Erwarte 2; waren aber " + gameSets.size());
 		}
 		for (int i = 0; i < 2; i++) {
 			sets[i] = gameSets.get(i);

@@ -100,13 +100,13 @@ public class VorlaufEndlaufController extends DisplayGameController<Game120> imp
 
 	public void update() {
 		var start = LocalDateTime.now();
-		LOGGER.log(System.Logger.Level.INFO, STR."Update start: \{start}");
+		LOGGER.log(System.Logger.Level.INFO, "Update start: " + start);
 		matchUpdater.updateMatch();
 		var players = match.getCurrentPlayers();
 		setPlayers(players);
 		var end = LocalDateTime.now();
 		var difference = Duration.between(start, end);
-		LOGGER.log(System.Logger.Level.INFO, STR."Update complete: Duration: \{difference.toMillis()} ms");
+		LOGGER.log(System.Logger.Level.INFO, "Update complete: Duration: " + difference.toMillis() + " ms");
 		int i = 0;
 		// update teams section
 		var teamBoxes = List.of(team1, team2, team3);

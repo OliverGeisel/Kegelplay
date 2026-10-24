@@ -35,8 +35,7 @@ public class KegelplayApplication extends Application {
 	}
 
 
-
-	public static void main(String[] args) {
+	static void main() {
 		launch();
 	}
 }

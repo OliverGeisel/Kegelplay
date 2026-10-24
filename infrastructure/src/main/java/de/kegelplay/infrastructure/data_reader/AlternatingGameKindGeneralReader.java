@@ -41,7 +41,7 @@ public class AlternatingGameKindGeneralReader {
 	public Match initNewMatch() {
 		var backupDir = baseDir.resolve("Backup-Daten");
 		if (!backupDir.toFile().exists()) {
-			LOGGER.log(System.Logger.Level.WARNING, STR."Backup dir does not exist: \{backupDir}");
+			LOGGER.log(System.Logger.Level.WARNING, "Backup dir does not exist: " + backupDir);
 		}
 		AltenateGameKindMatchConfig config;
 		GeneralMatchInfo general;
@@ -84,7 +84,7 @@ public class AlternatingGameKindGeneralReader {
 			var laneNames = readCorrectLaneNamed(baseDir);
 			config.setLaneNames(laneNames);
 		} catch (IOException e) {
-			LOGGER.log(System.Logger.Level.ERROR, STR."Could not read schema file for match: \{baseDir}");
+			LOGGER.log(System.Logger.Level.ERROR, "Could not read schema file for match: " + baseDir);
 			throw new RuntimeException("could not init new match", e);
 		}
 		// teams init
@@ -92,7 +92,7 @@ public class AlternatingGameKindGeneralReader {
 		for (var teamName : teamNames) {
 			try {
 				var teamFolder = baseDir.resolve(teamName);
-				KeyValueRegionCollection teamIni = new IniFile(baseDir.resolve(STR."\{teamName}.ini"));
+				KeyValueRegionCollection teamIni = new IniFile(baseDir.resolve(teamName + ".ini"));
 				var players = new TeamPlayerCreator<>(teamIni).createPlayerOfTeam();
 				var teamInfo = new GeneralTeamInfo(teamIni);
 				Team team = getTeam(teamName, teamInfo, players, teamFolder);
@@ -156,7 +156,7 @@ public class AlternatingGameKindGeneralReader {
 	private List<String> readCorrectLaneNamed(Path baseDir) {
 		var back = new LinkedList<String>();
 		if (!baseDir.resolve("Backup-Daten").toFile().exists()) {
-			LOGGER.log(System.Logger.Level.INFO, STR."Backup dir does not exist! Lanes have Default Names");
+			LOGGER.log(System.Logger.Level.INFO, "Backup dir does not exist! Lanes have Default Names");
 			int numberOfLanes = 4;
 			oldVersionLaneNames(back, baseDir);
 			return back;
@@ -178,7 +178,7 @@ public class AlternatingGameKindGeneralReader {
 				back.add(lanes.get(index).asText());
 			}
 		} catch (IOException e) {
-			LOGGER.log(System.Logger.Level.ERROR, STR."Could not read backup for match: \{baseDir}");
+			LOGGER.log(System.Logger.Level.ERROR, "Could not read backup for match: " + baseDir);
 		}
 		return back;
 	}
@@ -213,10 +213,10 @@ public class AlternatingGameKindGeneralReader {
 			var region = wks.getRegion("Allgemein");
 			var number = Integer.parseInt(region.getValue("Anzahl Bahnen"));
 			for (int i = 1; i <= number; i++) {
-				laneNames.add(STR."Bahn \{i}");
+				laneNames.add("Bahn " + i);
 			}
 		} catch (IOException e) {
-			LOGGER.log(System.Logger.Level.ERROR, STR."Could not read wks.ini for match: \{baseDir}");
+			LOGGER.log(System.Logger.Level.ERROR, "Could not read wks.ini for match: " + baseDir);
 		}
 	}
 
